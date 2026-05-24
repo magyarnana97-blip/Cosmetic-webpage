@@ -1,5 +1,4 @@
 ---
-// src/layouts/Layout.astro
 import type { Locale } from '../i18n/utils';
 import { getSection, localePath, SUPPORTED_LOCALES } from '../i18n/utils';
 
@@ -11,27 +10,24 @@ interface Props {
 
 const { locale, title, description } = Astro.props;
 const nav = getSection<any>(locale, 'nav');
-const lang_labels = getSection<any>(locale, 'lang');
 const footer = getSection<any>(locale, 'footer');
 
 const schema = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "BeautySalon",
-  "name": "Hancz Marianna Szépségterapeuta",
-  "url": "https://szepsegterapeuta.hu",
-  "telephone": "+36-20-339-3399",
-  "email": "info@szepsegterapeuta.hu",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Dolgos utca 2. 6B lépcsőház",
-    "addressLocality": "Budapest",
-    "postalCode": "1126",
-    "addressCountry": "HU"
+  '@context': 'https://schema.org',
+  '@type': 'BeautySalon',
+  name: 'Hancz Marianna Szépségterapeuta',
+  url: 'https://szepsegterapeuta.hu',
+  telephone: '+36-20-339-3399',
+  email: 'info@szepsegterapeuta.hu',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Dolgos utca 2. 6B lépcsőház',
+    addressLocality: 'Budapest',
+    postalCode: '1126',
+    addressCountry: 'HU'
   },
-  "openingHours": "Mo-Su 06:00-20:00",
-  "priceRange": "$$",
-  "description": description,
-  "sameAs": ["https://www.facebook.com/szepsegterapeuta"]
+  openingHours: 'Mo-Su 06:00-20:00',
+  description
 });
 ---
 
@@ -43,89 +39,176 @@ const schema = JSON.stringify({
   <meta name="description" content={description} />
   <title>{title}</title>
   <link rel="canonical" href={`https://szepsegterapeuta.hu${localePath(locale)}`} />
-  {SUPPORTED_LOCALES.filter(l => l !== 'ja' && l !== 'ko').map(l => (
-    <link rel="alternate" hreflang={l} href={`https://szepsegterapeuta.hu${localePath(l)}`} />
-  ))}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <script type="application/ld+json" set:html={schema} />
 </head>
 <body>
-  <header class="nav-header">
-    <div class="nav-container">
-      <a href={localePath(locale)} class="nav-logo" aria-label="Főoldal">
-        <img src="/logo.svg" alt="Szépségterapeuta logó" width="180" height="48" />
+
+  <header class="site-nav">
+    <div class="nav-wrap">
+      <a href={localePath(locale)} class="nav-logo">
+        <img src="/logo.svg" alt="Szépségterapeuta" width="160" height="44" />
       </a>
-      <nav aria-label="Főnavigáció">
-        <ul class="nav-links">
+      <nav>
+        <ul>
           <li><a href={`${localePath(locale)}#services`}>{nav.services}</a></li>
           <li><a href={`${localePath(locale)}#about`}>{nav.about}</a></li>
           <li><a href={`${localePath(locale)}#contact`}>{nav.contact}</a></li>
         </ul>
       </nav>
-      <div class="nav-right">
-        <div class="lang-switcher" role="navigation" aria-label="Nyelvváltó">
+      <div class="nav-end">
+        <div class="lang-row">
           {SUPPORTED_LOCALES.map(l => (
-            <a href={localePath(l)} class={`lang-btn ${l === locale ? 'active' : ''}`} hreflang={l} aria-current={l === locale ? 'true' : undefined}>
-              {lang_labels[l]}
+            <a href={localePath(l)} class={`lbtn${l === locale ? ' on' : ''}`} hreflang={l}>
+              {l.toUpperCase()}
             </a>
           ))}
         </div>
-        <a href={`${localePath(locale)}#contact`} class="btn-primary nav-cta">{nav.book}</a>
+        <a href={`${localePath(locale)}#contact`} class="cta-pill">{nav.book}</a>
       </div>
     </div>
   </header>
-  <main id="main-content"><slot /></main>
+
+  <main><slot /></main>
+
   <footer class="site-footer">
-    <p class="footer-tagline">{footer.tagline}</p>
-    <p class="footer-copy">{footer.copyright}</p>
+    <p class="ft-quote">{footer.tagline}</p>
+    <p class="ft-copy">{footer.copyright}</p>
   </footer>
+
 </body>
 </html>
 
 <style is:global>
   :root {
-    --color-green:      #A8C96A;
-    --color-sage:       #6E8467;
-    --color-cream:      #FAF9F6;
-    --color-beige:      #EDE5D6;
-    --color-gray:       #F2F2F2;
-    --color-text:       #2C2C2C;
-    --color-text-light: #6B6B6B;
-    --font-heading:     'Playfair Display', Georgia, serif;
-    --font-body:        'Lato', system-ui, sans-serif;
-    --max-width:        1200px;
-    --section-pad:      clamp(4rem, 8vw, 8rem) 1.5rem;
-    --radius:           12px;
-    --transition:       0.3s ease;
+    --c-gold:    #B89A6A;
+    --c-sage:    #7A8C72;
+    --c-cream:   #FAF8F4;
+    --c-linen:   #F0EBE1;
+    --c-stone:   #E8E0D2;
+    --c-ink:     #1E1E1E;
+    --c-muted:   #767068;
+    --f-serif:   'Cormorant Garamond', Georgia, serif;
+    --f-sans:    'Jost', system-ui, sans-serif;
+    --mw:        1160px;
+    --ease:      0.35s ease;
   }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); background: var(--color-cream); color: var(--color-text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-  h1, h2, h3 { font-family: var(--font-heading); line-height: 1.25; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: var(--f-sans);
+    font-weight: 300;
+    background: var(--c-cream);
+    color: var(--c-ink);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--f-serif);
+    font-weight: 400;
+    line-height: 1.2;
+  }
   img { max-width: 100%; height: auto; display: block; }
-  .nav-header { position: sticky; top: 0; z-index: 100; background: rgba(250,249,246,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(168,201,106,0.2); }
-  .nav-container { max-width: var(--max-width); margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-  .nav-links { list-style: none; display: flex; gap: 2rem; }
-  .nav-links a { text-decoration: none; color: var(--color-text); font-size: 0.95rem; letter-spacing: 0.02em; transition: color var(--transition); }
-  .nav-links a:hover { color: var(--color-sage); }
-  .nav-right { display: flex; align-items: center; gap: 1rem; }
-  .lang-switcher { display: flex; gap: 0.4rem; }
-  .lang-btn { font-size: 0.75rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; color: var(--color-text-light); padding: 0.25rem 0.5rem; border-radius: 4px; transition: all var(--transition); }
-  .lang-btn:hover, .lang-btn.active { color: var(--color-sage); background: rgba(110,132,103,0.1); }
-  .lang-btn.active { font-weight: 700; }
-  .btn-primary { display: inline-block; text-decoration: none; background: var(--color-green); color: #fff; padding: 0.75rem 1.75rem; border-radius: 50px; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em; transition: background var(--transition), transform var(--transition); border: none; cursor: pointer; }
-  .btn-primary:hover { background: var(--color-sage); transform: translateY(-1px); }
-  .btn-outline { display: inline-block; text-decoration: none; background: transparent; color: var(--color-sage); padding: 0.75rem 1.75rem; border-radius: 50px; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em; border: 2px solid var(--color-sage); transition: all var(--transition); }
-  .btn-outline:hover { background: var(--color-sage); color: #fff; transform: translateY(-1px); }
-  .section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-sage); margin-bottom: 0.75rem; }
-  .site-footer { background: var(--color-beige); text-align: center; padding: 3rem 1.5rem; border-top: 1px solid rgba(110,132,103,0.2); }
-  .footer-tagline { font-family: var(--font-heading); font-style: italic; font-size: 1.2rem; color: var(--color-sage); margin-bottom: 0.5rem; }
-  .footer-copy { font-size: 0.8rem; color: var(--color-text-light); }
-  .section { padding: var(--section-pad); }
-  .section-inner { max-width: var(--max-width); margin: 0 auto; }
-  .section-header { text-align: center; margin-bottom: 3.5rem; }
-  .section-header h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--color-text); margin-bottom: 1rem; }
-  .section-header p { color: var(--color-text-light); max-width: 600px; margin: 0 auto; font-size: 1.05rem; }
-  @media (max-width: 768px) { .nav-links { display: none; } .lang-switcher .lang-btn { font-size: 0.7rem; padding: 0.2rem 0.35rem; } }
+  a { color: inherit; }
+
+  /* ── NAV ─────────────────────────────── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(250,248,244,0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--c-stone);
+  }
+  .nav-wrap {
+    max-width: var(--mw); margin: 0 auto;
+    padding: 0.9rem 2rem;
+    display: flex; align-items: center; gap: 2.5rem;
+  }
+  .nav-logo { flex-shrink: 0; text-decoration: none; }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav a {
+    text-decoration: none;
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--c-muted);
+    transition: color var(--ease);
+  }
+  nav a:hover { color: var(--c-ink); }
+  .nav-end { margin-left: auto; display: flex; align-items: center; gap: 1.25rem; }
+
+  /* Nyelvváltó */
+  .lang-row { display: flex; gap: 0.15rem; }
+  .lbtn {
+    font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.08em; text-decoration: none;
+    color: var(--c-muted); padding: 0.3rem 0.5rem;
+    border-radius: 3px; transition: all var(--ease);
+  }
+  .lbtn:hover { color: var(--c-ink); }
+  .lbtn.on { color: var(--c-gold); font-weight: 500; }
+
+  /* CTA gomb */
+  .cta-pill {
+    display: inline-block; text-decoration: none;
+    background: var(--c-gold); color: #fff;
+    font-family: var(--f-sans); font-size: 0.78rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.7rem 1.8rem; border-radius: 2px;
+    transition: background var(--ease), transform var(--ease);
+    border: none; cursor: pointer; white-space: nowrap;
+  }
+  .cta-pill:hover { background: var(--c-sage); transform: translateY(-1px); }
+
+  .cta-ghost {
+    display: inline-block; text-decoration: none;
+    background: transparent; color: var(--c-ink);
+    font-family: var(--f-sans); font-size: 0.78rem;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.7rem 1.8rem; border-radius: 2px;
+    border: 1px solid var(--c-ink);
+    transition: all var(--ease);
+  }
+  .cta-ghost:hover { background: var(--c-ink); color: #fff; }
+
+  /* Szekciók */
+  .sec { padding: clamp(4rem, 9vw, 9rem) 2rem; }
+  .sec-inner { max-width: var(--mw); margin: 0 auto; }
+  .sec-label {
+    display: block; font-family: var(--f-sans);
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--c-gold);
+    margin-bottom: 1rem;
+  }
+  .sec-head { text-align: center; margin-bottom: 4rem; }
+  .sec-head h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); margin-bottom: 0.8rem; }
+  .sec-head p { color: var(--c-muted); max-width: 520px; margin: 0 auto; font-size: 1rem; }
+
+  /* Divider vonal */
+  .divider {
+    width: 48px; height: 1px;
+    background: var(--c-gold); margin: 1.5rem auto;
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--c-ink); color: rgba(255,255,255,0.55);
+    text-align: center; padding: 3.5rem 2rem;
+  }
+  .ft-quote {
+    font-family: var(--f-serif); font-style: italic;
+    font-size: 1.25rem; color: rgba(255,255,255,0.85);
+    margin-bottom: 0.75rem;
+  }
+  .ft-copy { font-size: 0.75rem; letter-spacing: 0.05em; }
+
+  /* ── MOBIL ───────────────────────────── */
+  @media (max-width: 768px) {
+    .nav-wrap { padding: 0.8rem 1.25rem; gap: 1rem; }
+    nav { display: none; }
+    .nav-end { gap: 0.75rem; }
+    .lbtn { padding: 0.25rem 0.3rem; font-size: 0.65rem; }
+    .cta-pill { padding: 0.6rem 1.2rem; font-size: 0.72rem; }
+    .sec { padding: clamp(3rem, 8vw, 5rem) 1.25rem; }
+  }
 </style>

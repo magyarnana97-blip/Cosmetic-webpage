@@ -1,5 +1,4 @@
 ---
-// src/pages/en/index.astro — English homepage
 import Layout from '../../layouts/Layout.astro';
 import { getSection } from '../../i18n/utils';
 
@@ -8,7 +7,6 @@ const meta         = getSection<any>(locale, 'meta');
 const hero         = getSection<any>(locale, 'hero');
 const about        = getSection<any>(locale, 'about');
 const services     = getSection<any>(locale, 'services');
-const why          = getSection<any>(locale, 'why');
 const testimonials = getSection<any>(locale, 'testimonials');
 const faq          = getSection<any>(locale, 'faq');
 const contact      = getSection<any>(locale, 'contact');
@@ -16,144 +14,120 @@ const contact      = getSection<any>(locale, 'contact');
 
 <Layout locale={locale} title={meta.title} description={meta.description}>
 
-  <section class="hero" aria-label="Introduction">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <span class="hero-badge">{hero.badge}</span>
-        <h1 class="hero-title">{hero.title}</h1>
-        <p class="hero-subtitle">{hero.subtitle}</p>
-        <div class="hero-cta">
-          <a href="#contact" class="btn-primary">{hero.ctaPrimary}</a>
-          <a href="#about"   class="btn-outline">{hero.ctaSecondary}</a>
+  <section class="hero">
+    <div class="hero-wrap">
+      <div class="hero-txt">
+        <span class="sec-label">{hero.badge}</span>
+        <h1>{hero.title}</h1>
+        <div class="hero-line"></div>
+        <p class="hero-sub">{hero.subtitle}</p>
+        <div class="hero-btns">
+          <a href="#contact" class="cta-pill">{hero.ctaPrimary}</a>
+          <a href="#about"   class="cta-ghost">{hero.ctaSecondary}</a>
         </div>
-        <ul class="trust-bar" aria-label="Trust indicators">
-          {hero.trustBar.map((item: string) => <li>{item}</li>)}
-        </ul>
       </div>
-      <div class="hero-image">
-        <img src="/images/hero.webp" alt="Elegant cosmetic treatment in Budapest" width="600" height="700" loading="eager" fetchpriority="high" />
+      <div class="hero-img">
+        <img src="/images/hero.webp" alt="Elegant cosmetic treatment Budapest" width="580" height="680" loading="eager" />
       </div>
+    </div>
+    <div class="hero-stats">
+      {hero.stats.map((s: any) => (
+        <div class="stat">
+          <span class="stat-n">{s.n}</span>
+          <span class="stat-l">{s.label}</span>
+        </div>
+      ))}
     </div>
   </section>
 
-  <section class="section about-section" id="about" aria-label="About">
-    <div class="section-inner about-grid">
-      <div class="about-image">
-        <img src="/images/about.webp" alt={about.imageAlt} width="500" height="600" loading="lazy" />
-      </div>
-      <div class="about-content">
-        <span class="section-label">{about.sectionLabel}</span>
+  <section class="sec about-sec" id="about">
+    <div class="sec-inner about-grid">
+      <div class="about-img"><img src="/images/about.webp" alt={about.imageAlt} width="480" height="580" loading="lazy" /></div>
+      <div class="about-txt">
+        <span class="sec-label">{about.sectionLabel}</span>
         <h2>{about.title}</h2>
-        <p class="about-body">{about.body}</p>
-        <ul class="values-grid">
-          {about.values.map((v: any) => (
-            <li class="value-item">
-              <span class="value-icon" aria-hidden="true">{v.icon}</span>
-              <span class="value-label">{v.label}</span>
-            </li>
-          ))}
-        </ul>
+        <div class="divider" style="margin:1.25rem 0;"></div>
+        <p>{about.body}</p>
+        <div class="cert-row">{about.certs.map((c: string) => <span class="cert-tag">{c}</span>)}</div>
       </div>
     </div>
   </section>
 
-  <section class="section services-section" id="services" aria-label="Treatments">
-    <div class="section-inner">
-      <header class="section-header">
-        <span class="section-label">{services.sectionLabel}</span>
+  <section class="sec services-sec" id="services">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <span class="sec-label">{services.sectionLabel}</span>
         <h2>{services.title}</h2>
+        <div class="divider"></div>
         <p>{services.subtitle}</p>
-      </header>
-      <ul class="services-grid">
+      </div>
+      <div class="svc-grid">
         {services.items.map((s: any) => (
-          <li class="service-card">
-            <span class="service-tag">{s.tag}</span>
+          <article class="svc-card">
+            <span class="svc-tag">{s.tag}</span>
             <h3>{s.title}</h3>
             <p>{s.description}</p>
-            <div class="service-meta">
-              <span>⏱ {s.duration}</span>
-              <span>💰 {s.price}</span>
-            </div>
-            <a href="#contact" class="btn-outline service-btn">{contact.formSubmit}</a>
-          </li>
+            <div class="svc-meta"><span>{s.duration}</span><span>{s.price}</span></div>
+            <a href="#contact" class="cta-ghost svc-cta">{contact.formSubmit}</a>
+          </article>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section why-section" aria-label="Why Marianna">
-    <div class="section-inner">
-      <header class="section-header">
-        <span class="section-label">{why.sectionLabel}</span>
-        <h2>{why.title}</h2>
-      </header>
-      <ul class="why-grid">
-        {why.items.map((w: any) => (
-          <li class="why-card">
-            <span class="why-icon" aria-hidden="true">{w.icon}</span>
-            <h3>{w.title}</h3>
-            <p>{w.description}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section testimonials-section" aria-label="Reviews">
-    <div class="section-inner">
-      <header class="section-header">
-        <span class="section-label">{testimonials.sectionLabel}</span>
+  <section class="sec testi-sec">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <span class="sec-label">{testimonials.sectionLabel}</span>
         <h2>{testimonials.title}</h2>
-      </header>
-      <ul class="testimonials-grid">
+        <div class="divider"></div>
+      </div>
+      <div class="testi-grid">
         {testimonials.items.map((t: any) => (
-          <li class="testimonial-card">
-            <blockquote>
-              <p>"{t.quote}"</p>
-              <footer>— {t.author}</footer>
-            </blockquote>
-          </li>
+          <figure class="testi-card">
+            <blockquote><p>{t.quote}</p></blockquote>
+            <figcaption>{t.author}</figcaption>
+          </figure>
         ))}
-      </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section faq-section" aria-label="FAQ">
-    <div class="section-inner faq-inner">
-      <header class="section-header">
-        <span class="section-label">{faq.sectionLabel}</span>
+  <section class="sec faq-sec">
+    <div class="sec-inner faq-inner">
+      <div class="sec-head">
+        <span class="sec-label">{faq.sectionLabel}</span>
         <h2>{faq.title}</h2>
-      </header>
+        <div class="divider"></div>
+      </div>
       <dl class="faq-list">
         {faq.items.map((item: any) => (
-          <div class="faq-item">
-            <dt>{item.q}</dt>
-            <dd>{item.a}</dd>
-          </div>
+          <div class="faq-row"><dt>{item.q}</dt><dd>{item.a}</dd></div>
         ))}
       </dl>
     </div>
   </section>
 
-  <section class="section contact-section" id="contact" aria-label="Contact">
-    <div class="section-inner contact-grid">
-      <div class="contact-info">
-        <span class="section-label">{contact.sectionLabel}</span>
+  <section class="sec contact-sec" id="contact">
+    <div class="sec-inner contact-grid">
+      <div class="contact-txt">
+        <span class="sec-label">{contact.sectionLabel}</span>
         <h2>{contact.title}</h2>
-        <p class="contact-subtitle">{contact.subtitle}</p>
+        <div class="divider" style="margin:1.25rem 0;"></div>
+        <p class="contact-sub">{contact.subtitle}</p>
         <address>
-          <p>📍 {contact.address}</p>
-          <p>📞 <a href={`tel:${contact.phone}`}>{contact.phone}</a></p>
-          <p>✉️ <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
-          <p>🕐 {contact.hours}</p>
+          <p>{contact.address}</p>
+          <p><a href={`tel:${contact.phone}`}>{contact.phone}</a></p>
+          <p><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          <p>{contact.hours}</p>
         </address>
       </div>
       <form class="contact-form" name="contact-en" method="POST" data-netlify="true">
         <input type="hidden" name="form-name" value="contact-en" />
-        <label>{contact.formName}<input type="text" name="name" required autocomplete="name" /></label>
-        <label>{contact.formEmail}<input type="email" name="email" required autocomplete="email" /></label>
+        <label>{contact.formName}<input type="text" name="name" required /></label>
+        <label>{contact.formEmail}<input type="email" name="email" required /></label>
         <label>{contact.formMessage}<textarea name="message" rows="5" required></textarea></label>
-        <button type="submit" class="btn-primary">{contact.formSubmit}</button>
+        <button type="submit" class="cta-pill">{contact.formSubmit}</button>
       </form>
     </div>
   </section>
@@ -161,62 +135,59 @@ const contact      = getSection<any>(locale, 'contact');
 </Layout>
 
 <style>
-.hero { background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-beige) 100%); padding: clamp(5rem, 10vw, 10rem) 1.5rem; overflow: hidden; }
-.hero-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem; }
-.hero-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-sage); background: rgba(110,132,103,0.1); padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.25rem; }
-.hero-title { font-size: clamp(2.2rem, 5vw, 3.5rem); white-space: pre-line; margin-bottom: 1.25rem; color: var(--color-text); }
-.hero-subtitle { color: var(--color-text-light); font-size: 1.1rem; max-width: 480px; margin-bottom: 2rem; }
-.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-.trust-bar { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
-.trust-bar li { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-light); padding-left: 1rem; position: relative; }
-.trust-bar li::before { content: "✓"; position: absolute; left: 0; color: var(--color-green); font-weight: 900; }
-.hero-image img { width: 100%; border-radius: 24px; box-shadow: 0 32px 80px rgba(0,0,0,0.12); object-fit: cover; aspect-ratio: 6/7; }
-.about-section { background: var(--color-cream); }
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.about-image img { border-radius: 20px; width: 100%; aspect-ratio: 5/6; object-fit: cover; }
-.about-content h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0.5rem 0 1.5rem; }
-.about-body { color: var(--color-text-light); margin-bottom: 2rem; font-size: 1.05rem; }
-.values-grid { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.value-item { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 0.9rem; }
-.value-icon { font-size: 1.4rem; }
-.services-section { background: var(--color-gray); }
-.services-grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-.service-card { background: #fff; border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); transition: transform var(--transition), box-shadow var(--transition); }
-.service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
-.service-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--color-beige); color: var(--color-sage); padding: 0.25rem 0.75rem; border-radius: 50px; align-self: flex-start; }
-.service-card h3 { font-size: 1.2rem; }
-.service-card p { color: var(--color-text-light); font-size: 0.95rem; flex: 1; }
-.service-meta { display: flex; gap: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--color-sage); }
-.service-btn { align-self: flex-start; margin-top: 0.5rem; }
-.why-section { background: var(--color-beige); }
-.why-grid { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-.why-card { text-align: center; }
-.why-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
-.why-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
-.why-card p { font-size: 0.9rem; color: var(--color-text-light); }
-.testimonials-section { background: var(--color-cream); }
-.testimonials-grid { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-.testimonial-card { background: var(--color-beige); border-radius: var(--radius); padding: 2.5rem; border-left: 4px solid var(--color-green); }
-.testimonial-card blockquote p { font-family: var(--font-heading); font-style: italic; font-size: 1.1rem; color: var(--color-text); margin-bottom: 1rem; }
-.testimonial-card blockquote footer { font-size: 0.85rem; font-weight: 700; color: var(--color-sage); }
-.faq-section { background: var(--color-gray); }
-.faq-inner { max-width: 780px; }
-.faq-list { display: flex; flex-direction: column; gap: 0; }
-.faq-item { border-bottom: 1px solid rgba(110,132,103,0.2); padding: 1.5rem 0; }
-.faq-item dt { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
-.faq-item dd { color: var(--color-text-light); margin: 0; font-size: 0.95rem; }
-.contact-section { background: var(--color-cream); }
-.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
-.contact-info h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0.5rem 0 1rem; }
-.contact-subtitle { color: var(--color-text-light); margin-bottom: 2rem; }
-address { font-style: normal; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem; }
-address a { color: var(--color-sage); text-decoration: none; }
+.hero { background: var(--c-linen); padding: clamp(4rem,9vw,9rem) 2rem 0; }
+.hero-wrap { max-width: var(--mw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 5rem; padding-bottom: clamp(3rem,6vw,6rem); }
+.hero-txt h1 { font-size: clamp(2.6rem, 5.5vw, 4.2rem); white-space: pre-line; margin: 0.5rem 0 0; }
+.hero-line { width: 52px; height: 1px; background: var(--c-gold); margin: 1.5rem 0; }
+.hero-sub { color: var(--c-muted); font-size: 1rem; max-width: 420px; margin-bottom: 2.5rem; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-img img { width: 100%; border-radius: 3px; aspect-ratio: 58/68; object-fit: cover; box-shadow: 20px 28px 60px rgba(0,0,0,0.13); }
+.hero-stats { max-width: var(--mw); margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--c-stone); padding: 2.5rem 0; gap: 2rem; }
+.stat { text-align: center; }
+.stat-n { display: block; font-family: var(--f-serif); font-size: clamp(2rem,4vw,3rem); color: var(--c-gold); line-height: 1; }
+.stat-l { display: block; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); margin-top: 0.4rem; }
+.about-sec { background: var(--c-cream); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.about-img img { width: 100%; border-radius: 3px; aspect-ratio: 48/58; object-fit: cover; }
+.about-txt h2 { font-size: clamp(1.9rem,3.5vw,2.8rem); margin: 0.5rem 0; }
+.about-txt p { color: var(--c-muted); }
+.cert-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 2rem; }
+.cert-tag { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-gold); border: 1px solid var(--c-gold); padding: 0.3rem 0.9rem; border-radius: 2px; }
+.services-sec { background: var(--c-linen); }
+.svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--c-stone); border: 1px solid var(--c-stone); }
+.svc-card { background: var(--c-cream); padding: 2.5rem 2rem; display: flex; flex-direction: column; gap: 0.9rem; transition: background var(--ease); }
+.svc-card:hover { background: #fff; }
+.svc-tag { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c-gold); }
+.svc-card h3 { font-size: 1.35rem; }
+.svc-card p { color: var(--c-muted); font-size: 0.9rem; flex: 1; }
+.svc-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 500; color: var(--c-muted); border-top: 1px solid var(--c-stone); padding-top: 0.9rem; }
+.svc-cta { align-self: flex-start; margin-top: 0.5rem; font-size: 0.72rem; }
+.testi-sec { background: var(--c-ink); color: #fff; }
+.testi-sec .sec-label { color: var(--c-gold); }
+.testi-sec .sec-head h2 { color: #fff; }
+.testi-sec .divider { background: var(--c-gold); }
+.testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.testi-card { border-left: 1px solid var(--c-gold); padding-left: 2rem; }
+.testi-card blockquote p { font-family: var(--f-serif); font-style: italic; font-size: 1.15rem; color: rgba(255,255,255,0.88); line-height: 1.65; }
+.testi-card figcaption { margin-top: 1.25rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-gold); }
+.faq-sec { background: var(--c-linen); }
+.faq-inner { max-width: 720px; }
+.faq-list { display: flex; flex-direction: column; }
+.faq-row { border-bottom: 1px solid var(--c-stone); padding: 1.75rem 0; }
+.faq-row dt { font-family: var(--f-serif); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.faq-row dd { color: var(--c-muted); font-size: 0.9rem; margin: 0; }
+.contact-sec { background: var(--c-cream); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 6rem; align-items: start; }
+.contact-txt h2 { font-size: clamp(1.9rem,3.5vw,2.8rem); margin: 0.5rem 0; }
+.contact-sub { color: var(--c-muted); margin-bottom: 2rem; }
+address { font-style: normal; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem; color: var(--c-muted); }
+address a { color: var(--c-gold); text-decoration: none; }
 address a:hover { text-decoration: underline; }
-.contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
-.contact-form label { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-text-light); }
-.contact-form input, .contact-form textarea { width: 100%; padding: 0.85rem 1rem; border: 1.5px solid rgba(110,132,103,0.3); border-radius: var(--radius); background: #fff; font-family: var(--font-body); font-size: 1rem; color: var(--color-text); transition: border-color var(--transition); }
-.contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--color-green); }
-.contact-form textarea { resize: vertical; min-height: 140px; }
-@media (max-width: 1024px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 768px) { .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; } .hero-image { order: -1; } .services-grid { grid-template-columns: 1fr; } .testimonials-grid { grid-template-columns: 1fr; } .why-grid { grid-template-columns: 1fr 1fr; } }
+.contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-form label { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted); }
+.contact-form input, .contact-form textarea { width: 100%; padding: 0.9rem 0; border: none; border-bottom: 1px solid var(--c-stone); background: transparent; font-family: var(--f-sans); font-size: 0.95rem; color: var(--c-ink); transition: border-color var(--ease); outline: none; border-radius: 0; }
+.contact-form input:focus, .contact-form textarea:focus { border-bottom-color: var(--c-gold); }
+.contact-form textarea { resize: vertical; min-height: 130px; }
+@media (max-width: 900px) { .hero-wrap { grid-template-columns: 1fr; gap: 3rem; } .hero-img { order: -1; } .hero-img img { max-height: 55vw; aspect-ratio: auto; } .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; } .svc-grid { grid-template-columns: 1fr; } .testi-grid { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 480px) { .hero-stats { grid-template-columns: 1fr; gap: 1.25rem; padding: 2rem 0; } .stat { text-align: left; } }
 </style>
