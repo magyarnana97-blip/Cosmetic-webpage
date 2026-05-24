@@ -1,9 +1,9 @@
 ---
-// src/pages/index.astro — Magyar főoldal (default)
-import Layout from '../layouts/Layout.astro';
-import { getSection } from '../i18n/utils';
+// src/pages/en/index.astro — English homepage
+import Layout from '../../layouts/Layout.astro';
+import { getSection } from '../../i18n/utils';
 
-const locale = 'hu';
+const locale = 'en';
 const meta         = getSection<any>(locale, 'meta');
 const hero         = getSection<any>(locale, 'hero');
 const about        = getSection<any>(locale, 'about');
@@ -16,7 +16,7 @@ const contact      = getSection<any>(locale, 'contact');
 
 <Layout locale={locale} title={meta.title} description={meta.description}>
 
-  <section class="hero" aria-label="Bemutatkozás">
+  <section class="hero" aria-label="Introduction">
     <div class="hero-inner">
       <div class="hero-content">
         <span class="hero-badge">{hero.badge}</span>
@@ -26,17 +26,17 @@ const contact      = getSection<any>(locale, 'contact');
           <a href="#contact" class="btn-primary">{hero.ctaPrimary}</a>
           <a href="#about"   class="btn-outline">{hero.ctaSecondary}</a>
         </div>
-        <ul class="trust-bar" aria-label="Bizalomjelzők">
+        <ul class="trust-bar" aria-label="Trust indicators">
           {hero.trustBar.map((item: string) => <li>{item}</li>)}
         </ul>
       </div>
       <div class="hero-image">
-        <img src="/images/hero.webp" alt="Elegáns kozmetikai kezelés Budapesten" width="600" height="700" loading="eager" fetchpriority="high" />
+        <img src="/images/hero.webp" alt="Elegant cosmetic treatment in Budapest" width="600" height="700" loading="eager" fetchpriority="high" />
       </div>
     </div>
   </section>
 
-  <section class="section about-section" id="about" aria-label="Bemutatkozás">
+  <section class="section about-section" id="about" aria-label="About">
     <div class="section-inner about-grid">
       <div class="about-image">
         <img src="/images/about.webp" alt={about.imageAlt} width="500" height="600" loading="lazy" />
@@ -57,7 +57,7 @@ const contact      = getSection<any>(locale, 'contact');
     </div>
   </section>
 
-  <section class="section services-section" id="services" aria-label="Kezelések">
+  <section class="section services-section" id="services" aria-label="Treatments">
     <div class="section-inner">
       <header class="section-header">
         <span class="section-label">{services.sectionLabel}</span>
@@ -81,7 +81,7 @@ const contact      = getSection<any>(locale, 'contact');
     </div>
   </section>
 
-  <section class="section why-section" aria-label="Miért Marianna">
+  <section class="section why-section" aria-label="Why Marianna">
     <div class="section-inner">
       <header class="section-header">
         <span class="section-label">{why.sectionLabel}</span>
@@ -99,7 +99,7 @@ const contact      = getSection<any>(locale, 'contact');
     </div>
   </section>
 
-  <section class="section testimonials-section" aria-label="Vélemények">
+  <section class="section testimonials-section" aria-label="Reviews">
     <div class="section-inner">
       <header class="section-header">
         <span class="section-label">{testimonials.sectionLabel}</span>
@@ -118,7 +118,7 @@ const contact      = getSection<any>(locale, 'contact');
     </div>
   </section>
 
-  <section class="section faq-section" aria-label="Gyakori kérdések">
+  <section class="section faq-section" aria-label="FAQ">
     <div class="section-inner faq-inner">
       <header class="section-header">
         <span class="section-label">{faq.sectionLabel}</span>
@@ -135,7 +135,7 @@ const contact      = getSection<any>(locale, 'contact');
     </div>
   </section>
 
-  <section class="section contact-section" id="contact" aria-label="Kapcsolat">
+  <section class="section contact-section" id="contact" aria-label="Contact">
     <div class="section-inner contact-grid">
       <div class="contact-info">
         <span class="section-label">{contact.sectionLabel}</span>
@@ -148,8 +148,8 @@ const contact      = getSection<any>(locale, 'contact');
           <p>🕐 {contact.hours}</p>
         </address>
       </div>
-      <form class="contact-form" name="contact" method="POST" data-netlify="true">
-        <input type="hidden" name="form-name" value="contact" />
+      <form class="contact-form" name="contact-en" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="contact-en" />
         <label>{contact.formName}<input type="text" name="name" required autocomplete="name" /></label>
         <label>{contact.formEmail}<input type="email" name="email" required autocomplete="email" /></label>
         <label>{contact.formMessage}<textarea name="message" rows="5" required></textarea></label>
@@ -184,7 +184,7 @@ const contact      = getSection<any>(locale, 'contact');
 .service-card { background: #fff; border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); transition: transform var(--transition), box-shadow var(--transition); }
 .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
 .service-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--color-beige); color: var(--color-sage); padding: 0.25rem 0.75rem; border-radius: 50px; align-self: flex-start; }
-.service-card h3 { font-size: 1.2rem; color: var(--color-text); }
+.service-card h3 { font-size: 1.2rem; }
 .service-card p { color: var(--color-text-light); font-size: 0.95rem; flex: 1; }
 .service-meta { display: flex; gap: 1rem; font-size: 0.85rem; font-weight: 700; color: var(--color-sage); }
 .service-btn { align-self: flex-start; margin-top: 0.5rem; }
