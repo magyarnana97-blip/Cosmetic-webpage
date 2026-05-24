@@ -15,13 +15,13 @@ const footer = getSection<any>(locale, 'footer');
 const schema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'BeautySalon',
-  name: 'Hancz Marianna Szépségterapeuta',
+  name: 'Hancz Marianna Sz\u00e9ps\u00e9gterapeuta',
   url: 'https://szepsegterapeuta.hu',
   telephone: '+36-20-339-3399',
   email: 'info@szepsegterapeuta.hu',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Dolgos utca 2. 6B lépcsőház',
+    streetAddress: 'Dolgos utca 2. 6B l\u00e9pcs\u0151h\u00e1z',
     addressLocality: 'Budapest',
     postalCode: '1126',
     addressCountry: 'HU'
@@ -43,20 +43,33 @@ const schema = JSON.stringify({
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <script type="application/ld+json" set:html={schema} />
 </head>
+
 <body>
 
-  <header class="site-nav">
+  <!-- NAV -->
+  <header class="site-nav" id="site-nav">
     <div class="nav-wrap">
-      <a href={localePath(locale)} class="nav-logo">
-        <img src="/logo.svg" alt="Szépségterapeuta" width="160" height="44" />
-      </a>
-      <nav>
+
+      <!-- Bal: hamburger (csak mobilon) -->
+      <button class="burger" id="burger" aria-label="Men\u00fc" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- K\u00f6z\u00e9p: nav linkek (desktop) -->
+      <nav class="desktop-nav" aria-label="F\u0151navig\u00e1ci\u00f3">
         <ul>
           <li><a href={`${localePath(locale)}#services`}>{nav.services}</a></li>
           <li><a href={`${localePath(locale)}#about`}>{nav.about}</a></li>
           <li><a href={`${localePath(locale)}#contact`}>{nav.contact}</a></li>
         </ul>
       </nav>
+
+      <!-- Jobb: logo -->
+      <a href={localePath(locale)} class="nav-logo" aria-label="F\u0151oldal">
+        <img src="/logo.svg" alt="Sz\u00e9ps\u00e9gterapeuta" width="150" height="42" />
+      </a>
+
+      <!-- Jobb: nyelvv\u00e1lt\u00f3 + CTA (desktop) -->
       <div class="nav-end">
         <div class="lang-row">
           {SUPPORTED_LOCALES.map(l => (
@@ -67,6 +80,24 @@ const schema = JSON.stringify({
         </div>
         <a href={`${localePath(locale)}#contact`} class="cta-pill">{nav.book}</a>
       </div>
+
+    </div>
+
+    <!-- Mobil men\u00fc (burger megnyom\u00e1sra cs\u00faszik le) -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href={`${localePath(locale)}#services`}>{nav.services}</a></li>
+        <li><a href={`${localePath(locale)}#about`}>{nav.about}</a></li>
+        <li><a href={`${localePath(locale)}#contact`}>{nav.contact}</a></li>
+      </ul>
+      <div class="mobile-lang">
+        {SUPPORTED_LOCALES.map(l => (
+          <a href={localePath(l)} class={`lbtn${l === locale ? ' on' : ''}`} hreflang={l}>
+            {l.toUpperCase()}
+          </a>
+        ))}
+      </div>
+      <a href={`${localePath(locale)}#contact`} class="cta-pill mobile-cta">{nav.book}</a>
     </div>
   </header>
 
@@ -77,26 +108,59 @@ const schema = JSON.stringify({
     <p class="ft-copy">{footer.copyright}</p>
   </footer>
 
+  <!-- Burger JS -->
+  <script>
+    const burger = document.getElementById('burger');
+    const menu   = document.getElementById('mobile-menu');
+
+    burger?.addEventListener('click', () => {
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      menu?.setAttribute('aria-hidden', String(open));
+      burger.classList.toggle('is-open', !open);
+      menu?.classList.toggle('is-open', !open);
+    });
+
+    // Linkre kattint\u00e1sra z\u00e1rja be
+    menu?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger?.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        burger?.classList.remove('is-open');
+        menu.classList.remove('is-open');
+      });
+    });
+  </script>
+
 </body>
 </html>
 
 <style is:global>
+  /* \u2500\u2500 RESET & ALAP \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
   :root {
-    --c-gold:    #B89A6A;
-    --c-sage:    #7A8C72;
-    --c-cream:   #FAF8F4;
-    --c-linen:   #F0EBE1;
-    --c-stone:   #E8E0D2;
-    --c-ink:     #1E1E1E;
-    --c-muted:   #767068;
-    --f-serif:   'Cormorant Garamond', Georgia, serif;
-    --f-sans:    'Jost', system-ui, sans-serif;
-    --mw:        1160px;
-    --ease:      0.35s ease;
+    --c-gold:  #B89A6A;
+    --c-sage:  #7A8C72;
+    --c-cream: #FAF8F4;
+    --c-linen: #F0EBE1;
+    --c-stone: #E8E0D2;
+    --c-ink:   #1E1E1E;
+    --c-muted: #767068;
+    --f-serif: 'Cormorant Garamond', Georgia, serif;
+    --f-sans:  'Jost', system-ui, sans-serif;
+    --mw:      1160px;
+    --ease:    0.3s ease;
+    --nav-h:   68px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; font-size: 16px; }
+
+  /* KRITIKUS: ez akad\u00e1lyozza meg a v\u00edzszintes csusz\u00e1st */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  html { scroll-behavior: smooth; }
   body {
     font-family: var(--f-sans);
     font-weight: 300;
@@ -105,110 +169,153 @@ const schema = JSON.stringify({
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 {
-    font-family: var(--f-serif);
-    font-weight: 400;
-    line-height: 1.2;
-  }
+  h1,h2,h3,h4 { font-family: var(--f-serif); font-weight: 400; line-height: 1.2; }
   img { max-width: 100%; height: auto; display: block; }
   a { color: inherit; }
 
-  /* ── NAV ─────────────────────────────── */
+  /* \u2500\u2500 NAV \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
   .site-nav {
-    position: sticky; top: 0; z-index: 200;
-    background: rgba(250,248,244,0.94);
+    position: fixed;        /* fix: nem g\u00f6rdul el scroll-n\u00e1l */
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    background: rgba(250,248,244,0.96);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--c-stone);
   }
   .nav-wrap {
     max-width: var(--mw); margin: 0 auto;
-    padding: 0.9rem 2rem;
-    display: flex; align-items: center; gap: 2.5rem;
+    height: var(--nav-h);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 2rem;
   }
-  .nav-logo { flex-shrink: 0; text-decoration: none; }
-  nav ul { list-style: none; display: flex; gap: 2.5rem; }
-  nav a {
+  .nav-logo { margin-left: auto; text-decoration: none; flex-shrink: 0; }
+  .desktop-nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  .desktop-nav a {
     text-decoration: none;
-    font-size: 0.82rem; font-weight: 500;
+    font-size: 0.78rem; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--c-muted);
-    transition: color var(--ease);
+    color: var(--c-muted); transition: color var(--ease);
   }
-  nav a:hover { color: var(--c-ink); }
-  .nav-end { margin-left: auto; display: flex; align-items: center; gap: 1.25rem; }
+  .desktop-nav a:hover { color: var(--c-ink); }
+  .nav-end { display: flex; align-items: center; gap: 1.25rem; }
 
-  /* Nyelvváltó */
-  .lang-row { display: flex; gap: 0.15rem; }
+  /* A main-t le kell tolni a fix nav magass\u00e1g\u00e1val */
+  main { padding-top: var(--nav-h); }
+
+  /* \u2500\u2500 LANGUAGEVÁLTÓ \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .lang-row { display: flex; gap: 0.1rem; }
   .lbtn {
-    font-family: var(--f-sans); font-size: 0.7rem; font-weight: 500;
+    font-family: var(--f-sans); font-size: 0.68rem; font-weight: 500;
     letter-spacing: 0.08em; text-decoration: none;
-    color: var(--c-muted); padding: 0.3rem 0.5rem;
+    color: var(--c-muted); padding: 0.3rem 0.45rem;
     border-radius: 3px; transition: all var(--ease);
   }
   .lbtn:hover { color: var(--c-ink); }
-  .lbtn.on { color: var(--c-gold); font-weight: 500; }
+  .lbtn.on { color: var(--c-gold); }
 
-  /* CTA gomb */
+  /* \u2500\u2500 GOMBOK \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
   .cta-pill {
     display: inline-block; text-decoration: none;
     background: var(--c-gold); color: #fff;
-    font-family: var(--f-sans); font-size: 0.78rem;
+    font-family: var(--f-sans); font-size: 0.75rem;
     font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.7rem 1.8rem; border-radius: 2px;
+    padding: 0.65rem 1.6rem; border-radius: 2px;
     transition: background var(--ease), transform var(--ease);
     border: none; cursor: pointer; white-space: nowrap;
   }
   .cta-pill:hover { background: var(--c-sage); transform: translateY(-1px); }
-
   .cta-ghost {
     display: inline-block; text-decoration: none;
     background: transparent; color: var(--c-ink);
-    font-family: var(--f-sans); font-size: 0.78rem;
+    font-family: var(--f-sans); font-size: 0.75rem;
     font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.7rem 1.8rem; border-radius: 2px;
-    border: 1px solid var(--c-ink);
-    transition: all var(--ease);
+    padding: 0.65rem 1.6rem; border-radius: 2px;
+    border: 1px solid var(--c-ink); transition: all var(--ease);
   }
   .cta-ghost:hover { background: var(--c-ink); color: #fff; }
 
-  /* Szekciók */
-  .sec { padding: clamp(4rem, 9vw, 9rem) 2rem; }
+  /* \u2500\u2500 BURGER (csak mobilon) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .burger {
+    display: none;          /* desktop-on rejtve */
+    flex-direction: column; justify-content: center;
+    gap: 5px; width: 36px; height: 36px;
+    background: none; border: none; cursor: pointer;
+    padding: 4px; flex-shrink: 0;
+  }
+  .burger span {
+    display: block; height: 1.5px; width: 100%;
+    background: var(--c-ink);
+    transition: transform var(--ease), opacity var(--ease);
+    transform-origin: center;
+  }
+  /* X anim\u00e1ci\u00f3 */
+  .burger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger.is-open span:nth-child(2) { opacity: 0; }
+  .burger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* \u2500\u2500 MOBIL MEN\u00dc \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .mobile-menu {
+    display: none;          /* desktop-on el van rejtve */
+    flex-direction: column;
+    gap: 0;
+    background: var(--c-cream);
+    border-top: 1px solid var(--c-stone);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+  }
+  .mobile-menu.is-open { max-height: 480px; }
+  .mobile-menu ul { list-style: none; }
+  .mobile-menu ul li a {
+    display: block;
+    padding: 1.1rem 2rem;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; color: var(--c-ink);
+    border-bottom: 1px solid var(--c-stone);
+    transition: color var(--ease);
+  }
+  .mobile-menu ul li a:hover { color: var(--c-gold); }
+  .mobile-lang {
+    display: flex; gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--c-stone);
+  }
+  .mobile-cta { margin: 1.25rem 2rem 1.5rem; align-self: flex-start; }
+
+  /* \u2500\u2500 EGYÉB GLOBÁLIS \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+  .sec { padding: clamp(3.5rem,8vw,8rem) 2rem; }
   .sec-inner { max-width: var(--mw); margin: 0 auto; }
   .sec-label {
     display: block; font-family: var(--f-sans);
-    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--c-gold);
-    margin-bottom: 1rem;
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--c-gold); margin-bottom: 0.9rem;
   }
   .sec-head { text-align: center; margin-bottom: 4rem; }
-  .sec-head h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); margin-bottom: 0.8rem; }
-  .sec-head p { color: var(--c-muted); max-width: 520px; margin: 0 auto; font-size: 1rem; }
+  .sec-head h2 { font-size: clamp(1.9rem,4.5vw,3rem); margin-bottom: 0.5rem; }
+  .sec-head p { color: var(--c-muted); max-width: 520px; margin: 0 auto; font-size: 0.95rem; }
+  .divider { width: 44px; height: 1px; background: var(--c-gold); margin: 1.25rem auto; }
 
-  /* Divider vonal */
-  .divider {
-    width: 48px; height: 1px;
-    background: var(--c-gold); margin: 1.5rem auto;
-  }
-
-  /* Footer */
   .site-footer {
-    background: var(--c-ink); color: rgba(255,255,255,0.55);
+    background: var(--c-ink); color: rgba(255,255,255,0.5);
     text-align: center; padding: 3.5rem 2rem;
   }
   .ft-quote {
     font-family: var(--f-serif); font-style: italic;
-    font-size: 1.25rem; color: rgba(255,255,255,0.85);
-    margin-bottom: 0.75rem;
+    font-size: 1.2rem; color: rgba(255,255,255,0.82);
+    margin-bottom: 0.6rem;
   }
-  .ft-copy { font-size: 0.75rem; letter-spacing: 0.05em; }
+  .ft-copy { font-size: 0.72rem; letter-spacing: 0.05em; }
 
-  /* ── MOBIL ───────────────────────────── */
+  /* \u2500\u2500 RESPONSIVE: mobilon burger jelenik meg \u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
   @media (max-width: 768px) {
-    .nav-wrap { padding: 0.8rem 1.25rem; gap: 1rem; }
-    nav { display: none; }
-    .nav-end { gap: 0.75rem; }
-    .lbtn { padding: 0.25rem 0.3rem; font-size: 0.65rem; }
-    .cta-pill { padding: 0.6rem 1.2rem; font-size: 0.72rem; }
-    .sec { padding: clamp(3rem, 8vw, 5rem) 1.25rem; }
+    .desktop-nav { display: none; }
+    .nav-end { display: none; }
+    .burger { display: flex; }
+    .nav-logo { margin-left: auto; }   /* logo jobbra tol\u00f3dik */
+    .mobile-menu { display: flex; }    /* most m\u00e1r cs\u00fasszhat */
+    .nav-wrap { padding: 0 1.25rem; }
+    .sec { padding: clamp(2.5rem,7vw,5rem) 1.25rem; }
   }
 </style>
