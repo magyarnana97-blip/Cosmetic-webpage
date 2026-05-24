@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "title": "Szépségterapeuta – Hancz Marianna | Budapest",
+    "description": "Prémium kozmetikai kezelések Budapesten. Hancz Marianna szépségterapeuta, QMS Anti-aging specialista. Meso Laser, QMS Medicosmetics, Image Peeling. Foglaljon időpontot!"
+  },
+  "nav": {
+    "home": "Főoldal",
+    "services": "Kezelések",
+    "about": "Rólam",
+    "contact": "Kapcsolat",
+    "book": "Időpontfoglalás"
+  },
+  "lang": { "hu": "Magyar", "en": "English", "ja": "日本語", "ko": "한국어" },
+  "hero": {
+    "badge": "QMS Anti-aging Specialista · Budapest",
+    "title": "Természetes szépség\na tudomány erejével",
+    "subtitle": "Hancz Marianna szépségterapeuta személyre szabott, tudományosan megalapozott kezelésekkel segít, hogy bőröd friss, üde és sugárzó legyen.",
+    "ctaPrimary": "Időpontfoglalás",
+    "ctaSecondary": "Bővebben",
+    "trustBar": ["20+ év tapasztalat", "QMS Certified", "Rugalmas időpontok", "Személyre szabva"]
+  },
+  "about": {
+    "sectionLabel": "Rólam",
+    "title": "Ahol a szakértelem találkozik a gondoskodással",
+    "body": "Hancz Marianna vagyok, szépségterapeuta és QMS Anti-aging specialista Budapesten. Hiszem, hogy az igazi szépség nem csupán külső réteg — hanem belső egyensúly, amelyet szakértelemmel és figyelemmel lehet megteremteni. Kezeléseimet mindig személyre szabom, mert minden bőr más. Folyamatosan követem a szépségipar legújabb tudományos fejlesztéseit, hogy az Ön bőre a lehető legjobb kezekben legyen.",
+    "imageAlt": "Hancz Marianna szépségterapeuta",
+    "values": [
+      { "icon": "🌿", "label": "Természetes" },
+      { "icon": "🤍", "label": "Gondoskodó" },
+      { "icon": "🔬", "label": "Tudományos" },
+      { "icon": "✨", "label": "Prémium" }
+    ]
+  },
+  "services": {
+    "sectionLabel": "Kezelések",
+    "title": "Amit az Ön bőréért teszek",
+    "subtitle": "Minden kezelés mögött egy cél áll: hogy Ön sugározzon.",
+    "items": [
+      {
+        "slug": "meso-laser",
+        "title": "Meso I Laser kezelések",
+        "description": "Forradalmi lézeres és fókuszált mezoterápia, amely a hatóanyagokat 5–8 mm mélységig juttatja a bőrbe. Ránctalanítás, feszesítés, revitalizálás — tű nélkül.",
+        "duration": "45–60 perc",
+        "price": "18 900 Ft-tól",
+        "tag": "Legnépszerűbb"
+      },
+      {
+        "slug": "qms",
+        "title": "QMS Medicosmetics kezelések",
+        "description": "A világ egyik legelismertebb prémium kozmetikai rendszere. Tiszta oxigénes feszesítés és Neo Tissudermie arcfiatalítás garantált eredményekkel.",
+        "duration": "60–90 perc",
+        "price": "Érdeklődjön",
+        "tag": "Prémium"
+      },
+      {
+        "slug": "peeling",
+        "title": "Image Designer Peelingek",
+        "description": "Szakmai peeling kezelések a bőr ragyogásáért, egyenletes szín- és textúrajavításért. Fiatalos, friss összhatás minden alkalommal.",
+        "duration": "30–45 perc",
+        "price": "Érdeklődjön",
+        "tag": "Megújulás"
+      }
+    ],
+    "cta": "Összes kezelés megtekintése"
+  },
+  "why": {
+    "sectionLabel": "Miért Marianna?",
+    "title": "Szakértelem, amely látható eredményt hoz",
+    "items": [
+      { "icon": "🏅", "title": "QMS Anti-aging specialista", "description": "Magyarország egyik kevés QMS-minősítéssel rendelkező szakembere — egy garancia a minőségre." },
+      { "icon": "🎯", "title": "Személyre szabott kezelések", "description": "Nincs két egyforma bőr. Minden vendégemnek egyedi kezelési tervet állítok össze." },
+      { "icon": "💎", "title": "Prémium kozmetikumok", "description": "Kizárólag tudományosan tesztelt, orvosminőségű termékeket alkalmazok." },
+      { "icon": "🕐", "title": "Rugalmas időbeosztás", "description": "Reggel 6-tól este 8-ig, hétvégén is — az Ön életritmusához igazodva." }
+    ]
+  },
+  "testimonials": {
+    "sectionLabel": "Vendégeink mondják",
+    "title": "Valódi tapasztalatok, valódi eredmények",
+    "items": [
+      { "quote": "Marianna mindig kedves és maximálisan segítőkész, kiemelkedő professzionális tudással rendelkező szakember. A nála töltött idő mindig felüdülés.", "author": "Visszatérő vendég" },
+      { "quote": "Nemcsak a bőröm, de a lelkem is megpihen nála. Pontosan azt az apró pluszt adja, amitől az egész élmény más lesz.", "author": "Rendszeres vendég" }
+    ]
+  },
+  "faq": {
+    "sectionLabel": "Kérdések",
+    "title": "Gyakran ismételt kérdések",
+    "items": [
+      { "q": "Hogyan foglalhatok időpontot?", "a": "Telefonon a +36 20 339 3399 számon vagy e-mailben az info@szepsegterapeuta.hu címen. Visszahívást is kérhet." },
+      { "q": "Mikor van nyitva?", "a": "Előzetes bejelentkezés alapján reggel 6-tól este 8-ig, hétvégén is." },
+      { "q": "Hol található a szalon?", "a": "1126 Budapest, Dolgos utca 2. – 6B lépcsőház." },
+      { "q": "Először jövök, mit várjak?", "a": "Először bőrelemzéssel kezdünk, hogy pontosan megértsük, mire van szüksége a bőrének. Hozzon csak önmagát." },
+      { "q": "Kinek ajánlott a Meso Laser?", "a": "Mindenkinek, aki ránctalanítást, feszesítést vagy revitalizálást szeretne, tű nélkül, tudományos alapon." }
+    ]
+  },
+  "contact": {
+    "sectionLabel": "Kapcsolat",
+    "title": "Foglaljon időpontot ma",
+    "subtitle": "Örömmel várom! Keressen telefonon, e-mailben, vagy küldjön üzenetet az alábbi űrlapon.",
+    "address": "1126 Budapest, Dolgos utca 2. – 6B lépcsőház",
+    "phone": "+36 20 339 3399",
+    "email": "info@szepsegterapeuta.hu",
+    "hours": "H–V és hétvége: 6:00–20:00",
+    "formName": "Neve",
+    "formEmail": "E-mail címe",
+    "formMessage": "Üzenete",
+    "formSubmit": "Küldés"
+  },
+  "footer": {
+    "tagline": "Szépség kívül és belül — rólad szól.",
+    "copyright": "© 2026 Hancz Marianna Szépségterapeuta. Minden jog fenntartva."
+  }
+}
