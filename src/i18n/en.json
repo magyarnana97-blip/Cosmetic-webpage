@@ -10,26 +10,25 @@
     "contact": "Contact",
     "book": "Book Appointment"
   },
-  "lang": { "hu": "Magyar", "en": "English", "ja": "日本語", "ko": "한국어" },
+  "lang": { "hu": "HU", "en": "EN", "ja": "JA", "ko": "KO" },
   "hero": {
     "badge": "QMS Anti-aging Specialist · Budapest",
     "title": "Natural Beauty Through\nthe Power of Science",
-    "subtitle": "Marianna Hancz, beauty therapist, offers personalised, science-based treatments to help your skin look fresh, radiant and harmonious.",
+    "subtitle": "Marianna Hancz offers personalised, science-based treatments to help your skin look fresh, radiant and harmonious.",
     "ctaPrimary": "Book Appointment",
     "ctaSecondary": "Learn More",
-    "trustBar": ["20+ years experience", "QMS Certified", "Flexible hours", "Personalised care"]
+    "stats": [
+      { "n": "20+", "label": "Years experience" },
+      { "n": "QMS", "label": "Certified" },
+      { "n": "Mo–Su", "label": "6:00–20:00" }
+    ]
   },
   "about": {
     "sectionLabel": "About",
     "title": "Where Expertise Meets Care",
-    "body": "I am Marianna Hancz, beauty therapist and QMS Anti-aging specialist based in Budapest. I believe that true beauty is not merely a surface layer — it is a balance created through expertise and attention. I tailor every treatment individually, because every skin is different. I continuously follow the latest scientific developments in the beauty industry to ensure your skin is in the best possible hands.",
+    "body": "I am Marianna Hancz, beauty therapist and QMS Anti-aging specialist based in Budapest. I believe that true beauty is not merely a surface layer — it is a balance created through expertise and attention. I tailor every treatment individually, because every skin is different.",
     "imageAlt": "Marianna Hancz beauty therapist",
-    "values": [
-      { "icon": "🌿", "label": "Natural" },
-      { "icon": "🤍", "label": "Caring" },
-      { "icon": "🔬", "label": "Scientific" },
-      { "icon": "✨", "label": "Premium" }
-    ]
+    "certs": ["QMS Anti-aging", "Meso I Laser", "Image Skincare", "Medicosmetics"]
   },
   "services": {
     "sectionLabel": "Treatments",
@@ -39,17 +38,6 @@
       { "slug": "meso-laser", "title": "Meso I Laser Treatments", "description": "Revolutionary laser and focused mesotherapy delivering active ingredients 5–8 mm deep. Anti-wrinkle, firming, revitalising — needle-free.", "duration": "45–60 min", "price": "From 18,900 HUF", "tag": "Most Popular" },
       { "slug": "qms", "title": "QMS Medicosmetics", "description": "One of the world's most prestigious premium cosmetic systems. Pure oxygen firming and Neo Tissudermie facial rejuvenation with guaranteed results.", "duration": "60–90 min", "price": "On request", "tag": "Premium" },
       { "slug": "peeling", "title": "Image Designer Peels", "description": "Professional peeling treatments for radiant skin, even tone and texture. A youthful, fresh overall effect every time.", "duration": "30–45 min", "price": "On request", "tag": "Renewal" }
-    ],
-    "cta": "View All Treatments"
-  },
-  "why": {
-    "sectionLabel": "Why Marianna?",
-    "title": "Expertise That Delivers Visible Results",
-    "items": [
-      { "icon": "🏅", "title": "QMS Anti-aging Specialist", "description": "One of the few QMS-certified professionals in Hungary — a guarantee of quality." },
-      { "icon": "🎯", "title": "Personalised Treatments", "description": "No two skins are alike. I create a unique treatment plan for every guest." },
-      { "icon": "💎", "title": "Premium Products", "description": "Only scientifically tested, medical-grade products are used in every treatment." },
-      { "icon": "🕐", "title": "Flexible Hours", "description": "From 6am to 8pm, weekends included — to fit your schedule." }
     ]
   },
   "testimonials": {
