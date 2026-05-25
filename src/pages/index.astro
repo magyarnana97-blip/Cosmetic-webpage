@@ -14,82 +14,110 @@ const contact      = getSection<any>(locale, 'contact');
 
 <Layout locale={locale} title={meta.title} description={meta.description}>
 
-  <!-- HERO -->
+  <!-- ══ HERO ══ -->
   <section class="hero">
-    <!-- Háttér dekoráció -->
-    <div class="hero-bg-left"></div>
-    <div class="hero-bg-right"></div>
 
-    <div class="hero-inner">
-      <!-- DESKTOP: bal szöveg, jobb kép -->
-      <div class="hero-text">
-        <span class="sec-label">{hero.badge}</span>
-        <h1>{hero.title}</h1>
-        <div class="hero-divider"></div>
-        <p class="hero-sub">{hero.subtitle}</p>
-        <p class="hero-tagline">Természetes szépség, harmónia, önbizalom</p>
-        <div class="hero-btns">
-          <a href="#contact" class="btn-primary">{hero.ctaPrimary}</a>
-          <a href="#about" class="btn-outline">{hero.ctaSecondary}</a>
+    <!-- ── MOBIL nézet ── -->
+    <div class="hero-mobile">
+      <!-- 1) Logó + háttérfotó -->
+      <div class="hm-logo-wrap">
+        <img src="/images/hero.jpg" alt="" aria-hidden="true" class="hm-bg" />
+        <div class="hm-logo-box">
+          <img src="/logo.svg" alt="Szépségterapeuta" class="hm-logo"
+            onerror="this.src='/logo.png'" />
         </div>
       </div>
-      <div class="hero-img-wrap">
-        <img
-          src="/images/hero.jpg"
-          alt="Természetes kozmetikai kezelés"
-          width="560" height="660"
-          loading="eager"
-          onerror="this.style.display='none'; this.parentElement.classList.add('no-img')"
-        />
+
+      <!-- 2) 2 nagy csempe -->
+      <div class="hm-tiles">
+        <a href="#services" class="hmt hmt-green">
+          <span class="hmt-circle">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M18 8c0 0-7 5.5-7 12a7 7 0 0014 0c0-6.5-7-12-7-12z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M18 20v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="hmt-name">FRESH GREEN</span>
+          <span class="hmt-sub">Időpontfoglalás</span>
+        </a>
+        <a href="#about" class="hmt hmt-beige">
+          <span class="hmt-circle hmt-circle-beige">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M12 24c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M18 10c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4z" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </span>
+          <span class="hmt-name">WARM BEIGE</span>
+          <span class="hmt-sub">Rólam</span>
+        </a>
+      </div>
+
+      <!-- 3) Gombok -->
+      <div class="hm-btns">
+        <a href="#contact" class="btn-primary hm-btn-main">{hero.ctaPrimary}</a>
+        <a href="#about" class="hm-btn-arrow">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M7 10h6M10 7l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- 4) Ikon + szlogen -->
+      <div class="hm-footer">
+        <span class="hm-footer-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M14 6c0 0-5.5 4-5.5 9a5.5 5.5 0 0011 0C19.5 10 14 6 14 6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M14 15v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="hm-footer-txt">TERMÉSZETES</span>
+        <p class="hm-slogan">Szépség kívül és belül – rólad szól.</p>
       </div>
     </div>
 
-    <!-- Stat sor -->
-    <div class="hero-stats">
-      {hero.stats.map((s: any) => (
-        <div class="stat-item">
-          <span class="stat-n">{s.n}</span>
-          <span class="stat-l">{s.label}</span>
+    <!-- ── DESKTOP nézet ── -->
+    <div class="hero-desktop">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <span class="sec-label">{hero.badge}</span>
+          <h1>{hero.title}</h1>
+          <div class="hero-divider"></div>
+          <p class="hero-sub">{hero.subtitle}</p>
+          <p class="hero-tagline">Természetes szépség, harmónia, önbizalom</p>
+          <div class="hero-btns">
+            <a href="#contact" class="btn-primary">{hero.ctaPrimary}</a>
+            <a href="#about" class="btn-outline">{hero.ctaSecondary}</a>
+          </div>
         </div>
-      ))}
+        <div class="hero-img-wrap">
+          <img src="/images/hero.jpg" alt="Természetes kozmetikai kezelés"
+            width="560" height="660" loading="eager"
+            onerror="this.style.display='none'; this.parentElement.classList.add('no-img')" />
+        </div>
+      </div>
+      <div class="hero-stats">
+        {hero.stats.map((s: any) => (
+          <div class="stat-item">
+            <span class="stat-n">{s.n}</span>
+            <span class="stat-l">{s.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
 
-    <!-- MOBIL: 2 navigációs csempe -->
-    <div class="hero-tiles">
-      <a href="#about" class="tile tile-sage">
-        <span class="tile-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <circle cx="16" cy="11" r="5" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M6 26c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="tile-label">Rólam</span>
-        <span class="tile-arrow">→</span>
-      </a>
-      <a href="#services" class="tile tile-green">
-        <span class="tile-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <path d="M16 4C16 4 8 10 8 18a8 8 0 0016 0c0-8-8-14-8-14z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M16 18v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="tile-label">Kezelések</span>
-        <span class="tile-arrow">→</span>
-      </a>
-    </div>
   </section>
 
   <!-- RÓLAM -->
   <section class="sec about-sec" id="about">
     <div class="sec-inner about-grid">
       <div class="about-img-wrap">
-        <img
-          src="/images/about.jpg"
-          alt={about.imageAlt}
-          width="480" height="560"
-          loading="lazy"
-          onerror="this.style.display='none'; this.parentElement.classList.add('no-img')"
-        />
+        <img src="/images/about.jpg" alt={about.imageAlt}
+          width="480" height="560" loading="lazy"
+          onerror="this.style.display='none'; this.parentElement.classList.add('no-img')" />
       </div>
       <div class="about-text">
         <span class="sec-label">{about.sectionLabel}</span>
@@ -184,38 +212,17 @@ const contact      = getSection<any>(locale, 'contact');
         <div class="divider" style="margin: 1rem 0;"></div>
         <p class="contact-sub">{contact.subtitle}</p>
         <div class="contact-details">
-          <div class="contact-item">
-            <span class="contact-icon">📍</span>
-            <span>{contact.address}</span>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">📞</span>
-            <a href={`tel:${contact.phone}`}>{contact.phone}</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">✉️</span>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">🕐</span>
-            <span>{contact.hours}</span>
-          </div>
+          <div class="contact-item"><span class="contact-icon">📍</span><span>{contact.address}</span></div>
+          <div class="contact-item"><span class="contact-icon">📞</span><a href={`tel:${contact.phone}`}>{contact.phone}</a></div>
+          <div class="contact-item"><span class="contact-icon">✉️</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div>
+          <div class="contact-item"><span class="contact-icon">🕐</span><span>{contact.hours}</span></div>
         </div>
       </div>
       <form class="contact-form" name="contact" method="POST" data-netlify="true">
         <input type="hidden" name="form-name" value="contact" />
-        <label class="form-field">
-          <span>{contact.formName}</span>
-          <input type="text" name="name" required />
-        </label>
-        <label class="form-field">
-          <span>{contact.formEmail}</span>
-          <input type="email" name="email" required />
-        </label>
-        <label class="form-field">
-          <span>{contact.formMessage}</span>
-          <textarea name="message" rows="5" required></textarea>
-        </label>
+        <label class="form-field"><span>{contact.formName}</span><input type="text" name="name" required /></label>
+        <label class="form-field"><span>{contact.formEmail}</span><input type="email" name="email" required /></label>
+        <label class="form-field"><span>{contact.formMessage}</span><textarea name="message" rows="5" required></textarea></label>
         <button type="submit" class="btn-primary">{contact.formSubmit}</button>
       </form>
     </div>
@@ -224,125 +231,151 @@ const contact      = getSection<any>(locale, 'contact');
 </Layout>
 
 <style>
-/* ── HERO ── */
-.hero {
+/* ══ MOBIL HERO ══ */
+.hero-mobile { display: none; flex-direction: column; }
+
+/* 1) logó + háttér */
+.hm-logo-wrap {
   position: relative;
-  background: var(--cream);
+  width: 100%;
+  height: 52vw;
+  min-height: 200px;
+  max-height: 280px;
   overflow: hidden;
+  background: var(--cream);
 }
-.hero-bg-left {
-  position: absolute; top: 0; left: -5%;
-  width: 45%; height: 100%;
-  background: url('/images/hero-bg-leaf.jpg') center/cover no-repeat;
-  opacity: 0.18;
-  pointer-events: none;
+.hm-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
 }
-.hero-bg-right {
-  position: absolute; top: 0; right: -5%;
-  width: 40%; height: 100%;
-  background: url('/images/hero-bg-spa.jpg') center/cover no-repeat;
-  opacity: 0.15;
-  pointer-events: none;
+.hm-logo-box {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
 }
+.hm-logo { width: 55%; max-width: 220px; }
+
+/* 2) 2 csempe */
+.hm-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.hmt {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.6rem;
+  padding: 1.8rem 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+.hmt-green { background: var(--green); color: #fff; }
+.hmt-beige { background: var(--beige); color: var(--sage); }
+.hmt-circle {
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  display: flex; align-items: center; justify-content: center;
+}
+.hmt-circle-beige {
+  border-color: rgba(110,132,103,0.5);
+}
+.hmt-name {
+  font-family: var(--f-body);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.18em;
+}
+.hmt-sub {
+  font-family: var(--f-head);
+  font-size: 0.85rem; font-style: italic;
+  opacity: 0.8;
+}
+
+/* 3) gombok */
+.hm-btns {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 1.2rem 1.25rem;
+  background: var(--cream);
+  border-top: 1px solid rgba(168,201,106,0.2);
+}
+.hm-btn-main {
+  flex: 1; text-align: center;
+  font-size: 0.75rem; padding: 0.75rem 1rem;
+}
+.hm-btn-arrow {
+  width: 44px; height: 44px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--green); color: #fff;
+  transition: background var(--ease);
+}
+.hm-btn-arrow:hover { background: var(--sage); }
+
+/* 4) ikon + szlogen */
+.hm-footer {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.3rem;
+  padding: 1.5rem 1.25rem 2rem;
+  background: var(--cream);
+  border-top: 1px solid rgba(168,201,106,0.15);
+  color: var(--muted);
+}
+.hm-footer-icon { color: var(--sage); opacity: 0.7; }
+.hm-footer-txt {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted);
+}
+.hm-slogan {
+  font-family: var(--f-head); font-style: italic;
+  font-size: 0.9rem; color: var(--sage);
+  text-align: center; margin-top: 0.2rem;
+}
+
+/* ══ DESKTOP HERO ══ */
+.hero-desktop { display: block; }
 .hero-inner {
   max-width: var(--mw); margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr;
   align-items: center; gap: 4rem;
   padding: clamp(4rem,9vw,8rem) 2rem clamp(2rem,4vw,4rem);
-  position: relative; z-index: 1;
 }
 .hero-text h1 {
   font-size: clamp(2.4rem,5vw,3.8rem);
-  color: var(--sage);
-  margin: 0.5rem 0;
-  white-space: pre-line;
+  color: var(--sage); margin: 0.5rem 0;
 }
 .hero-divider {
   width: 55px; height: 2px;
-  background: var(--green);
-  margin: 1.25rem 0;
-  border-radius: 2px;
+  background: var(--green); margin: 1.25rem 0; border-radius: 2px;
 }
-.hero-sub {
-  color: var(--muted); font-size: 1rem;
-  max-width: 420px; margin-bottom: 0.5rem;
-}
+.hero-sub { color: var(--muted); font-size: 1rem; max-width: 420px; margin-bottom: 0.5rem; }
 .hero-tagline {
   font-family: var(--f-head); font-style: italic;
-  color: var(--sage); font-size: 1rem;
-  letter-spacing: 0.05em; margin-bottom: 2rem;
+  color: var(--sage); font-size: 1rem; margin-bottom: 2rem;
 }
 .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 .hero-img-wrap {
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 8px; overflow: hidden;
   background: linear-gradient(135deg, var(--beige) 0%, var(--gray-lt) 100%);
   min-height: 420px;
   display: flex; align-items: center; justify-content: center;
   box-shadow: 0 20px 60px rgba(110,132,103,0.15);
 }
-.hero-img-wrap img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.hero-img-wrap.no-img::after {
-  content: '✿';
-  font-size: 4rem; color: var(--green); opacity: 0.4;
-}
-
-/* Stat sor */
+.hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.hero-img-wrap.no-img::after { content: '✿'; font-size: 4rem; color: var(--green); opacity: 0.4; }
 .hero-stats {
   max-width: var(--mw); margin: 0 auto;
   display: grid; grid-template-columns: repeat(3,1fr);
   border-top: 1px solid rgba(168,201,106,0.3);
-  padding: 2rem;
-  position: relative; z-index: 1;
-  gap: 1rem;
+  padding: 2rem; gap: 1rem;
 }
 .stat-item { text-align: center; }
-.stat-n {
-  display: block;
-  font-family: var(--f-head);
-  font-size: clamp(1.8rem,4vw,2.8rem);
-  color: var(--green); line-height: 1;
-}
-.stat-l {
-  display: block; font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--muted); margin-top: 0.3rem;
-}
+.stat-n { display: block; font-family: var(--f-head); font-size: clamp(1.8rem,4vw,2.8rem); color: var(--green); line-height: 1; }
+.stat-l { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
 
-/* Navigációs csempék – CSAK MOBILON */
-.hero-tiles {
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  position: relative; z-index: 1;
-}
-.tile {
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 0.5rem;
-  padding: 2rem 1rem;
-  text-align: center;
-  transition: filter var(--ease);
-}
-.tile:hover { filter: brightness(0.95); }
-.tile-sage { background: var(--sage); color: #fff; }
-.tile-green { background: var(--green); color: #fff; }
-.tile-icon { opacity: 0.85; }
-.tile-label {
-  font-family: var(--f-head); font-size: 1.2rem;
-  font-weight: 600; letter-spacing: 0.05em;
-}
-.tile-arrow { font-size: 1.2rem; opacity: 0.7; }
-
-/* ── RÓLAM ── */
+/* ══ RÓLAM ══ */
 .about-sec { background: var(--beige); }
-.about-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: center;
-}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
 .about-img-wrap {
   border-radius: 8px; overflow: hidden;
   background: linear-gradient(135deg, var(--gray-lt) 0%, var(--cream) 100%);
@@ -351,143 +384,70 @@ const contact      = getSection<any>(locale, 'contact');
   box-shadow: 0 16px 48px rgba(110,132,103,0.12);
 }
 .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.about-img-wrap.no-img::after {
-  content: '☽';
-  font-size: 5rem; color: var(--sage); opacity: 0.25;
-}
+.about-img-wrap.no-img::after { content: '☽'; font-size: 5rem; color: var(--sage); opacity: 0.25; }
 .about-text h2 { font-size: clamp(1.8rem,3vw,2.6rem); color: var(--sage); margin: 0.5rem 0; }
 .about-body { color: var(--muted); line-height: 1.8; margin-bottom: 0.5rem; }
 .cert-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
-.cert-tag {
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--sage);
-  border: 1.5px solid var(--sage); padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-}
+.cert-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); border: 1.5px solid var(--sage); padding: 0.3rem 0.8rem; border-radius: 20px; }
 
-/* ── KEZELÉSEK ── */
+/* ══ KEZELÉSEK ══ */
 .services-sec { background: var(--gray-lt); }
-.svc-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 1.5rem;
-}
-.svc-card {
-  background: #fff; padding: 2rem 1.75rem;
-  border-radius: 8px;
-  display: flex; flex-direction: column; gap: 0.75rem;
-  border: 1px solid rgba(168,201,106,0.2);
-  transition: box-shadow var(--ease), transform var(--ease);
-}
+.svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.svc-card { background: #fff; padding: 2rem 1.75rem; border-radius: 8px; display: flex; flex-direction: column; gap: 0.75rem; border: 1px solid rgba(168,201,106,0.2); transition: box-shadow var(--ease), transform var(--ease); }
 .svc-card:hover { box-shadow: 0 8px 32px rgba(110,132,103,0.15); transform: translateY(-3px); }
 .svc-icon { color: var(--green); margin-bottom: 0.25rem; }
-.svc-tag {
-  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--green);
-}
+.svc-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); }
 .svc-card h3 { font-size: 1.25rem; color: var(--sage); }
 .svc-card p { color: var(--muted); font-size: 0.9rem; flex: 1; line-height: 1.7; }
-.svc-meta {
-  display: flex; justify-content: space-between;
-  font-size: 0.8rem; font-weight: 700;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(168,201,106,0.25);
-}
+.svc-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; padding-top: 0.75rem; border-top: 1px solid rgba(168,201,106,0.25); }
 .svc-duration { color: var(--muted); }
 .svc-price { color: var(--sage); }
 .svc-btn { align-self: flex-start; margin-top: 0.25rem; font-size: 0.72rem; padding: 0.5rem 1.2rem; }
 
-/* ── VÉLEMÉNYEK ── */
+/* ══ VÉLEMÉNYEK ══ */
 .testi-sec { background: var(--sage); }
 .testi-sec .sec-label { color: rgba(255,255,255,0.7); }
 .testi-sec .sec-head h2 { color: #fff; }
 .testi-sec .divider { background: var(--green); }
-.testi-sec .sec-head p { color: rgba(255,255,255,0.7); }
-.testi-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-.testi-card {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 2rem;
-}
-.testi-quote-icon {
-  font-size: 2rem; color: var(--green);
-  line-height: 1; margin-bottom: 0.75rem;
-}
-.testi-card blockquote p {
-  font-family: var(--f-head); font-style: italic;
-  font-size: 1.05rem; color: rgba(255,255,255,0.9);
-  line-height: 1.7;
-}
-.testi-card figcaption {
-  margin-top: 1rem;
-  font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--green);
-}
+.testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.testi-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 2rem; }
+.testi-quote-icon { font-size: 2rem; color: var(--green); line-height: 1; margin-bottom: 0.75rem; }
+.testi-card blockquote p { font-family: var(--f-head); font-style: italic; font-size: 1.05rem; color: rgba(255,255,255,0.9); line-height: 1.7; }
+.testi-card figcaption { margin-top: 1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
 
-/* ── GYIK ── */
+/* ══ GYIK ══ */
 .faq-sec { background: var(--beige); }
 .faq-inner { max-width: 740px; }
 .faq-list { display: flex; flex-direction: column; }
 .faq-row { border-bottom: 1px solid rgba(110,132,103,0.2); padding: 1.5rem 0; }
-.faq-row dt {
-  font-family: var(--f-head); font-size: 1.05rem;
-  color: var(--sage); margin-bottom: 0.5rem;
-}
+.faq-row dt { font-family: var(--f-head); font-size: 1.05rem; color: var(--sage); margin-bottom: 0.5rem; }
 .faq-row dd { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
 
-/* ── KAPCSOLAT ── */
+/* ══ KAPCSOLAT ══ */
 .contact-sec { background: var(--cream); }
-.contact-grid {
-  display: grid; grid-template-columns: 1fr 1.2fr;
-  gap: 5rem; align-items: start;
-}
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
 .contact-info h2 { font-size: clamp(1.8rem,3vw,2.6rem); color: var(--sage); margin: 0.5rem 0; }
 .contact-sub { color: var(--muted); margin-bottom: 1.5rem; }
 .contact-details { display: flex; flex-direction: column; gap: 0.9rem; }
-.contact-item {
-  display: flex; align-items: flex-start; gap: 0.75rem;
-  font-size: 0.9rem; color: var(--muted);
-}
+.contact-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9rem; color: var(--muted); }
 .contact-item a { color: var(--sage); }
 .contact-item a:hover { text-decoration: underline; }
 .contact-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
-
 .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
-.form-field {
-  display: flex; flex-direction: column; gap: 0.4rem;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted);
-}
-.contact-form input,
-.contact-form textarea {
-  width: 100%; padding: 0.85rem 0;
-  border: none; border-bottom: 1.5px solid rgba(110,132,103,0.3);
-  background: transparent;
-  font-family: var(--f-body); font-size: 0.95rem; color: var(--ink);
-  transition: border-color var(--ease); outline: none;
-}
-.contact-form input:focus,
-.contact-form textarea:focus { border-bottom-color: var(--green); }
+.form-field { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.contact-form input, .contact-form textarea { width: 100%; padding: 0.85rem 0; border: none; border-bottom: 1.5px solid rgba(110,132,103,0.3); background: transparent; font-family: var(--f-body); font-size: 0.95rem; color: var(--ink); transition: border-color var(--ease); outline: none; }
+.contact-form input:focus, .contact-form textarea:focus { border-bottom-color: var(--green); }
 .contact-form textarea { resize: vertical; min-height: 120px; }
 
-/* ── RESZPONZÍV ── */
+/* ══ RESZPONZÍV ══ */
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 2rem; padding-bottom: 1rem; }
-  .hero-img-wrap { order: -1; min-height: 280px; }
-  .hero-stats { grid-template-columns: repeat(3,1fr); padding: 1.5rem 1.25rem; }
-  .hero-tiles { display: grid; }
+  .hero-mobile { display: flex; }
+  .hero-desktop { display: none; }
   .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .svc-grid { grid-template-columns: 1fr; }
   .testi-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
-  .hero-stats { grid-template-columns: 1fr; gap: 1rem; }
-  .stat-item { text-align: left; }
-  .hero-btns { flex-direction: column; }
-  .hero-btns a { text-align: center; }
+  .hm-logo-wrap { height: 55vw; }
 }
 </style>
