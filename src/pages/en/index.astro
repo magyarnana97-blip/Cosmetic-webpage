@@ -10,6 +10,48 @@ const services     = getSection<any>(locale, 'services');
 const testimonials = getSection<any>(locale, 'testimonials');
 const faq          = getSection<any>(locale, 'faq');
 const contact      = getSection<any>(locale, 'contact');
+
+const posts = [
+  {
+    img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80',
+    tag: 'Trends',
+    date: 'May 25, 2026',
+    title: 'Where is Cosmetology Headed in 2026?',
+    excerpt: 'Skinimalism, personalisation and smart technology are reshaping the beauty industry. Here is what it means for your skin.',
+    body: `Cosmetology today is far more than choosing the right cream. Over the past few years, the profession has shifted decisively toward skincare that is more conscious, more personalised, and more scientifically grounded. This shift is visible to everyday clients: more and more people are looking for solutions that do not promise overnight miracles, but genuinely adapt to their skin type, lifestyle and sensitivities.\n\nOne of the strongest emerging trends is skinimalism — the philosophy of using fewer, but more intentionally chosen products. Instead of the old "more is more" approach, many professionals today advocate for a simpler, well-considered routine. The logic is sound: too many ingredients, too many layers or incompatible products can easily irritate the skin, compromise its barrier, and ultimately achieve the opposite of what was intended.\n\nAlongside this, personalisation is becoming increasingly important. The same cream, the same treatment or the same active ingredient does not work the same way for everyone. The profession is therefore moving toward routines that take into account a client's skin type, specific concerns, age, sensitivity and daily habits.\n\nTechnology is also making a more visible entrance. Digital skin assessment tools, smarter diagnostic systems and innovations in targeted ingredient delivery are all entering the picture. Crucially, however, these tools complement rather than replace the skilled aesthetician.\n\nThe future of cosmetology is not about excess. It is about intention. Fewer promises, more real care — and that is where a skilled aesthetician truly makes a difference.`,
+    sources: [
+      { label: 'Artificial intelligence in cosmetic dermatology (PubMed, 2024)', url: 'https://pubmed.ncbi.nlm.nih.gov/39188183/' },
+      { label: 'Nanocarriers in skincare: current trends (PubMed, 2025)', url: 'https://pubmed.ncbi.nlm.nih.gov/41014067/' },
+      { label: 'Evaluating efficacy and innovation in skin care (PMC, 2025)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12408269/' },
+    ]
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80',
+    tag: 'Science',
+    date: 'May 25, 2026',
+    title: 'How Effective Are Cosmetic Products, Really?',
+    excerpt: 'There is often a significant gap between marketing claims and scientific evidence. Here is what actually matters when choosing skincare.',
+    body: `Many people still buy cosmetic products as if the promise on the packaging were itself a guarantee of results. The reality is considerably more complex: a product's effectiveness depends not only on what it contains, but on the concentration, the formulation, and the skin type it is used on.\n\nScientific studies increasingly show that certain ingredients genuinely can improve skin hydration, elasticity or the appearance of fine lines — but visible results take time, consistency and the right placement within a routine. This is especially important to understand when clients expect fast, immediate change.\n\nThe role of the aesthetician is therefore not simply to recommend a product, but to explain that measurable improvement requires patience, regular use, and thoughtful integration into a daily routine. In many cases, the best outcome comes not from a "miracle cream", but from a well-designed home care routine combined with professional treatment.\n\nOne particularly active area of research is botanical and fermented ingredients — multiple studies show promising improvements in hydration, texture and elasticity. However, it is always worth distinguishing between marketing language and verified evidence.\n\nSo next time you choose a product, ask: is there real evidence behind it, and does it suit my skin's current condition? A skilled aesthetician who knows your skin is the most reliable guide.`,
+    sources: [
+      { label: 'Efficacy of fermented lysate in anti-aging cosmetics (PubMed, 2024)', url: 'https://pubmed.ncbi.nlm.nih.gov/37977853/' },
+      { label: 'Anti-wrinkle efficacy of phenolic acids (PubMed, 2024)', url: 'https://pubmed.ncbi.nlm.nih.gov/38943252/' },
+      { label: 'Efficacy and Safety of Plant-Based Products (PubMed, 2025)', url: 'https://pubmed.ncbi.nlm.nih.gov/39654386/' },
+    ]
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&q=80',
+    tag: 'Sustainability',
+    date: 'May 25, 2026',
+    title: 'Sustainable Cosmetics: A Passing Trend or a Lasting Direction?',
+    excerpt: 'The words "natural" and "organic" do not always mean what we think. Let us look at what responsible skincare actually means.',
+    body: `Sustainability is no longer an optional "beauty extra" — it has become one of the industry's most serious directions of development. Recent reviews show that the profession is paying increasing attention to lower environmental impact, ethical sourcing of ingredients, energy-efficient operations and recyclable packaging.\n\nThis shift affects not only manufacturers, but salons and clients alike. More and more consumers are asking whether a product is environmentally responsible, where its ingredients come from, and whether it is safe over the long term.\n\nIt is important, however, not to conflate sustainability with the labels "natural" or "organic". An ingredient can be plant-derived and still be irritating or poorly tolerated — and a well-designed synthetic ingredient can be safer and more stable. One does not automatically imply the other.\n\nModern cosmetology therefore no longer thinks in black-and-white terms. The real question is how to use products that are simultaneously effective, safe, and responsibly produced.\n\nWhen a salon works with sustainable products and communicates this transparently, it is also a competitive advantage — because the conscious consumer is actively looking for exactly this.`,
+    sources: [
+      { label: 'Sustainability in Cosmetic Dermatology (PMC, 2025)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12454804/' },
+      { label: 'Sustainable cosmetic ingredient alternatives (PMC, 2025)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12877994/' },
+      { label: 'From plant genetic resources to cosmetic active ingredients (PMC, 2025)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12495392/' },
+    ]
+  },
+];
 ---
 
 <Layout locale={locale} title={meta.title} description={meta.description}>
@@ -75,6 +117,58 @@ const contact      = getSection<any>(locale, 'contact');
     </div>
   </section>
 
+  <!-- BLOG -->
+  <section class="sec blog-sec">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <span class="sec-label">Tips &amp; Guides</span>
+        <h2>Skincare Blog</h2>
+        <div class="divider"></div>
+        <p>Expert tips, treatment guides and skincare trends straight from the treatment room.</p>
+      </div>
+      <div class="blog-grid">
+        {posts.map((p, i) => (
+          <article class="blog-card">
+            <div class="blog-img-wrap">
+              <img src={p.img} alt={p.title} loading="lazy" />
+              <span class="blog-tag">{p.tag}</span>
+            </div>
+            <div class="blog-body">
+              <p class="blog-date">{p.date}</p>
+              <h3>{p.title}</h3>
+              <p class="blog-excerpt">{p.excerpt}</p>
+              <button class="blog-link blog-open-btn" data-index={i}>Read more →</button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG MODALS -->
+  {posts.map((p, i) => (
+    <dialog id={`modal-en-${i}`} class="blog-modal">
+      <div class="modal-inner">
+        <button class="modal-close blog-close-btn" data-id={`modal-en-${i}`} aria-label="Close">✕</button>
+        <span class="blog-tag modal-tag">{p.tag}</span>
+        <p class="blog-date">{p.date}</p>
+        <h2 class="modal-title">{p.title}</h2>
+        <img src={p.img} alt={p.title} class="modal-img" loading="lazy" />
+        <div class="modal-body">
+          {p.body.split('\n\n').map((para: string) => <p>{para}</p>)}
+        </div>
+        <div class="modal-sources">
+          <h4>Sources</h4>
+          <ul>
+            {p.sources.map((s: any) => (
+              <li><a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </dialog>
+  ))}
+
   <section class="sec testi-sec">
     <div class="sec-inner">
       <div class="sec-head">
@@ -134,6 +228,25 @@ const contact      = getSection<any>(locale, 'contact');
 
 </Layout>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.blog-open-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = (btn as HTMLElement).dataset.index;
+        const modal = document.getElementById('modal-en-' + idx) as HTMLDialogElement | null;
+        modal?.showModal();
+      });
+    });
+    document.querySelectorAll('.blog-close-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = (btn as HTMLElement).dataset.id;
+        const modal = document.getElementById(id!) as HTMLDialogElement | null;
+        modal?.close();
+      });
+    });
+  });
+</script>
+
 <style>
 .hero { background: var(--c-linen); padding: clamp(4rem,9vw,9rem) 2rem 0; }
 .hero-wrap { max-width: var(--mw); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 5rem; padding-bottom: clamp(3rem,6vw,6rem); }
@@ -162,6 +275,34 @@ const contact      = getSection<any>(locale, 'contact');
 .svc-card p { color: var(--c-muted); font-size: 0.9rem; flex: 1; }
 .svc-meta { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 500; color: var(--c-muted); border-top: 1px solid var(--c-stone); padding-top: 0.9rem; }
 .svc-cta { align-self: flex-start; margin-top: 0.5rem; font-size: 0.72rem; }
+.blog-sec { background: var(--c-linen); }
+.blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; }
+.blog-card { background: var(--c-cream); border-radius: 3px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--c-stone); transition: box-shadow var(--ease), transform var(--ease); }
+.blog-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-3px); }
+.blog-img-wrap { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+.blog-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.blog-card:hover .blog-img-wrap img { transform: scale(1.04); }
+.blog-tag { position: absolute; top: 0.75rem; left: 0.75rem; background: var(--c-gold); color: #fff; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 2px; }
+.blog-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.blog-date { font-size: 0.7rem; color: var(--c-muted); }
+.blog-body h3 { font-size: 1.05rem; line-height: 1.35; }
+.blog-excerpt { font-size: 0.85rem; color: var(--c-muted); line-height: 1.65; flex: 1; }
+.blog-link { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-gold); margin-top: 0.5rem; transition: color var(--ease); background: none; border: none; cursor: pointer; padding: 0; font-family: inherit; }
+.blog-link:hover { color: var(--c-ink); }
+.blog-modal { border: none; border-radius: 4px; padding: 0; max-width: 680px; width: 92vw; max-height: 88vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.18); }
+.blog-modal::backdrop { background: rgba(20,20,20,0.5); backdrop-filter: blur(3px); }
+.modal-inner { padding: 2.5rem 2rem 2rem; position: relative; background: var(--c-cream); }
+.modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--c-muted); transition: color var(--ease); }
+.modal-close:hover { color: var(--c-ink); }
+.modal-tag { position: static; display: inline-block; margin-bottom: 0.5rem; }
+.modal-title { font-size: clamp(1.4rem,3vw,2rem); margin: 0.5rem 0 1rem; line-height: 1.3; }
+.modal-img { width: 100%; border-radius: 3px; aspect-ratio: 16/9; object-fit: cover; margin-bottom: 1.5rem; }
+.modal-body p { color: var(--c-muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1rem; }
+.modal-sources { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--c-stone); }
+.modal-sources h4 { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 0.75rem; }
+.modal-sources ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.modal-sources li a { font-size: 0.78rem; color: var(--c-gold); text-decoration: underline; word-break: break-all; }
+.modal-sources li a:hover { color: var(--c-ink); }
 .testi-sec { background: var(--c-ink); color: #fff; }
 .testi-sec .sec-label { color: var(--c-gold); }
 .testi-sec .sec-head h2 { color: #fff; }
@@ -188,6 +329,6 @@ address a:hover { text-decoration: underline; }
 .contact-form input, .contact-form textarea { width: 100%; padding: 0.9rem 0; border: none; border-bottom: 1px solid var(--c-stone); background: transparent; font-family: var(--f-sans); font-size: 0.95rem; color: var(--c-ink); transition: border-color var(--ease); outline: none; border-radius: 0; }
 .contact-form input:focus, .contact-form textarea:focus { border-bottom-color: var(--c-gold); }
 .contact-form textarea { resize: vertical; min-height: 130px; }
-@media (max-width: 900px) { .hero-wrap { grid-template-columns: 1fr; gap: 3rem; } .hero-img { order: -1; } .hero-img img { max-height: 55vw; aspect-ratio: auto; } .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; } .svc-grid { grid-template-columns: 1fr; } .testi-grid { grid-template-columns: 1fr; gap: 2rem; } }
-@media (max-width: 480px) { .hero-stats { grid-template-columns: 1fr; gap: 1.25rem; padding: 2rem 0; } .stat { text-align: left; } }
+@media (max-width: 900px) { .hero-wrap { grid-template-columns: 1fr; gap: 3rem; } .hero-img { order: -1; } .hero-img img { max-height: 55vw; aspect-ratio: auto; } .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; } .svc-grid { grid-template-columns: 1fr; } .testi-grid { grid-template-columns: 1fr; gap: 2rem; } .blog-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .hero-stats { grid-template-columns: 1fr; gap: 1.25rem; padding: 2rem 0; } .stat { text-align: left; } .modal-inner { padding: 2rem 1.25rem 1.5rem; } }
 </style>
