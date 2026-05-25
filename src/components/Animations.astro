@@ -1,7 +1,7 @@
 <!-- Scroll-reveal + Count-up + Marquee JS -->
 <script>
 // ══ 1. SCROLL REVEAL ══
-const revealEls = document.querySelectorAll('.reveal');
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
 const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -9,7 +9,7 @@ const revealObs = new IntersectionObserver((entries) => {
       revealObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
 revealEls.forEach(el => revealObs.observe(el));
 
 // ══ 2. COUNT-UP ══
@@ -17,7 +17,7 @@ function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
 function countUp(el) {
   const target = parseFloat(el.dataset.target);
   const suffix = el.dataset.suffix || '';
-  const duration = 2000;
+  const duration = 2200;
   let start = null;
   function frame(ts) {
     if (!start) start = ts;
@@ -41,59 +41,68 @@ const countObs = new IntersectionObserver((entries) => {
 countEls.forEach(el => countObs.observe(el));
 
 // ══ 3. STAGGERED GALLERY ══
-const galleryItems = document.querySelectorAll('.gallery-item');
+const galleryGroups = new Map();
+document.querySelectorAll('.gallery-item').forEach(el => {
+  const parent = el.parentElement;
+  if (!galleryGroups.has(parent)) galleryGroups.set(parent, []);
+  galleryGroups.get(parent).push(el);
+});
+
 const galleryObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      e.target.classList.add('gallery-visible');
+      const siblings = galleryGroups.get(e.target.parentElement) || [];
+      const idx = siblings.indexOf(e.target);
+      setTimeout(() => {
+        e.target.classList.add('gallery-visible');
+      }, idx * 150);
       galleryObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.1 });
-galleryItems.forEach(el => galleryObs.observe(el));
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.gallery-item').forEach(el => galleryObs.observe(el));
 </script>
 
 <style is:global>
-/* ══ SCROLL REVEAL ══ */
+/* ══ SCROLL REVEAL — lassabb, kúszóbb ══ */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(42px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
 }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-1 { transition-delay: 0.13s; }
+.reveal-delay-2 { transition-delay: 0.26s; }
+.reveal-delay-3 { transition-delay: 0.39s; }
+.reveal-delay-4 { transition-delay: 0.52s; }
+
 .reveal-left {
   opacity: 0;
-  transform: translateX(-32px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateX(-48px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+
 .reveal-right {
   opacity: 0;
-  transform: translateX(32px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateX(48px);
+  transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal-right.revealed { opacity: 1; transform: translateX(0); }
 
-/* ══ STAGGERED GALLERY ══ */
+/* ══ STAGGERED GALLERY — lassabb ══ */
 .gallery-item {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transform: translateY(48px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.gallery-item:nth-child(1) { transition-delay: 0ms; }
-.gallery-item:nth-child(2) { transition-delay: 120ms; }
-.gallery-item:nth-child(3) { transition-delay: 240ms; }
-.gallery-item:nth-child(4) { transition-delay: 360ms; }
-.gallery-item:nth-child(5) { transition-delay: 480ms; }
-.gallery-item:nth-child(6) { transition-delay: 600ms; }
-.gallery-item:nth-child(7) { transition-delay: 720ms; }
 .gallery-item.gallery-visible {
   opacity: 1;
   transform: translateY(0);
@@ -110,9 +119,8 @@ galleryItems.forEach(el => galleryObs.observe(el));
 }
 .marquee-track {
   display: flex;
-  gap: 0;
   width: max-content;
-  animation: marquee-scroll 28s linear infinite;
+  animation: marquee-scroll 32s linear infinite;
 }
 .marquee-wrap:hover .marquee-track {
   animation-play-state: paused;
