@@ -41,7 +41,7 @@ const schema = JSON.stringify({
   <link rel="canonical" href={`https://szepsegterapeuta.hu${localePath(locale)}`} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <script type="application/ld+json" set:html={schema} />
 </head>
 
@@ -132,7 +132,7 @@ const schema = JSON.stringify({
     --ink:     #2C2C2C;
     --muted:   #7A7A7A;
     --f-head:  'Playfair Display', Georgia, serif;
-    --f-body:  'Lato', system-ui, sans-serif;
+    --f-body:  'Nunito Sans', system-ui, sans-serif;
     --mw:      1200px;
     --ease:    0.3s ease;
     --nav-h:   70px;
@@ -140,7 +140,6 @@ const schema = JSON.stringify({
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── FŐ FIX: vízszintes scroll tiltása ── */
   html {
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -195,7 +194,7 @@ const schema = JSON.stringify({
   /* ── LANG ── */
   .lang-row { display: flex; gap: 0.1rem; }
   .lbtn {
-    font-family: var(--f-body); font-size: 0.7rem; font-weight: 700;
+    font-size: 0.7rem; font-weight: 700;
     letter-spacing: 0.08em;
     color: var(--muted); padding: 0.3rem 0.4rem;
     border-radius: 3px; transition: color var(--ease);
@@ -270,7 +269,7 @@ const schema = JSON.stringify({
   .sec { padding: clamp(3.5rem, 8vw, 7rem) 2rem; }
   .sec-inner { max-width: var(--mw); margin: 0 auto; }
   .sec-label {
-    display: block; font-family: var(--f-body);
+    display: block;
     font-size: 0.65rem; font-weight: 700; letter-spacing: 0.25em;
     text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem;
   }
@@ -299,6 +298,82 @@ const schema = JSON.stringify({
   }
   .footer-links a:hover { color: #fff; }
   .ft-copy { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+
+  /* ── SCROLL REVEAL – erősebb animáció ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.24s; }
+  .reveal-delay-3 { transition-delay: 0.36s; }
+  .reveal-delay-4 { transition-delay: 0.48s; }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-55px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(55px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-right.revealed { opacity: 1; transform: translateX(0); }
+
+  /* ── STAGGERED GALLERY – erősebb ── */
+  .gallery-item {
+    opacity: 0;
+    transform: translateY(55px) scale(0.97);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gallery-item:nth-child(1) { transition-delay: 0ms; }
+  .gallery-item:nth-child(2) { transition-delay: 130ms; }
+  .gallery-item:nth-child(3) { transition-delay: 260ms; }
+  .gallery-item:nth-child(4) { transition-delay: 390ms; }
+  .gallery-item:nth-child(5) { transition-delay: 520ms; }
+  .gallery-item:nth-child(6) { transition-delay: 650ms; }
+  .gallery-item:nth-child(7) { transition-delay: 780ms; }
+  .gallery-item.gallery-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    overflow: hidden;
+    width: 100%;
+    background: var(--beige);
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(168,201,106,0.25);
+    border-bottom: 1px solid rgba(168,201,106,0.25);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 28s linear infinite;
+  }
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0 2.5rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--sage); white-space: nowrap;
+  }
+  .marquee-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
