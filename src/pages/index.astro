@@ -360,15 +360,18 @@ const posts = [
     const top = document.querySelector('.hm-top') as HTMLElement | null;
     const olive = document.querySelector('.hm-olive') as HTMLElement | null;
     if (!top) return;
+    top.style.willChange = 'transform, opacity, filter';
     let ticking = false;
     const update = () => {
       const y = window.scrollY || 0;
-      const p = Math.min(Math.max(y / 360, 0), 1); // 0..1 az első ~360px alatt
+      const p = Math.min(Math.max(y / 440, 0), 1); // 0..1 az első ~440px alatt
       const ease = p * p * (3 - 2 * p); // smoothstep
-      // a felső rész ~65 fokos elfordulásra (ease≈0.72) már teljesen elhalványul
-      top.style.opacity = String(Math.max(1 - ease * 1.4, 0));
-      // olajág: alja fix, felülről jobbra fordul el max 90 fokot
-      if (olive) olive.style.rotate = (ease * 90).toFixed(1) + 'deg';
+      // finom parallax: a felső rész lágyan hátralép (zsugorodik, sodródik, életlenedik, halványul)
+      top.style.opacity = String(1 - ease);
+      top.style.transform = 'translateY(' + (-ease * 26).toFixed(1) + 'px) scale(' + (1 - ease * 0.07).toFixed(3) + ')';
+      top.style.filter = 'blur(' + (ease * 3).toFixed(1) + 'px)';
+      // olajág: épp csak billen néhány fokot az aljánál fogva
+      if (olive) olive.style.rotate = (-(ease * 6)).toFixed(1) + 'deg';
       ticking = false;
     };
     window.addEventListener('scroll', () => {
