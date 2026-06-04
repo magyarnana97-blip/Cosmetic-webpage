@@ -37,20 +37,23 @@
 
   <!-- ░ HERO ░ -->
   <section class="hero">
-    <!-- VIDEÓ HELYE (most háttérszín) -->
+    <!-- NŐI VIDEÓ: auto-indul, némítva, nem ismétlődik, az utolsó kockán megáll -->
     <div class="hero-media">
+      <video class="hero-video" autoplay muted playsinline preload="auto" poster="/video-2-poster.jpg">
+        <source src="/video-2.mp4" type="video/mp4" />
+      </video>
       <svg class="tech" viewBox="0 0 300 360" fill="none" aria-hidden="true">
-        <circle class="ring r1" cx="190" cy="150" r="120" stroke="#fff" stroke-width="0.7" opacity="0.55"/>
-        <circle class="ring r2" cx="190" cy="150" r="86" stroke="#fff" stroke-width="0.7" opacity="0.45" stroke-dasharray="2 5"/>
-        <circle class="ring r3" cx="190" cy="150" r="146" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
-        <g class="nodes" stroke="#fff" stroke-width="0.7" opacity="0.75">
-          <path d="M214 86 h44 M214 86 v-16"/><circle cx="262" cy="86" r="1.8" fill="#fff"/>
-          <path d="M250 180 h40 M250 180 l10 13"/><circle cx="294" cy="180" r="1.8" fill="#fff"/>
-          <rect x="208" y="120" width="4" height="4" fill="#fff"/>
+        <circle class="ring r1" cx="150" cy="130" r="120" stroke="#fff" stroke-width="0.7" opacity="0.5"/>
+        <circle class="ring r2" cx="150" cy="130" r="86" stroke="#fff" stroke-width="0.7" opacity="0.4" stroke-dasharray="2 5"/>
+        <circle class="ring r3" cx="150" cy="130" r="146" stroke="#fff" stroke-width="0.5" opacity="0.28"/>
+        <g class="nodes" stroke="#fff" stroke-width="0.7" opacity="0.7">
+          <path d="M174 66 h44 M174 66 v-16"/><circle cx="222" cy="66" r="1.8" fill="#fff"/>
+          <path d="M210 160 h40 M210 160 l10 13"/><circle cx="254" cy="160" r="1.8" fill="#fff"/>
+          <rect x="168" y="100" width="4" height="4" fill="#fff"/>
         </g>
       </svg>
-      <div class="hero-fade"></div>
     </div>
+    <div class="hero-left-fade" aria-hidden="true"></div>
 
     <div class="hero-text">
       <span class="eyebrow reveal">Professzionális<br/>bőrápolás</span>
@@ -62,7 +65,7 @@
         </span></a>
         <a href="#kezelesek" class="link-play">
           <span class="play"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span>Ismerd meg<br/>a kezeléseket</span>
+          <span>Ismerd meg a<br/>kezeléseket</span>
         </a>
       </div>
     </div>
@@ -158,36 +161,37 @@
     .drawer a:hover{color:var(--green);background:var(--bg);}
 
     /* HERO */
-    .hero{position:relative;min-height:100vh;display:flex;align-items:flex-start;overflow:hidden;background:var(--bg);}
-    .hero-media{position:absolute;inset:0;background:linear-gradient(165deg,#eef0ea 0%,#e2ead8 50%,#d6e2c8 100%);}
-    .tech{position:absolute;top:46%;right:-6%;width:80%;height:auto;mix-blend-mode:screen;}
+    .hero{position:relative;height:560px;margin-top:62px;overflow:hidden;background:var(--bg);}
+    .hero-media{position:absolute;top:-1px;left:17.7%;width:80%;height:555px;border-radius:18px;overflow:hidden;background:linear-gradient(165deg,#eef0ea,#d6e2c8);}
+    .hero-video{width:100%;height:100%;object-fit:cover;display:block;}
+    .tech{position:absolute;top:6%;right:-6%;width:74%;height:auto;mix-blend-mode:screen;z-index:2;}
     .ring{transform-box:fill-box;transform-origin:center;}
     .r1{animation:spin 34s linear infinite;} .r2{animation:spin 24s linear infinite reverse;} .r3{animation:spin 48s linear infinite;}
     .nodes{animation:pulse 3.4s ease-in-out infinite;}
     @keyframes spin{to{transform:rotate(360deg);}}
     @keyframes pulse{0%,100%{opacity:.45;}50%{opacity:.85;}}
     /* felül krém (szöveghez), lent átlátszó (ott jön a nő) */
-    .hero-fade{position:absolute;inset:0;background:linear-gradient(to bottom,var(--bg) 12%,rgba(242,244,239,.78) 34%,rgba(242,244,239,.18) 56%,transparent 78%);}
-    .hero-text{position:relative;z-index:3;padding:84px 1.4rem 0;width:100%;max-width:78%;}
+    .hero-left-fade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--bg) 24%,rgba(242,244,239,.45) 46%,transparent 68%);}
+    .hero-text{position:absolute;top:0;left:0;z-index:3;transform:translate(11px,16px) scale(.96);transform-origin:top left;width:73%;padding:0 1.1rem;}
     .eyebrow{display:block;font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.9rem;line-height:1.6;}
     .hero-text h1{font-size:clamp(1.8rem,7.6vw,2.3rem);margin-bottom:.9rem;}
     .lead{color:var(--muted);font-size:.82rem;line-height:1.6;max-width:230px;margin-bottom:1.4rem;}
-    .hero-cta{display:flex;align-items:center;gap:.9rem;flex-wrap:nowrap;}
+    .hero-cta{display:flex;align-items:center;gap:.9rem 1.1rem;flex-wrap:wrap;}
     /* levágott sarkú gomb */
     .btn-cut{display:inline-flex;background:var(--ink);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);transition:.3s;flex-shrink:0;}
-    .btn-cut .lbl{display:inline-flex;align-items:center;gap:.45rem;margin:1.5px;background:var(--bg);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);color:var(--ink);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.75rem .95rem;transition:.3s;}
+    .btn-cut .lbl{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap;margin:1.5px;background:var(--bg);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);color:var(--ink);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.75rem .95rem;transition:.3s;}
     .btn-cut:hover .lbl{background:var(--ink);color:#fff;}
-    .link-play{display:inline-flex;align-items:center;gap:.5rem;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.35;}
+    .link-play{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-size:.56rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.35;}
     .play{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--green);color:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.3s;}
     .link-play:hover .play{background:var(--green);color:#fff;}
 
     /* KÁRTYÁK */
-    .cards-band{padding:1.6rem 1rem 2.4rem;}
-    .cards{background:var(--box);border:1px solid var(--line);border-radius:20px;padding:1.4rem 1rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;}
+    .cards-band{padding:1.6rem 1rem 2.4rem;margin-top:-213px;position:relative;z-index:5;}
+    .cards{background:var(--box);border:1px solid var(--line);border-radius:20px;padding:1.4rem 1rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;transform:translateX(-6px);box-shadow:0 24px 50px -28px rgba(110,132,103,.4);}
     .card{text-align:center;padding:.5rem .4rem;position:relative;}
-    .card:not(:last-child)::after{content:'';position:absolute;right:0;top:16%;height:68%;width:1px;background:var(--line);}
+    .card:not(:last-child)::after{content:'';position:absolute;right:0;top:16%;height:68%;width:1.5px;background:#fff;}
     .ic-slot{display:block;width:40px;height:40px;margin:0 auto 1rem;border-radius:10px;border:1px dashed var(--line);}
-    .card h3{font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;font-family:var(--sans);font-weight:600;color:var(--ink);margin-bottom:.5rem;line-height:1.3;}
+    .card h3{font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;font-family:var(--sans);font-weight:500;color:var(--ink);margin-bottom:.5rem;line-height:1.3;}
     .card p{color:var(--muted);font-size:.72rem;line-height:1.5;}
 
     /* FEJLESZTÜNK */
