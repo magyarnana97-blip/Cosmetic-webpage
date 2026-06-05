@@ -103,9 +103,11 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <!-- SZÉRUM CSEPP (statikus kép) -->
+    <!-- SZÉRUM VIDEÓ: betöltéskor 0,5 mp, majd görgetésre lejátszódik a teljes 3 mp -->
     <div class="serum reveal-media">
-      <img src="/drop.webp" alt="Szérum csepp" loading="lazy" />
+      <video id="dropvid" muted playsinline preload="auto" poster="/drop2-poster.jpg">
+        <source src="/drop2.mp4" type="video/mp4" />
+      </video>
     </div>
   </section>
 
@@ -202,7 +204,7 @@
     .brush-dev{width:130px;margin:.1rem 0 1rem;}
     /* PIPETTA + CSEPP + HULLÁMZÁS */
     .serum{position:absolute;right:-8px;top:1.3rem;z-index:1;width:56%;}
-    .serum img{width:100%;border-radius:14px;display:block;}
+    .serum video{width:100%;border-radius:14px;display:block;}
     .pool{fill:rgba(150,180,90,.26);}
     .ripple{fill:none;stroke:#9bbe66;stroke-width:1.6;transform-box:fill-box;transform-origin:center;animation:rippleout 3s ease-out infinite;}
     .ripple2{animation-delay:.32s;}
@@ -246,11 +248,41 @@
   </style>
 
   <script>
+    // mindig a tetejéről induljon (ne ugorjon a lap közepére)
+    if('scrollRestoration' in history) history.scrollRestoration='manual';
+    window.scrollTo(0,0);
+    window.addEventListener('load',()=>window.scrollTo(0,0));
+
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
     burger?.addEventListener('click',()=>{burger.classList.toggle('open');drawer?.classList.toggle('open');});
     drawer?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger?.classList.remove('open');drawer.classList.remove('open');}));
     const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
     document.querySelectorAll('.reveal,.reveal-media').forEach(el=>io.observe(el));
+
+    // SZÉRUM VIDEÓ: betöltéskor 0,5 mp lejátszás, utána görgetésre pörgetjük (0,5s → 3s)
+    (() => {
+      const v = document.getElementById('dropvid');
+      if(!v) return;
+      const sec = document.querySelector('.develop');
+      let scrub = false, ticking = false;
+      const startIntro = () => {
+        try { v.currentTime = 0; const p = v.play(); if(p&&p.catch) p.catch(()=>{}); } catch(e){}
+        setTimeout(() => { try{ v.pause(); }catch(e){} scrub = true; }, 500);
+      };
+      v.addEventListener('loadeddata', startIntro, { once:true });
+      const update = () => {
+        if(scrub && sec){
+          const r = sec.getBoundingClientRect();
+          const vh = window.innerHeight || 800;
+          let p = (vh - r.top) / vh;            // 0 amikor belép alulról, 1 amikor a teteje fent
+          p = Math.min(Math.max(p, 0), 1);
+          const t = 0.5 + p * 2.5;              // 0,5s → 3,0s
+          if(Number.isFinite(t)) { try{ v.currentTime = Math.min(t, (v.duration||3) - 0.05); }catch(e){} }
+        }
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => { if(!ticking){ requestAnimationFrame(update); ticking = true; } }, { passive:true });
+    })();
   </script>
 </body>
 </html>
