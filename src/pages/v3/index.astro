@@ -42,7 +42,8 @@
   <!-- ░ HERO ░ -->
   <section class="hero">
     <div class="hero-media">
-      <video class="hero-video" muted playsinline preload="auto" poster="/video-2-poster.jpg">
+      <!-- autoplay hozzáadva: böngésző csak muted+playsinline+autoplay kombinációval indítja el -->
+      <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/video-2-poster.jpg">
         <source src="/video-2.mp4" type="video/mp4" />
       </video>
     </div>
@@ -133,7 +134,6 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <!-- reveal-media: beleép a viewportba = megjelenik + tézer indul -->
     <div class="serum reveal-media" id="serumWrap">
       <video id="dropvid" muted playsinline preload="auto" poster="/drop2-poster.jpg">
         <source src="/drop2.mp4" type="video/mp4" />
@@ -209,7 +209,7 @@
     .drawer a{padding:.85rem 2.4rem .85rem 1.6rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
     .drawer a:hover{color:var(--green);background:var(--bg);}
 
-    /* HERO — margin-top 44px */
+    /* HERO */
     .hero{position:relative;height:560px;margin-top:44px;overflow:hidden;background:var(--bg);}
     .hero-media{position:absolute;top:1px;left:76px;width:80%;height:555px;border-radius:18px;overflow:hidden;background:linear-gradient(165deg,#eef0ea,#d6e2c8);}
     .hero-video{width:100%;height:100%;object-fit:cover;display:block;}
@@ -246,11 +246,11 @@
     .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
     .brush-dev{width:65px;margin:.1rem 0 1rem;}
 
-    /* SÉRUM — +5% szélesebb (70%), balrább (105px) */
+    /* SÉRUM — zöldebb filter: saturate 3.2, hue-rotate -12deg */
     .serum{position:absolute;left:105px;top:-305px;z-index:0;width:70%;}
     .serum video{
       width:100%;display:block;
-      filter:saturate(2.1) brightness(1.03) hue-rotate(8deg);
+      filter:saturate(3.2) brightness(1.05) hue-rotate(-12deg);
       transform:translateZ(0);
       will-change:transform;
       -webkit-mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);
@@ -291,7 +291,7 @@
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     });
 
-    // ---- HERO VIDEÓ ----
+    // ---- HERO VIDEÓ sebessége ----
     (() => {
       const hv = document.querySelector('.hero-video');
       if (!hv) return;
@@ -327,9 +327,6 @@
     });
 
     // ---- SÉRUM VIDEÓ ----
-    // Pontosan az eredeti, bevált logika:
-    //   - betöltéskor 0,5 mp tézer (loadeddata)
-    //   - viewport közepén (rootMargin -45%) lejouml;tssza a maradékot
     (() => {
       const v = document.getElementById('dropvid');
       if (!v) return;
@@ -346,7 +343,6 @@
       if (v.readyState >= 2) teaser();
       else v.addEventListener('loadeddata', teaser, { once: true });
 
-      // Viewport középén: lejouml;tssza a maradékot 0.5 mp-től
       const cio = new IntersectionObserver((es) => {
         es.forEach(e => {
           if (e.isIntersecting && !centeredPlayed) {
@@ -358,7 +354,6 @@
       }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
       cio.observe(v);
 
-      // Kattintásra újra az elejéről
       v.style.cursor = 'pointer';
       v.addEventListener('click', () => {
         try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
