@@ -42,8 +42,8 @@
   <!-- ░ HERO ░ -->
   <section class="hero">
     <div class="hero-media">
-      <!-- autoplay hozzáadva: böngésző csak muted+playsinline+autoplay kombinációval indítja el -->
-      <video class="hero-video" autoplay muted playsinline loop preload="auto" poster="/video-2-poster.jpg">
+      <!-- autoplay + muted + playsinline: böngésző feltétele; loop NINCS — egyszer játszik le -->
+      <video class="hero-video" autoplay muted playsinline preload="auto" poster="/video-2-poster.jpg">
         <source src="/video-2.mp4" type="video/mp4" />
       </video>
     </div>
@@ -246,7 +246,7 @@
     .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
     .brush-dev{width:65px;margin:.1rem 0 1rem;}
 
-    /* SÉRUM — zöldebb filter: saturate 3.2, hue-rotate -12deg */
+    /* SÉRUM */
     .serum{position:absolute;left:105px;top:-305px;z-index:0;width:70%;}
     .serum video{
       width:100%;display:block;
@@ -291,14 +291,23 @@
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     });
 
-    // ---- HERO VIDEÓ sebessége ----
+    // ---- HERO VIDEÓ: egyszer játszik le, a vege előtt lágyan lelassul ----
     (() => {
       const hv = document.querySelector('.hero-video');
       if (!hv) return;
-      const setRate = () => { hv.playbackRate = 0.85; };
+      // alap sebesség
+      const setRate = () => { if (hv.playbackRate === 1) hv.playbackRate = 0.85; };
       hv.addEventListener('loadedmetadata', setRate);
       hv.addEventListener('play', setRate);
-      setRate();
+      // lágy lassulás: az utolsó 1.4 mp-ben 0.85x → 0.18x
+      hv.addEventListener('timeupdate', () => {
+        const d = hv.duration;
+        if (!d || !isFinite(d)) return;
+        const left = d - hv.currentTime;
+        if (left < 1.4) {
+          hv.playbackRate = Math.max(0.18, (left / 1.4) * 0.85);
+        }
+      });
     })();
 
     // ---- BURGER MENÜ ----
@@ -326,37 +335,28 @@
       }
     });
 
-    // ---- SÉRUM VIDEÓ ----
+    // ---- SÉRUM VIDEÓ: egyszer játszik, az utolsó kockán megáll, kattintásra újraindul ----
     (() => {
       const v = document.getElementById('dropvid');
       if (!v) return;
-      let teased = false, centeredPlayed = false;
+      const sec = document.querySelector('.develop');
+      let started = false;
 
-      const teaser = () => {
-        if (teased) return; teased = true;
-        try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
-        setTimeout(() => {
-          try { if (!centeredPlayed) { v.pause(); v.currentTime = 0.5; } } catch(e) {}
-        }, 500);
-      };
-
-      if (v.readyState >= 2) teaser();
-      else v.addEventListener('loadeddata', teaser, { once: true });
-
-      const cio = new IntersectionObserver((es) => {
+      const vio = new IntersectionObserver((es) => {
         es.forEach(e => {
-          if (e.isIntersecting && !centeredPlayed) {
-            centeredPlayed = true;
-            try { v.currentTime = 0.5; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
-            cio.disconnect();
+          if (e.isIntersecting && !started) {
+            started = true;
+            try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(err) {}
+            vio.disconnect();
           }
         });
-      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-      cio.observe(v);
+      }, { threshold: .35 });
+      vio.observe(sec);
 
+      // loop NINCS — a videó a végén megáll az utolsó kockán
       v.style.cursor = 'pointer';
       v.addEventListener('click', () => {
-        try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
+        try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(err) {}
       });
     })();
   </script>
