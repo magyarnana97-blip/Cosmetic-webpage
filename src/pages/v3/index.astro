@@ -245,7 +245,15 @@
     // iOS/bfcache: ha visszatöltődik a lap a gyorsítótárból, ugorjon a tetejére
     window.addEventListener('pageshow', (e) => { if(e.persisted) window.scrollTo(0,0); });
 
-    // (A hero videó vége lassulása már a fájlba van kódolva — nincs runtime állítgatás, így nem akad.)
+    // HERO videó: egyenletesen, picit lassabban (0.85x) — EGYSZER beállítva, nem futás közben, így nem akad
+    (() => {
+      const hv = document.querySelector('.hero-video');
+      if(!hv) return;
+      const setRate = () => { hv.playbackRate = 0.85; };
+      hv.addEventListener('loadedmetadata', setRate);
+      hv.addEventListener('play', setRate);
+      setRate();
+    })();
 
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
     burger?.addEventListener('click',()=>{burger.classList.toggle('open');drawer?.classList.toggle('open');});
