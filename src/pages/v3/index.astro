@@ -133,7 +133,8 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <div class="serum" id="serumWrap">
+    <!-- reveal-media: beleép a viewportba = megjelenik + tézer indul -->
+    <div class="serum reveal-media" id="serumWrap">
       <video id="dropvid" muted playsinline preload="auto" poster="/drop2-poster.jpg">
         <source src="/drop2.mp4" type="video/mp4" />
       </video>
@@ -208,7 +209,7 @@
     .drawer a{padding:.85rem 2.4rem .85rem 1.6rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
     .drawer a:hover{color:var(--green);background:var(--bg);}
 
-    /* HERO — margin-top 44px (volt 62px), ~70%-ra csökkentett fejléc alatti tér */
+    /* HERO — margin-top 44px */
     .hero{position:relative;height:560px;margin-top:44px;overflow:hidden;background:var(--bg);}
     .hero-media{position:absolute;top:1px;left:76px;width:80%;height:555px;border-radius:18px;overflow:hidden;background:linear-gradient(165deg,#eef0ea,#d6e2c8);}
     .hero-video{width:100%;height:100%;object-fit:cover;display:block;}
@@ -245,14 +246,13 @@
     .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
     .brush-dev{width:65px;margin:.1rem 0 1rem;}
 
-    /* SÉRUM VIDEÓ — +5% szélesebb (70%), balrább (105px), élénkebb zöld */
+    /* SÉRUM — +5% szélesebb (70%), balrább (105px) */
     .serum{position:absolute;left:105px;top:-305px;z-index:0;width:70%;}
     .serum video{
       width:100%;display:block;
       filter:saturate(2.1) brightness(1.03) hue-rotate(8deg);
       transform:translateZ(0);
       will-change:transform;
-      backface-visibility:hidden;
       -webkit-mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);
       mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);
     }
@@ -295,14 +295,10 @@
     (() => {
       const hv = document.querySelector('.hero-video');
       if (!hv) return;
-      hv.playbackRate = 0.85;
-      const tryPlay = () => {
-        hv.playbackRate = 0.85;
-        const p = hv.play();
-        if (p && p.catch) p.catch(() => {});
-      };
-      if (hv.readyState >= 3) { tryPlay(); }
-      else { hv.addEventListener('canplay', tryPlay, { once: true }); }
+      const setRate = () => { hv.playbackRate = 0.85; };
+      hv.addEventListener('loadedmetadata', setRate);
+      hv.addEventListener('play', setRate);
+      setRate();
     })();
 
     // ---- BURGER MENÜ ----
@@ -318,69 +314,55 @@
     }));
 
     // ---- REVEAL ANIMÁCIÓ ----
-    const revealIO = new IntersectionObserver((es) => es.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); }
+    const io = new IntersectionObserver((es) => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     }), { threshold: .12 });
-
     document.querySelectorAll('.reveal, .reveal-media').forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight * 1.05) {
         el.classList.add('in');
       } else {
-        revealIO.observe(el);
+        io.observe(el);
       }
     });
 
     // ---- SÉRUM VIDEÓ ----
-    // iOS fix: canplay sokszor nem tüzel preload korlátozás miatt.
-    // Hármas biztosíték: loadeddata + loadedmetadata + 800ms fallback timeout
+    // Pontosan az eredeti, bevált logika:
+    //   - betöltéskor 0,5 mp tézer (loadeddata)
+    //   - viewport közepén (rootMargin -45%) lejouml;tssza a maradékot
     (() => {
-      const wrap = document.getElementById('serumWrap');
       const v = document.getElementById('dropvid');
-      if (!wrap || !v) return;
+      if (!v) return;
+      let teased = false, centeredPlayed = false;
 
-      const playPreview = () => {
-        try { v.currentTime = 0; } catch(e) {}
-        const p = v.play();
-        if (p && p.catch) p.catch(() => {});
-        setTimeout(() => { try { v.pause(); } catch(e) {} }, 500);
+      const teaser = () => {
+        if (teased) return; teased = true;
+        try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
+        setTimeout(() => {
+          try { if (!centeredPlayed) { v.pause(); v.currentTime = 0.5; } } catch(e) {}
+        }, 500);
       };
 
-      // Betöltéskor: hármas biztosíték
-      let loadStarted = false;
-      const onReady = () => {
-        if (loadStarted) return;
-        loadStarted = true;
-        playPreview();
-      };
+      if (v.readyState >= 2) teaser();
+      else v.addEventListener('loadeddata', teaser, { once: true });
 
-      if (v.readyState >= 2) {
-        onReady();
-      } else {
-        v.addEventListener('loadeddata', onReady, { once: true });
-        v.addEventListener('loadedmetadata', onReady, { once: true });
-        // Fallback: 800ms után próbálja meg akármit — iOS-on néha egyik event sem tüzel
-        setTimeout(onReady, 800);
-      }
+      // Viewport középén: lejouml;tssza a maradékot 0.5 mp-től
+      const cio = new IntersectionObserver((es) => {
+        es.forEach(e => {
+          if (e.isIntersecting && !centeredPlayed) {
+            centeredPlayed = true;
+            try { v.currentTime = 0.5; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
+            cio.disconnect();
+          }
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      cio.observe(v);
 
-      // Görgetés: középre érve újra preview — egyszer
-      let scrollTriggered = false;
-      const checkCenter = () => {
-        if (scrollTriggered) return;
-        const rect = wrap.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const centerY = rect.top + rect.height / 2;
-        if (centerY > vh * 0.30 && centerY < vh * 0.70) {
-          scrollTriggered = true;
-          playPreview();
-          window.removeEventListener('scroll', checkCenter);
-        }
-      };
-      window.addEventListener('scroll', checkCenter, { passive: true });
-
-      // Kattintásra újrajátszás
+      // Kattintásra újra az elejéről
       v.style.cursor = 'pointer';
-      v.addEventListener('click', playPreview);
+      v.addEventListener('click', () => {
+        try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
+      });
     })();
   </script>
 </body>
