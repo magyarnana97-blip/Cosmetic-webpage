@@ -183,7 +183,7 @@
     .cards{position:relative;--cpad:6px;--cardline:68%;background:rgba(20,23,21,0.35);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border:1px solid rgba(255,255,255,0.22);border-radius:20px;padding:var(--cpad) .85rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;margin:0 .7rem;transform:translateX(-8px);box-shadow:0 26px 54px -26px rgba(0,0,0,.4);}
     .card{text-align:center;padding:74px .35rem .5rem;position:relative;}
     .card:not(:last-child)::after{content:'';position:absolute;right:0;top:calc((100% - var(--cardline))/2);height:var(--cardline);width:1.5px;background:rgba(255,255,255,.6);}
-    .card-ic{position:absolute;top:8px;left:50%;object-fit:contain;z-index:3;}
+    .card-ic{position:absolute;top:8px;left:50%;object-fit:contain;z-index:3;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(60deg) opacity(0.85);}
     .ic1{width:56px;height:56px;transform:translate(-50%,0) translate(-113px,-4px);}
     .ic2{width:77px;height:77px;transform:translate(-50%,0) translate(3px,-12px);}
     .ic3{width:66px;height:66px;transform:translate(-50%,0) translate(112px,-8px);}
