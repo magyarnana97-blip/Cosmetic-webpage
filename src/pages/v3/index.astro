@@ -1,4 +1,3 @@
----
 // v3 — Futurisztikus prototípus (mobil-fókusz). Cím: /v3
 ---
 
@@ -134,9 +133,8 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <!-- A serum videó kezdetben láthatatlan (opacity:0 + scale:.92),
-         CSS tranzicióval jelenik meg mikor a videó középre ér — scroll megállás nélkül -->
-    <div class="serum serum-hidden" id="serumWrap">
+    <!-- Sérum videó: betöltéskor azonnal látható, 0.5mp preview lejátszik, majd megáll -->
+    <div class="serum" id="serumWrap">
       <video id="dropvid" muted playsinline preload="auto" poster="/drop2-poster.jpg">
         <source src="/drop2.mp4" type="video/mp4" />
       </video>
@@ -167,8 +165,23 @@
       --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;overflow-x:clip;width:100%;}
-    body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:clip;width:100%;max-width:100vw;position:relative;}
+    html{
+      scroll-behavior:smooth;
+      overflow-x:hidden;
+      overscroll-behavior-x:none;
+      width:100%;
+      max-width:100%;
+    }
+    body{
+      font-family:var(--sans);background:var(--bg);color:var(--ink);font-weight:300;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+      overscroll-behavior-x:none;
+      width:100%;
+      max-width:100vw;
+      position:relative;
+      touch-action:pan-y;
+    }
     h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.08;color:var(--ink);}
     em{font-style:italic;color:var(--green);}
     img{max-width:100%;display:block;}
@@ -233,20 +246,21 @@
     .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
     .brush-dev{width:65px;margin:.1rem 0 1rem;}
 
-    /* SÉRUM VIDEÓ — közép-trigger animáció scroll-lock nélkül
-       Kezdeti állapot: láthatatlan + kicsit kisebb
-       Amikor a videó középre ér: CSS tranzició induljon el — NEM scroll-freeze */
-    .serum{position:absolute;left:126px;top:-305px;z-index:0;width:58%;}
-    .serum-hidden{
-      opacity:0;
-      transform:scale(.92) translateY(18px);
-      transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+    /* SÉRUM VIDEÓ
+       - Betöltéskor azonnal látható (opacity:1, scale:1)
+       - JS lejátszik 0.5mp-et betöltéskor, majd megáll egy fix képkockán
+       - Görgetéskor középre érve újra lejátszik 0.5mp-et
+       - +15% méret (width: 66.7%), élénkebb zöld filter */
+    .serum{position:absolute;left:126px;top:-305px;z-index:0;width:66.7%;}
+    .serum video{
+      width:100%;display:block;
+      filter:saturate(2.1) brightness(1.03) hue-rotate(8deg);
+      transform:translateZ(0);
+      will-change:transform;
+      backface-visibility:hidden;
+      -webkit-mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);
+      mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);
     }
-    .serum-visible{
-      opacity:1;
-      transform:scale(1) translateY(0);
-    }
-    .serum video{width:100%;display:block;filter:saturate(1.7) brightness(1.03);transform:translateZ(0);will-change:transform;backface-visibility:hidden;-webkit-mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);mask-image:radial-gradient(98% 92% at 50% 46%,#000 14%,transparent 60%);}
     .btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--green);color:var(--ink);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.2rem;border-radius:10px;transition:.3s;}
     .btn-outline:hover{background:var(--green);color:#fff;}
     .develop{position:relative;padding:1.5rem 1.4rem 2rem;overflow:visible;min-height:90px;margin-top:0;}
@@ -322,53 +336,54 @@
       }
     });
 
-    // ---- SÉRUM VIDEÓ — közép-trigger, SCROLL-LOCK NÉLKÜL ----
-    // Mőködési logika:
-    // 1. Az oldal betöltésekor a videó láthatatlan (CSS: opacity:0, scale:.92)
-    // 2. scroll esemény: minden kérnél megmérjük a videó pozícióját
-    // 3. Ha a videó középpontja belép a viewport középső 40%-ába:
-    //    → CSS osztály váltással megjelenik (tranzició CSS-ben van — nem JS)
-    //    → videó elindul — .play() hívás NINCS scroll-lock logikával körbeépitve
-    // 4. Egyszer történik meg, utána az observer lekapcsol
+    // ---- SÉRUM VIDEÓ ----
+    // Logika:
+    // 1. Betöltéskor AZONNAL lejátszik 0.5mp-et, majd megáll (ez a "preview" képkocka)
+    // 2. Görgetéskor ha középre ér: újra lejátszik 0.5mp-et, megáll
+    // 3. Kattintásra: újraindítás
     (() => {
       const wrap = document.getElementById('serumWrap');
       const v = document.getElementById('dropvid');
       if (!wrap || !v) return;
 
-      let triggered = false;
-
-      const checkCenter = () => {
-        if (triggered) return;
-        const rect = wrap.getBoundingClientRect();
-        const vh = window.innerHeight;
-        // A videó középpontja: rect.top + rect.height / 2
-        // Viewport középső 40%-a: vh * 0.30 – vh * 0.70
-        const centerY = rect.top + rect.height / 2;
-        if (centerY > vh * 0.30 && centerY < vh * 0.70) {
-          triggered = true;
-          // 1. Megjelenítés: csak CSS osztály csere — a scroll-t nem érinti
-          wrap.classList.remove('serum-hidden');
-          wrap.classList.add('serum-visible');
-          // 2. Videó lejsszás: egyszerű, nyers .play() — muted+playsinline miatt iOS sem scrollol
-          try { v.currentTime = 0; } catch(e) {}
-          const p = v.play();
-          if (p && p.catch) p.catch(() => {});
-          // 3. Observer leállítása
-          window.removeEventListener('scroll', checkCenter, { passive: true });
-        }
-      };
-
-      window.addEventListener('scroll', checkCenter, { passive: true });
-      // Első ellenőrzés azonnal (ha már középen van betöltéskor)
-      checkCenter();
-
-      // Kattintásra újrajátszás
-      v.style.cursor = 'pointer';
-      v.addEventListener('click', () => {
+      // 0.5mp lejátszás, majd megáll
+      const playPreview = () => {
         try { v.currentTime = 0; } catch(e) {}
         const p = v.play();
         if (p && p.catch) p.catch(() => {});
-      });
+        setTimeout(() => {
+          try { v.pause(); } catch(e) {}
+        }, 500);
+      };
+
+      // Betöltéskor azonnal preview
+      const startOnLoad = () => {
+        playPreview();
+      };
+      if (v.readyState >= 2) {
+        startOnLoad();
+      } else {
+        v.addEventListener('canplay', startOnLoad, { once: true });
+      }
+
+      // Görgetés: középre érve újra preview — egyszer
+      let scrollTriggered = false;
+      const checkCenter = () => {
+        if (scrollTriggered) return;
+        const rect = wrap.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const centerY = rect.top + rect.height / 2;
+        if (centerY > vh * 0.30 && centerY < vh * 0.70) {
+          scrollTriggered = true;
+          playPreview();
+          window.removeEventListener('scroll', checkCenter, { passive: true });
+        }
+      };
+      window.addEventListener('scroll', checkCenter, { passive: true });
+
+      // Kattintásra újrajátszás
+      v.style.cursor = 'pointer';
+      v.addEventListener('click', playPreview);
     })();
   </script>
 </body>
