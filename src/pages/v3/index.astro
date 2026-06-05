@@ -257,36 +257,26 @@
     const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
     document.querySelectorAll('.reveal,.reveal-media').forEach(el=>io.observe(el));
 
-    // SZÉRUM VIDEÓ: csak amikor a szekció láthatóvá válik, indul a 0,5 mp intró,
-    // utána görgetésre pörög (0,5s → 3s). Így betöltéskor nincs odaugrás.
+    // SZÉRUM VIDEÓ: amikor a szekció láthatóvá válik, végigjátszódik egyszer,
+    // a végén megáll az utolsó kockán; kattintásra újraindul.
     (() => {
       const v = document.getElementById('dropvid');
       if(!v) return;
       const sec = document.querySelector('.develop');
-      let scrub = false, started = false, ticking = false;
+      let started = false;
       const vio = new IntersectionObserver((es) => {
         es.forEach(e => {
           if(e.isIntersecting && !started){
             started = true;
             try { v.currentTime = 0; const p = v.play(); if(p&&p.catch) p.catch(()=>{}); } catch(e){}
-            setTimeout(() => { try{ v.pause(); }catch(e){} scrub = true; }, 500);
             vio.disconnect();
           }
         });
       }, { threshold: .35 });
       vio.observe(sec);
-      const update = () => {
-        if(scrub && sec){
-          const r = sec.getBoundingClientRect();
-          const vh = window.innerHeight || 800;
-          let p = (vh - r.top) / vh;
-          p = Math.min(Math.max(p, 0), 1);
-          const t = 0.5 + p * 2.5;
-          if(Number.isFinite(t)) { try{ v.currentTime = Math.min(t, (v.duration||3) - 0.05); }catch(e){} }
-        }
-        ticking = false;
-      };
-      window.addEventListener('scroll', () => { if(!ticking){ requestAnimationFrame(update); ticking = true; } }, { passive:true });
+      // nincs loop -> a végén az utolsó kockán marad; kattintásra újraindul
+      v.style.cursor = 'pointer';
+      v.addEventListener('click', () => { try { v.currentTime = 0; const p = v.play(); if(p&&p.catch) p.catch(()=>{}); } catch(e){} });
     })();
   </script>
 </body>
