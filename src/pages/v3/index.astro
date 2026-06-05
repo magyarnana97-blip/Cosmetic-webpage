@@ -39,7 +39,7 @@
   <section class="hero">
     <!-- NŐI VIDEÓ: auto-indul, némítva, nem ismétlődik, az utolsó kockán megáll -->
     <div class="hero-media">
-      <video class="hero-video" autoplay muted playsinline preload="auto" poster="/video-2-poster.jpg">
+      <video class="hero-video" muted playsinline preload="auto" poster="/video-2-poster.jpg">
         <source src="/video-2.mp4" type="video/mp4" />
       </video>
     </div>
@@ -240,19 +240,33 @@
   </style>
 
   <script>
-    // a böngésző ne állítsa vissza a korábbi görgetés-pozíciót
+    // a böngésző ne állítsa vissza a korábbi görgetés-pozíciót (sima reload a tetejéről indul)
     if('scrollRestoration' in history) history.scrollRestoration='manual';
-    // iOS/bfcache: ha visszatöltődik a lap a gyorsítótárból, ugorjon a tetejére
-    window.addEventListener('pageshow', (e) => { if(e.persisted) window.scrollTo(0,0); });
 
-    // HERO videó: egyenletesen, picit lassabban (0.85x) — EGYSZER beállítva, nem futás közben, így nem akad
+    // Bármely videó lejátszása ÚGY, hogy a böngésző NE görgessen hozzá (megőrzi a pozíciódat)
+    window.__playNoScroll = function(v){
+      const sy = window.scrollY;
+      try{ const p = v.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){}
+      const fix = () => { if(Math.abs(window.scrollY - sy) > 2) window.scrollTo(0, sy); };
+      requestAnimationFrame(fix); setTimeout(fix, 40); setTimeout(fix, 120);
+    };
+
+    // HERO videó: nincs autoplay; csak akkor indítjuk, amikor látható -> nem ránt a tetejére. 0.85x, az elejéről.
     (() => {
       const hv = document.querySelector('.hero-video');
       if(!hv) return;
-      const setRate = () => { hv.playbackRate = 0.85; };
-      hv.addEventListener('loadedmetadata', setRate);
-      hv.addEventListener('play', setRate);
-      setRate();
+      hv.playbackRate = 0.85;
+      let started = false;
+      const io = new IntersectionObserver((es) => {
+        es.forEach(e => {
+          if(e.isIntersecting){
+            if(!started){ started = true; try{ hv.currentTime = 0; }catch(_){} }
+            hv.playbackRate = 0.85;
+            window.__playNoScroll(hv);
+          }
+        });
+      }, { threshold: 0.25 });
+      io.observe(hv);
     })();
 
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
@@ -268,19 +282,20 @@
       const v = document.getElementById('dropvid');
       if(!v) return;
       let teased = false, centeredPlayed = false;
-      const noScroll = (fn) => { const sy = window.scrollY; fn(); requestAnimationFrame(() => { if(Math.abs(window.scrollY - sy) > 2) window.scrollTo(0, sy); }); };
       const teaser = () => {
         if(teased) return; teased = true;
-        noScroll(() => { try { v.currentTime = 0; const p = v.play(); if(p&&p.catch) p.catch(()=>{}); } catch(e){} });
+        try{ v.currentTime = 0; }catch(e){}
+        window.__playNoScroll(v);
         setTimeout(() => { try{ if(!centeredPlayed){ v.pause(); v.currentTime = 0.5; } }catch(e){} }, 500);
       };
       if(v.readyState >= 2) teaser(); else v.addEventListener('loadeddata', teaser, { once:true });
-      // a viewport középső ~10% sávjában: lejátssza a többit
+      // a viewport középső ~10% sávjában: lejátssza a többit (görgetés-védelemmel)
       const cio = new IntersectionObserver((es) => {
         es.forEach(e => {
           if(e.isIntersecting && !centeredPlayed){
             centeredPlayed = true;
-            try { v.currentTime = 0.5; const p = v.play(); if(p&&p.catch) p.catch(()=>{}); } catch(e){}
+            try{ v.currentTime = 0.5; }catch(e){}
+            window.__playNoScroll(v);
             cio.disconnect();
           }
         });
@@ -288,7 +303,7 @@
       cio.observe(v);
       // végén megáll; kattintásra újraindul az elejéről
       v.style.cursor = 'pointer';
-      v.addEventListener('click', () => { try { v.currentTime = 0; const p = v.play(); if(p&&p.catch) p.catch(()=>{}); } catch(e){} });
+      v.addEventListener('click', () => { try{ v.currentTime = 0; }catch(e){} window.__playNoScroll(v); });
     })();
   </script>
 </body>
