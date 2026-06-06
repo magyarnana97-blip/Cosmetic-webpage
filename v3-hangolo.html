@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>v3 hero hangoló</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#F2F4EF;--green:#A8C96A;--green-deep:#8FAE52;--box:#E8EAE2;--line:#D6D9CF;--muted:#7B8180;--ink:#3A3F3E;--serif:'Playfair Display',serif;--sans:'Inter',sans-serif;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:#e9e8e3;display:flex;gap:26px;padding:24px;flex-wrap:wrap;align-items:flex-start;}
+  h1.t{font-size:18px;margin-bottom:4px;}
+  p.note{font-size:12px;color:#666;max-width:340px;line-height:1.5;margin-bottom:14px;}
+
+  .phone{width:390px;background:var(--bg);border:1px solid #d8d8d2;border-radius:20px;overflow:hidden;box-shadow:0 12px 44px rgba(0,0,0,.14);flex-shrink:0;}
+  .nav{height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 .85rem;background:rgba(242,244,239,.92);border-bottom:1px solid #e6e6df;}
+  .nav .l{display:flex;align-items:center;gap:.45rem;}
+  .nav .l img{height:31px;}
+  .nav .l span{font-size:.9rem;color:var(--muted);} .nav .l b{color:var(--green);font-weight:600;}
+  .nav .r{display:flex;align-items:center;gap:.55rem;}
+  .book{background:var(--green);color:#fff;font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.55rem .85rem;border-radius:9px;}
+  .bg{display:flex;flex-direction:column;gap:5px;}.bg span{width:25px;height:2px;background:var(--ink);}
+
+  .hero{position:relative;overflow:hidden;background:linear-gradient(165deg,#eef0ea,#e2ead8 50%,#d6e2c8);}
+  .vbox{position:absolute;border-radius:14px;background:radial-gradient(60% 55% at 65% 42%,rgba(168,201,106,.55),rgba(150,180,90,.25) 70%,transparent);border:1.5px dashed rgba(110,132,103,.6);display:flex;align-items:center;justify-content:center;color:#6c8930;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:grab;touch-action:none;}
+  .tgroup{position:absolute;cursor:grab;touch-action:none;transform-origin:top left;width:78%;}
+  .drag:hover{outline:1.5px solid rgba(110,132,103,.5);outline-offset:3px;}
+  .eyebrow{font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.7rem;line-height:1.6;}
+  .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
+  .tgroup h1{font-family:var(--serif);font-weight:400;font-size:2.05rem;line-height:1.08;color:var(--ink);margin-bottom:.9rem;}
+  .tgroup h1 em{font-style:italic;color:var(--green);}
+  .lead{color:var(--muted);font-size:.82rem;line-height:1.6;max-width:230px;margin-bottom:1.4rem;}
+  .cta{display:flex;align-items:center;gap:.8rem;flex-wrap:nowrap;}
+  .btncut{background:conic-gradient(from 200deg at 50% 50%,rgba(168,201,106,0.12) 0%,rgba(168,201,106,0.5) 20%,#A8C96A 40%,#8FAE52 50%,#A8C96A 60%,rgba(168,201,106,0.4) 80%,rgba(168,201,106,0.12) 100%);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);}
+  .btncut .lbl{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap;margin:1.5px;background:var(--bg);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);color:var(--ink);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.75rem .95rem;}
+  .play{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-size:.56rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.35;}
+  .play .c{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--green);color:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  .cards-wrap{padding:1.4rem 1rem 2rem;}
+  .cards{position:relative;background:rgba(46,52,48,.4);backdrop-filter:blur(3px);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:var(--cpad,22px) .85rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;align-content:center;cursor:grab;touch-action:none;--cpad:22px;--cardline:68%;}
+  .ccol{text-align:center;padding:54px .35rem .5rem;position:relative;}
+  .ccol:not(:last-child)::after{content:'';position:absolute;right:0;top:calc((100% - var(--cardline))/2);height:var(--cardline);width:1.5px;background:rgba(255,255,255,.55);}
+  .ic{position:absolute;top:8px;left:50%;width:42px;height:42px;object-fit:contain;cursor:grab;touch-action:none;z-index:3;filter:brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(60deg) opacity(0.85);}
+  .ch{font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;font-weight:500;color:#fff;margin-bottom:.5rem;line-height:1.3;}
+  .cp{color:rgba(255,255,255,.78);font-size:.7rem;line-height:1.5;}
+
+  .dev-wrap{position:relative;min-height:360px;padding:1.5rem 1.4rem 2rem;}
+  .gifbox{position:absolute;width:58%;height:170px;border-radius:14px;background:radial-gradient(60% 60% at 50% 50%,rgba(168,201,106,.5),rgba(150,180,90,.18) 70%,transparent);border:1.5px dashed rgba(110,132,103,.6);display:flex;align-items:center;justify-content:center;color:#6c8930;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:grab;touch-action:none;}
+  .devtext{position:absolute;cursor:grab;touch-action:none;transform-origin:top left;width:70%;}
+  .devtext h1 em{font-style:italic;color:var(--green);}
+
+  .panel{width:340px;background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 6px 24px rgba(0,0,0,.08);max-height:94vh;overflow:auto;}
+  .panel h2{font-size:13px;color:var(--green-deep);margin:14px 0 2px;border-top:1px solid #eee;padding-top:10px;}
+  .panel h2:first-child{border:none;padding-top:0;margin-top:0;}
+  .row{margin:9px 0;}
+  .row label{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:5px;}
+  .row label b{color:var(--green-deep);}
+  input[type=range]{width:100%;accent-color:var(--green-deep);}
+  .out{margin-top:12px;width:100%;background:#f7f7f4;border:1px solid #dcdcd6;border-radius:10px;padding:12px;font:11.5px/1.5 monospace;color:#333;min-height:170px;resize:vertical;display:block;}
+  button{margin-top:9px;width:100%;padding:10px;border:none;border-radius:8px;background:var(--green-deep);color:#fff;font-size:13px;font-weight:700;cursor:pointer;}
+  button.sec{background:#bbb;}
+  .ok{font-size:12px;color:var(--green-deep);text-align:center;margin-top:8px;min-height:14px;}
+</style>
+</head>
+<body>
+  <div>
+    <h1 class="t">🎚️ v3 hero hangoló</h1>
+    <p class="note">Húzd az elemeket, állítsd a csúszlókat. „Értékek másolása" → küldd be. (Böngészőben nyisd meg! A beállításaid mentődnek és a legutóbbi állásból indul.)</p>
+    <div class="phone">
+      <div class="nav">
+        <div class="l"><img src="public/logo.png" alt=""><span><b>szépség</b>terapeuta</span></div>
+        <div class="r"><span class="book">Időpont</span><span class="bg"><span></span><span></span><span></span></span></div>
+      </div>
+      <div class="hero" id="hero">
+        <div class="vbox drag" id="vbox">NŐ / VIDEÓ</div>
+        <div class="tgroup drag" id="tgroup">
+          <div class="eyebrow">Professzionális<br>bőrápolás</div>
+          <svg class="brush" id="brush1" viewBox="0 0 200 10" preserveAspectRatio="none"><defs><linearGradient id="bgr" x1="0" x2="1"><stop offset="0" stop-color="#8FAE52"/><stop offset=".28" stop-color="#A8C96A"/><stop offset=".62" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/></linearGradient></defs><path d="M1,2.6 L199,4.2 L199,5.6 L1,7.4 Z" fill="url(#bgr)"/></svg>
+          <h1>A tudomány<br>ereje.<br>A természet<br><em>intelligenciája.</em></h1>
+          <div class="lead">Személyre szabott kezelések a bőröd egészségéért és ragyogásáért.</div>
+          <div class="cta">
+            <span class="btncut"><span class="lbl">Időpontot foglalok →</span></span>
+            <span class="play"><span class="c">▶</span><span>Ismerd meg a<br>kezeléseket</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="cards-wrap">
+        <div class="cards drag" id="cards">
+          <img class="ic drag" id="ic1" src="public/ic-tudomany.webp">
+          <img class="ic drag" id="ic2" src="public/ic-szemelyre.webp">
+          <img class="ic drag" id="ic3" src="public/ic-premium.webp">
+          <div class="ccol col1"><div class="ch">Tudományos<br>háttér</div><div class="cp">Bizonyított hatóanyagok, látható eredmények.</div></div>
+          <div class="ccol col2"><div class="ch">Személyre<br>szabott kezelés</div><div class="cp">Mert minden bőr egyedi.</div></div>
+          <div class="ccol col3"><div class="ch">Prémium<br>élmény</div><div class="cp">Modern technológia, maximális kényelem.</div></div>
+        </div>
+      </div>
+      <div class="dev-wrap">
+        <div class="gifbox drag" id="gifbox">GIF / VIDEÓ</div>
+        <div class="devtext drag" id="devtext">
+          <div class="eyebrow">A bőröd megérdemli</div>
+          <h1 style="font-size:1.7rem;font-family:var(--serif);font-weight:400;line-height:1.08;">Nem csak kezelünk.<br><em>Fejlesztünk.</em></h1>
+          <svg class="brush" id="brush2" viewBox="0 0 200 10" preserveAspectRatio="none"><path d="M1,2.6 L199,4.2 L199,5.6 L1,7.4 Z" fill="url(#bgr)"/></svg>
+          <div class="lead">Együttműködünk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Hero / szöveg / videó</h2>
+    <div class="row"><label>Hero magasság <b><span id="vHH">560</span>px</b></label><input type="range" id="sHH" min="380" max="780" value="560"></div>
+    <div class="row"><label>Szöveg méret <b><span id="vTS">82</span>%</b></label><input type="range" id="sTS" min="60" max="130" value="82"></div>
+    <div class="row"><label>Szöveg szélesség <b><span id="vTW">78</span>%</b></label><input type="range" id="sTW" min="45" max="100" value="78"></div>
+    <div class="row"><label>Videó szélesség <b><span id="vVW">80</span>%</b></label><input type="range" id="sVW" min="30" max="100" value="80"></div>
+    <div class="row"><label>Videó magasság (9:16) <b><span id="vVH">555</span>px</b></label><input type="range" id="sVH" min="120" max="700" value="555"></div>
+    <button id="ratio169" class="sec">📐 9:16 arányra állít</button>
+
+    <h2>Kártyadoboz</h2>
+    <div class="row"><label>Kártyadoboz magasság (térköz) <b><span id="vCH">6</span>px</b></label><input type="range" id="sCH" min="6" max="64" value="6"></div>
+    <div class="row"><label>Kártya FŐ szöveg méret <b><span id="vCT">74</span>%</b></label><input type="range" id="sCT" min="55" max="110" value="74"></div>
+    <div class="row"><label>Fehér vonalak mérete <b><span id="vCL">68</span>%</b></label><input type="range" id="sCL" min="20" max="100" value="68"></div>
+    <div class="row"><label>Piktogram 1 (Tudományos) <b><span id="vP1">54</span>px</b></label><input type="range" id="sP1" min="20" max="120" value="54"></div>
+    <div class="row"><label>Piktogram 2 (Személyre) <b><span id="vP2">90</span>px</b></label><input type="range" id="sP2" min="20" max="120" value="90"></div>
+    <div class="row"><label>Piktogram 3 (Prémium) <b><span id="vP3">90</span>px</b></label><input type="range" id="sP3" min="20" max="120" value="90"></div>
+
+    <h2>Develop / ecsetvonások</h2>
+    <div class="row"><label>Develop szöveg méret <b><span id="vDT">70</span>%</b></label><input type="range" id="sDT" min="60" max="130" value="70"></div>
+    <div class="row"><label>Ecsetvonás méret (mindkettő) <b><span id="vBR">59</span>px</b></label><input type="range" id="sBR" min="30" max="160" value="59"></div>
+
+    <textarea class="out" id="out" spellcheck="false"></textarea>
+    <button id="copy">📋 Vágólapra másolás</button>
+    <button id="load" style="background:#5a7d3a;">📥 Beillesztett értékek betöltése</button>
+    <button id="reset" class="sec">↺ Alaphelyzet</button>
+    <div class="ok" id="ok"></div>
+  </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    var $=function(i){return document.getElementById(i);};
+    var hero=$('hero'),tg=$('tgroup'),vb=$('vbox'),cards=$('cards'),devtext=$('devtext'),gifbox=$('gifbox');
+    var KEY='v3tuner_v6', saved=null;
+    try{saved=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+    var defPos={tgroup:{x:12,y:56},vbox:{x:76,y:1},cards:{x:-1,y:-224},devtext:{x:-3,y:-264},gifbox:{x:126,y:-266},ic1:{x:-115,y:-3},ic2:{x:-1,y:-21},ic3:{x:112,y:-22}};
+    var pos=Object.assign({},defPos,(saved&&saved.pos)||{});
+    var SL=['sHH','sTS','sTW','sVW','sVH','sDT','sCH','sCT','sCL','sP1','sP2','sP3','sBR'];
+    if(saved&&saved.sl){SL.forEach(function(k){if(saved.sl[k]!=null)$(k).value=saved.sl[k];});}
+    function save(){try{var sl={};SL.forEach(function(k){sl[k]=$(k).value;});localStorage.setItem(KEY,JSON.stringify({pos:pos,sl:sl}));}catch(e){}}
+
+    function applyTG(){tg.style.transform='translate('+pos.tgroup.x+'px,'+pos.tgroup.y+'px) scale('+(+$('sTS').value/100)+')';}
+    function applyVB(){vb.style.left=pos.vbox.x+'px';vb.style.top=pos.vbox.y+'px';}
+    function applyCards(){cards.style.transform='translate('+pos.cards.x+'px,'+pos.cards.y+'px)';}
+    function applyDev(){devtext.style.transform='translate('+pos.devtext.x+'px,'+pos.devtext.y+'px) scale('+(+$('sDT').value/100)+')';}
+    function applyGif(){gifbox.style.left=pos.gifbox.x+'px';gifbox.style.top=pos.gifbox.y+'px';}
+    function applyIc(id){$(id).style.transform='translate(-50%,0) translate('+pos[id].x+'px,'+pos[id].y+'px)';}
+    function sz(){
+      hero.style.height=$('sHH').value+'px';
+      tg.style.width=$('sTW').value+'%';
+      vb.style.width=$('sVW').value+'%';
+      vb.style.height=$('sVH').value+'px';
+      cards.style.setProperty('--cpad',$('sCH').value+'px');
+      cards.style.setProperty('--cardline',$('sCL').value+'%');
+      document.querySelectorAll('.ch').forEach(function(e){e.style.fontSize=(+$('sCT').value/100)+'rem';});
+      $('ic1').style.width=$('ic1').style.height=$('sP1').value+'px';
+      $('ic2').style.width=$('ic2').style.height=$('sP2').value+'px';
+      $('ic3').style.width=$('ic3').style.height=$('sP3').value+'px';
+      document.querySelectorAll('.brush').forEach(function(e){e.style.width=$('sBR').value+'px';});
+      ['HH','TS','TW','VW','VH','DT','CH','CT','CL','P1','P2','P3','BR'].forEach(function(k){$('v'+k).textContent=$('s'+k).value;});
+      applyTG();applyVB();applyCards();applyDev();applyGif();applyIc('ic1');applyIc('ic2');applyIc('ic3');out();save();
+    }
+    function out(){
+      if(document.activeElement===$('out'))return; // ne írjuk felül, ha épp beleírsz
+      $('out').value=
+'HERO magasság: '+$('sHH').value+'px\n'+
+'SZÖVEG: méret '+$('sTS').value+'%, szélesség '+$('sTW').value+'%  (X '+Math.round(pos.tgroup.x)+', Y '+Math.round(pos.tgroup.y)+')\n'+
+'VIDEÓ: '+$('sVW').value+'% × '+$('sVH').value+'px  (X '+Math.round(pos.vbox.x)+', Y '+Math.round(pos.vbox.y)+')\n'+
+'KÁRTYADOBOZ: térköz '+$('sCH').value+'px, fő szöveg '+$('sCT').value+'%, fehér vonalak '+$('sCL').value+'%  (eltolás X '+Math.round(pos.cards.x)+', Y '+Math.round(pos.cards.y)+')\n'+
+'PIKTOGRAM 1: '+$('sP1').value+'px (X'+Math.round(pos.ic1.x)+',Y'+Math.round(pos.ic1.y)+')\n'+
+'PIKTOGRAM 2: '+$('sP2').value+'px (X'+Math.round(pos.ic2.x)+',Y'+Math.round(pos.ic2.y)+')\n'+
+'PIKTOGRAM 3: '+$('sP3').value+'px (X'+Math.round(pos.ic3.x)+',Y'+Math.round(pos.ic3.y)+')\n'+
+'ECSETVONÁS: '+$('sBR').value+'px\n'+
+'DEVELOP szöveg: méret '+$('sDT').value+'%  (X '+Math.round(pos.devtext.x)+', Y '+Math.round(pos.devtext.y)+')\n'+
+'GIF/VIDEÓ doboz: X '+Math.round(pos.gifbox.x)+', Y '+Math.round(pos.gifbox.y);
+    }
+    SL.forEach(function(i){$(i).addEventListener('input',sz);});
+    var act=null,sx,sy,ox,oy;
+    var APPLY={tgroup:applyTG,vbox:applyVB,cards:applyCards,devtext:applyDev,gifbox:applyGif,ic1:function(){applyIc('ic1');},ic2:function(){applyIc('ic2');},ic3:function(){applyIc('ic3');}};
+    [['tgroup',tg],['vbox',vb],['cards',cards],['devtext',devtext],['gifbox',gifbox],['ic1',$('ic1')],['ic2',$('ic2')],['ic3',$('ic3')]].forEach(function(p){
+      var id=p[0],el=p[1];
+      el.addEventListener('pointerdown',function(e){act=id;sx=e.clientX;sy=e.clientY;ox=pos[id].x;oy=pos[id].y;el.setPointerCapture(e.pointerId);e.preventDefault();e.stopPropagation();});
+      el.addEventListener('pointermove',function(e){if(act!==id)return;pos[id].x=ox+(e.clientX-sx);pos[id].y=oy+(e.clientY-sy);APPLY[id]();out();save();});
+      el.addEventListener('pointerup',function(){act=null;});
+    });
+    $('ratio169').addEventListener('click',function(){var w=390*(+$('sVW').value/100);$('sVH').value=Math.min(700,Math.round(w*16/9));sz();});
+    // VÁGÓLAPRA másolás (file://-n is működik, nincs felugró ablak)
+    $('copy').addEventListener('click',function(){
+      var ta=$('out'); ta.focus(); ta.select(); ta.setSelectionRange(0,99999);
+      var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
+      if(!ok && navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(ta.value).catch(function(){}); ok=true; }
+      ta.blur();
+      $('ok').textContent = ok ? '✓ Vágólapra másolva! Küldd be a chatbe.' : '⚠ Jelöld ki kézzel és Cmd+C';
+      setTimeout(function(){$('ok').textContent='';},3000);
+    });
+    // BEILLESZTETT értékek betöltése (a szerkeszthető mezőből)
+    function gnum(t,re){var m=t.match(re);return m?parseFloat(m[1]):null;}
+    function setSl(id,v){if(v!=null&&$(id))$(id).value=v;}
+    $('load').addEventListener('click',function(){
+      var t=$('out').value;
+      setSl('sHH',gnum(t,/HERO magasság:\s*(-?\d+)/));
+      var m;
+      if(m=t.match(/méret\s*(-?\d+)%,\s*szélesség\s*(-?\d+)%\s*\(X\s*(-?\d+),\s*Y\s*(-?\d+)\)/)){setSl('sTS',m[1]);setSl('sTW',m[2]);pos.tgroup={x:+m[3],y:+m[4]};}
+      if(m=t.match(/VIDEÓ:\s*(-?\d+)%\s*×\s*(-?\d+)px\s*\(X\s*(-?\d+),\s*Y\s*(-?\d+)\)/)){setSl('sVW',m[1]);setSl('sVH',m[2]);pos.vbox={x:+m[3],y:+m[4]};}
+      if(m=t.match(/térköz\s*(-?\d+)px,\s*fő szöveg\s*(-?\d+)%,\s*fehér vonalak\s*(-?\d+)%\s*\(eltolás X\s*(-?\d+),\s*Y\s*(-?\d+)\)/)){setSl('sCH',m[1]);setSl('sCT',m[2]);setSl('sCL',m[3]);pos.cards={x:+m[4],y:+m[5]};}
+      [1,2,3].forEach(function(i){var r=new RegExp('PIKTOGRAM '+i+':\\s*(-?\\d+)px\\s*\\(X\\s*(-?\\d+)\\s*,\\s*Y\\s*(-?\\d+)\\)');if(m=t.match(r)){setSl('sP'+i,m[1]);pos['ic'+i]={x:+m[2],y:+m[3]};}});
+      setSl('sBR',gnum(t,/ECSETVONÁS:\s*(-?\d+)px/));
+      if(m=t.match(/DEVELOP szöveg:\s*méret\s*(-?\d+)%\s*\(X\s*(-?\d+),\s*Y\s*(-?\d+)\)/)){setSl('sDT',m[1]);pos.devtext={x:+m[2],y:+m[3]};}
+      if(m=t.match(/GIF\/VIDEÓ doboz:\s*X\s*(-?\d+),\s*Y\s*(-?\d+)/)){pos.gifbox={x:+m[1],y:+m[2]};}
+      sz();
+      $('ok').textContent='✓ Betöltve!';setTimeout(function(){$('ok').textContent='';},2500);
+    });
+    $('reset').addEventListener('click',function(){pos=JSON.parse(JSON.stringify(defPos));sz();});
+    sz();
+  });
+</script>
+</body>
+</html>
