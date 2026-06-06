@@ -39,7 +39,7 @@
   <section class="hero">
     <!-- NŐI VIDEÓ: auto-indul, némítva, nem ismétlődik, az utolsó kockán megáll -->
     <div class="hero-media">
-      <video class="hero-video" muted playsinline preload="auto" poster="/video-2-poster.jpg">
+      <video class="hero-video" autoplay muted playsinline preload="auto" poster="/video-2-poster.jpg">
         <source src="/video-2.mp4" type="video/mp4" />
       </video>
     </div>
@@ -253,22 +253,14 @@
       requestAnimationFrame(fix); setTimeout(fix, 40); setTimeout(fix, 120);
     };
 
-    // HERO videó: nincs autoplay; csak akkor indítjuk, amikor látható -> nem ránt a tetejére. 0.85x, az elejéről.
+    // HERO videó: autoplay (a markupban indítja a böngésző), itt csak a sebesség 0.85x — egyszer beállítva, nem akad
     (() => {
       const hv = document.querySelector('.hero-video');
       if(!hv) return;
-      hv.playbackRate = 0.85;
-      let started = false;
-      const io = new IntersectionObserver((es) => {
-        es.forEach(e => {
-          if(e.isIntersecting){
-            if(!started){ started = true; try{ hv.currentTime = 0; }catch(_){} }
-            hv.playbackRate = 0.85;
-            window.__playNoScroll(hv);
-          }
-        });
-      }, { threshold: 0.25 });
-      io.observe(hv);
+      const setRate = () => { hv.playbackRate = 0.85; };
+      hv.addEventListener('loadedmetadata', setRate);
+      hv.addEventListener('play', setRate);
+      setRate();
     })();
 
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
