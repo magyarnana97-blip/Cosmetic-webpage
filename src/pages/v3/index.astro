@@ -291,23 +291,14 @@
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     });
 
-    // ---- HERO VIDEÓ: egyszer játszik le, a vege előtt lágyan lelassul ----
+    // ---- HERO VIDEÓ: egyszer játszik le, egyenletesen 0.85x ----
     (() => {
       const hv = document.querySelector('.hero-video');
       if (!hv) return;
-      // alap sebesség
-      const setRate = () => { if (hv.playbackRate === 1) hv.playbackRate = 0.85; };
+      const setRate = () => { hv.playbackRate = 0.85; };
       hv.addEventListener('loadedmetadata', setRate);
       hv.addEventListener('play', setRate);
-      // lágy lassulás: az utolsó 1.4 mp-ben 0.85x → 0.18x
-      hv.addEventListener('timeupdate', () => {
-        const d = hv.duration;
-        if (!d || !isFinite(d)) return;
-        const left = d - hv.currentTime;
-        if (left < 1.4) {
-          hv.playbackRate = Math.max(0.18, (left / 1.4) * 0.85);
-        }
-      });
+      setRate();
     })();
 
     // ---- BURGER MENÜ ----
@@ -353,7 +344,6 @@
       }, { threshold: .35 });
       vio.observe(sec);
 
-      // loop NINCS — a videó a végén megáll az utolsó kockán
       v.style.cursor = 'pointer';
       v.addEventListener('click', () => {
         try { v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(err) {}
