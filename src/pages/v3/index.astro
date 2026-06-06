@@ -1,4 +1,3 @@
----
 // v3 — Futurisztikus prototípus (mobil-fókusz). Cím: /v3
 // A HERO arc helye SZÁNDÉKOSAN üres (háttérszín) — ide kerül majd a tiszta videó.
 // A kártya-piktogramok helye is üres (csak a hely van meg).
@@ -14,6 +13,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('pageshow', function() {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    });
+  </script>
 </head>
 
 <body>
@@ -163,14 +172,12 @@
     .nodes{animation:pulse 3.4s ease-in-out infinite;}
     @keyframes spin{to{transform:rotate(360deg);}}
     @keyframes pulse{0%,100%{opacity:.45;}50%{opacity:.85;}}
-    /* felül krém (szöveghez), lent átlátszó (ott jön a nő) */
     .hero-left-fade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to right,var(--bg) 24%,rgba(242,244,239,.45) 46%,transparent 68%);}
     .hero-text{position:absolute;top:0;left:0;z-index:3;transform:translate(12px,56px) scale(.82);transform-origin:top left;width:78%;padding:0 1.1rem;}
     .eyebrow{display:block;font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.9rem;line-height:1.6;}
     .hero-text h1{font-size:clamp(1.8rem,7.6vw,2.3rem);margin-bottom:.9rem;}
     .lead{color:var(--muted);font-size:.82rem;line-height:1.6;max-width:230px;margin-bottom:1.4rem;}
     .hero-cta{display:flex;align-items:center;gap:.8rem;flex-wrap:nowrap;}
-    /* levágott sarkú gomb */
     .btn-cut{display:inline-flex;background:conic-gradient(from 200deg at 50% 50%,rgba(168,201,106,0.12) 0%,rgba(168,201,106,0.5) 20%,#A8C96A 40%,#8FAE52 50%,#A8C96A 60%,rgba(168,201,106,0.4) 80%,rgba(168,201,106,0.12) 100%);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);transition:.3s;flex-shrink:0;}
     .btn-cut .lbl{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap;margin:1.5px;background:var(--bg);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);color:var(--ink);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.75rem .95rem;transition:.3s;}
     .btn-cut:hover .lbl{background:var(--ink);color:#fff;}
@@ -191,10 +198,8 @@
     .card p{color:rgba(255,255,255,.78);font-size:.7rem;line-height:1.5;}
 
     /* FEJLESZTÜNK */
-    /* ECSETVONÁS */
     .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
     .brush-dev{width:65px;margin:.1rem 0 1rem;}
-    /* PIPETTA + CSEPP + HULLÁMZÁS */
     .serum{position:absolute;left:126px;top:-305px;z-index:0;width:67%;pointer-events:auto;}
     .serum video{width:100%;display:block;filter:saturate(2.4) brightness(1.05);transform:translateZ(0);will-change:transform;}
     .serum::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(100% 95% at 50% 46%,transparent 44%,var(--bg) 78%);}
@@ -233,7 +238,6 @@
     .foot-tag{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.9rem;margin:.5rem 0 1.2rem;}
     .foot-copy{font-size:.72rem;color:var(--muted);opacity:.7;}
 
-    /* nagyobb képernyőn középre fogjuk, de a fókusz a mobil */
     @media (min-width:760px){
       .hero-text{max-width:1100px;margin:0 auto;padding-bottom:4rem;}
       .cards,.develop,.closing-inner{max-width:1000px;margin-left:auto;margin-right:auto;}
@@ -242,18 +246,7 @@
   </style>
 
   <script>
-    // a böngésző ne állítsa vissza a korábbi görgetés-pozíciót (sima reload a tetejéről indul)
-    if('scrollRestoration' in history) history.scrollRestoration='manual';
-
-    // Bármely videó lejátszása ÚGY, hogy a böngésző NE görgessen hozzá (megőrzi a pozíciódat)
-    window.__playNoScroll = function(v){
-      const sy = window.scrollY;
-      try{ const p = v.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){}
-      const fix = () => { if(Math.abs(window.scrollY - sy) > 2) window.scrollTo(0, sy); };
-      requestAnimationFrame(fix); setTimeout(fix, 40); setTimeout(fix, 120);
-    };
-
-    // HERO videó: autoplay (a markupban indítja a böngésző), itt csak a sebesség 0.85x — egyszer beállítva, nem akad
+    // HERO videó: autoplay (a markupban indítja a böngésző), itt csak a sebesség 0.85x
     (() => {
       const hv = document.querySelector('.hero-video');
       if(!hv) return;
@@ -263,15 +256,26 @@
       setRate();
     })();
 
+    // Bármely videó lejátszása ÚGY, hogy a böngésző NE görgessen hozzá
+    window.__playNoScroll = function(v){
+      const sy = window.scrollY;
+      try{ const p = v.play(); if(p&&p.catch) p.catch(()=>{}); }catch(e){}
+      const fix = () => { if(Math.abs(window.scrollY - sy) > 2) window.scrollTo(0, sy); };
+      requestAnimationFrame(fix); setTimeout(fix, 40); setTimeout(fix, 120);
+    };
+
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
     burger?.addEventListener('click',()=>{burger.classList.toggle('open');drawer?.classList.toggle('open');});
     drawer?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger?.classList.remove('open');drawer.classList.remove('open');}));
-    const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
-    document.querySelectorAll('.reveal,.reveal-media').forEach(el=>io.observe(el));
 
-    // SZÉRUM VIDEÓ:
-    //  - betöltéskor azonnal lefut 0,5 mp (teaser), majd megáll a 0,5-nél
-    //  - amikor a videó a KÉPERNYŐ KÖZEPÉN van, lejátssza a többit (0,5 mp -> vége)
+    const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+    document.querySelectorAll('.reveal,.reveal-media').forEach(el=>{
+      const rect = el.getBoundingClientRect();
+      if(rect.top < window.innerHeight * 1.05){ el.classList.add('in'); }
+      else { io.observe(el); }
+    });
+
+    // SZÉRUM VIDEÓ
     (() => {
       const v = document.getElementById('dropvid');
       if(!v) return;
@@ -283,7 +287,6 @@
         setTimeout(() => { try{ if(!centeredPlayed){ v.pause(); v.currentTime = 0.5; } }catch(e){} }, 500);
       };
       if(v.readyState >= 2) teaser(); else v.addEventListener('loadeddata', teaser, { once:true });
-      // a viewport középső ~10% sávjában: lejátssza a többit (görgetés-védelemmel)
       const cio = new IntersectionObserver((es) => {
         es.forEach(e => {
           if(e.isIntersecting && !centeredPlayed){
@@ -295,7 +298,6 @@
         });
       }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
       cio.observe(v);
-      // amikor lefutott a videó, lejátssza még az ELSŐ 0,5 mp-et, majd megáll
       let tailDone = false;
       v.addEventListener('ended', () => {
         if(tailDone) return; tailDone = true;
@@ -303,7 +305,6 @@
         window.__playNoScroll(v);
         setTimeout(() => { try{ v.pause(); }catch(e){} }, 520);
       });
-      // kattintásra újraindul az elejéről (a "farok" is újra lejátszódhat)
       v.style.cursor = 'pointer';
       v.addEventListener('click', () => { tailDone = false; try{ v.currentTime = 0; }catch(e){} window.__playNoScroll(v); });
     })();
