@@ -40,6 +40,9 @@ import Footer from '../../components/Footer.astro';
   <script>
     // a böngésző ne állítsa vissza a korábbi görgetés-pozíciót (sima reload a tetejéről indul)
     if('scrollRestoration' in history) history.scrollRestoration='manual';
+    // BIZTOSÍTÉK: betöltéskor MINDIG a tetejére (még ha egy autoplay videó próbálna is odagörgetni)
+    window.scrollTo(0,0);
+    window.addEventListener('load', function(){ window.scrollTo(0,0); setTimeout(function(){ window.scrollTo(0,0); }, 60); });
 
     // Bármely videó lejátszása ÚGY, hogy a böngésző NE görgessen hozzá (megőrzi a pozíciódat)
     window.__playNoScroll = function(v){
