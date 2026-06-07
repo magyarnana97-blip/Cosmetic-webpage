@@ -40,9 +40,8 @@ import Footer from '../../components/Footer.astro';
   <script>
     // a böngésző ne állítsa vissza a korábbi görgetés-pozíciót (sima reload a tetejéről indul)
     if('scrollRestoration' in history) history.scrollRestoration='manual';
-    // BIZTOSÍTÉK: betöltéskor MINDIG a tetejére (még ha egy autoplay videó próbálna is odagörgetni)
+    // betöltéskor a tetejére (instant, hogy NE ússzon fel láthatóan)
     window.scrollTo(0,0);
-    window.addEventListener('load', function(){ window.scrollTo(0,0); setTimeout(function(){ window.scrollTo(0,0); }, 60); });
 
     // Bármely videó lejátszása ÚGY, hogy a böngésző NE görgessen hozzá (megőrzi a pozíciódat)
     window.__playNoScroll = function(v){
@@ -62,12 +61,17 @@ import Footer from '../../components/Footer.astro';
       setRate();
     })();
 
-    // GÖMB videó (Kezelések fejléc): no-scroll lejátszás, hogy betöltéskor NE ugorjon az oldal középre
+    // GÖMB videó (Kezelések fejléc): CSAK akkor játszódik le, amikor LÁTSZIK — így mobilon NEM görget oda betöltéskor
     (() => {
       const ov = document.querySelector('.kz-orb-vid');
       if(!ov) return;
-      const play = () => window.__playNoScroll(ov);
-      if(ov.readyState >= 2) play(); else ov.addEventListener('loadeddata', play, { once:true });
+      const io = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting){ var p = ov.play(); if(p && p.catch) p.catch(function(){}); }
+          else { try{ ov.pause(); }catch(_){} }
+        });
+      }, { threshold: 0.25 });
+      io.observe(ov);
     })();
 
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
