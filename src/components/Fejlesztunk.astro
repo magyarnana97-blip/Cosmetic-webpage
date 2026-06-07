@@ -5,12 +5,14 @@
 
 <section class="develop" id="fejlesztunk">
   <div class="develop-text">
-    <span class="eyebrow reveal">A bőröd megérdemli</span>
-    <h2 class="reveal d1">Nem csak kezelünk.<br/><em>Fejlesztünk.</em></h2>
-    <svg class="brush brush-dev reveal d1" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M1,2.6 L199,4.2 L199,5.6 L1,7.4 Z" fill="url(#brushgrad)"/>
-    </svg>
-    <p class="reveal d2">Együttműködünk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.</p>
+    <div class="dev-col">
+      <span class="eyebrow reveal">A bőröd megérdemli</span>
+      <h2 class="reveal d1">Nem csak kezelünk.<br/><em>Fejlesztünk.</em></h2>
+      <svg class="brush brush-dev reveal d1" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M1,2.6 L199,4.2 L199,5.6 L1,7.4 Z" fill="url(#brushgrad)"/>
+      </svg>
+    </div>
+    <p class="reveal d2 dev-p">Együttműködünk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.</p>
   </div>
   <!--
     MÁSODIK VIDEÓ (szérum) — ELMENTVE, kivéve a megjelenésből.
@@ -50,10 +52,12 @@
 
   /* mobilon a develop-doboz alacsony, hogy a Kezelések feljebb induljon (a szöveg+szérum úgyis fel van húzva) */
   .develop{position:relative;padding:1.5rem 1.4rem .4rem;overflow:visible;min-height:0;margin-top:0;}
-  .develop-text{position:absolute;transform:translate(4px,-264px) scale(.70);transform-origin:top left;width:70%;z-index:2;pointer-events:none;}
+  /* a Fejlesztünk-hangolóból: NEM skálázott, a cím és a szöveg külön pozícionálva (drag-értékek) */
+  .develop-text{position:absolute;transform:translate(4px,-264px);transform-origin:top left;width:92%;z-index:2;pointer-events:none;}
+  .dev-col{max-width:51%;transform:translate(0px,5px);}
   .develop-text a{pointer-events:auto;}
-  .develop-text h2{font-size:clamp(2rem,8vw,2.6rem);margin-bottom:1rem;}
-  .develop-text p{color:var(--muted);font-size:.95rem;line-height:1.7;max-width:300px;margin-bottom:1.6rem;}
+  .develop-text h2{font-size:21px;line-height:1.08;margin:0;}
+  .develop-text p{color:var(--muted);font-size:11px;line-height:1.5;max-width:150px;margin:0;transform:translate(174px,-88px);}
   .develop-media{position:relative;z-index:1;height:200px;margin-top:1.5rem;border-radius:18px;background:radial-gradient(120px 120px at 70% 45%,#cfe0a8,#aecb7e 60%,#9bbe66 100%);box-shadow:0 30px 60px -28px rgba(110,132,103,.5);}
   .green-texture{position:absolute;left:0;right:0;bottom:0;height:190px;z-index:0;background:
     radial-gradient(140% 90px at 50% 100%,rgba(168,201,106,.45),transparent 70%),

@@ -12,11 +12,11 @@
   <div class="kz-head">
     <div class="kz-head-text">
       <span class="eyebrow">Kezelések</span>
-      <h2>Személyre szabott kezelések <em>a bőröd valódi igényeire.</em></h2>
+      <h2>Személyre szabott kezelések <em>a bőröd <span class="kz-blk">valódi</span> igényeire.</em></h2>
       <p class="kz-sub">Modern technológiával és szakértelemmel dolgozunk a természetes, egészséges ragyogásért.</p>
     </div>
     <div class="kz-orb">
-      <video class="kz-orb-vid" src="/orb.mp4?5" autoplay muted loop playsinline preload="auto" poster="/orb-poster.jpg?5"></video>
+      <video class="kz-orb-vid" src="/orb.mp4?5" muted loop playsinline preload="auto" poster="/orb-poster.jpg?5"></video>
     </div>
   </div>
 
@@ -81,6 +81,7 @@
   .kz-head-text{ max-width:46%; min-width:0; position:relative; z-index:2; transform:translate(0,-4px); }
   .kezelesek .eyebrow{ font-size:.525rem; margin-bottom:.74rem; }
   .kz-head h2{ font-size:19px; line-height:1.08; margin:0 0 .45rem; }
+  .kz-head h2 .kz-blk{ color:var(--ink); }
   .kz-sub{ color:var(--muted); font-size:10px; line-height:1.45; }
 
   /* Kép-keretek (helykijelölés) */

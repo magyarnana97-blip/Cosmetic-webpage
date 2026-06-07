@@ -59,6 +59,14 @@ import Footer from '../../components/Footer.astro';
       setRate();
     })();
 
+    // GÖMB videó (Kezelések fejléc): no-scroll lejátszás, hogy betöltéskor NE ugorjon az oldal középre
+    (() => {
+      const ov = document.querySelector('.kz-orb-vid');
+      if(!ov) return;
+      const play = () => window.__playNoScroll(ov);
+      if(ov.readyState >= 2) play(); else ov.addEventListener('loadeddata', play, { once:true });
+    })();
+
     const burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
     burger?.addEventListener('click',()=>{burger.classList.toggle('open');drawer?.classList.toggle('open');});
     drawer?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger?.classList.remove('open');drawer.classList.remove('open');}));
