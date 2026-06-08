@@ -11,23 +11,24 @@
       <p class="rolam-sub">Több mint kezeléseket kínálok. A célom megérteni, mire van valóban szüksége a bőrödnek, és olyan megoldást találni, amely hosszú távon is támogatja annak egészségét és természetes ragyogását.</p>
     </div>
     <div class="rolam-photo">
-      <img src="/marianna-rolam.webp" alt="Marianna portré" />
+      <img src="/marianna-rolam.webp?2" alt="Marianna portré" />
     </div>
   </div>
 </section>
 
 <style>
   .rolam{ background:var(--bg); padding:2rem 1.1rem 2.4rem 1.65rem; }
-  .rolam-head{ position:relative; display:flex; align-items:center; gap:.8rem; max-width:1000px; margin:0 auto; }
-  .rolam-text{ flex:1; min-width:0; }
+  /* réteges: a fotó külön rétegen (hátul), a szöveg elöl — így a szöveg rámehet a képre */
+  .rolam-head{ position:relative; min-height:280px; max-width:1000px; margin:0 auto; }
+  .rolam-text{ position:relative; z-index:2; max-width:60%; }
   .rolam .eyebrow{ font-size:.525rem; margin-bottom:.74rem; }
-  .rolam-h2{ font-size:19px; line-height:1.12; margin:0 0 .7rem; }
+  .rolam-h2{ font-size:21px; line-height:1.12; margin:0 0 .7rem; }
   .rolam-h2 em{ font-style:italic; color:var(--green); }
-  .rolam-sub{ color:var(--muted); font-size:9.5px; line-height:1.55; max-width:215px; }
-  .rolam-photo{ flex-shrink:0; width:140px; }
+  .rolam-sub{ color:var(--muted); font-size:10px; line-height:1.55; max-width:170px; }
+  .rolam-photo{ position:absolute; top:0; right:0; width:226px; z-index:1; transform:translate(13px,-127px); }
   .rolam-photo img{ width:100%; height:auto; display:block;
-    -webkit-mask-image:radial-gradient(70% 70% at 50% 45%, #000 55%, transparent 94%);
-    mask-image:radial-gradient(70% 70% at 50% 45%, #000 55%, transparent 94%); }
+    -webkit-mask-image:radial-gradient(74% 80% at 50% 42%, #000 46%, transparent 88%);
+    mask-image:radial-gradient(74% 80% at 50% 42%, #000 46%, transparent 88%); }
 
   @media (min-width:760px){
     .rolam{ padding:3rem 1.4rem; }
