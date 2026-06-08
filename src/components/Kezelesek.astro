@@ -1,9 +1,5 @@
 ---
 // ░ KEZELÉSEK szekció — külön komponens ░
-// CSAK a szöveg, egy az egyben a referenciaképről. Semmi kitalált tartalom.
-// NAGYON TÖMÖR mobil-elrendezés (cél ~1–1,3 iPhone 16 képernyő): kis kép-keretek, szoros térközök.
-// A képek helyét szaggatott KERET jelöli. A dizájn-elemek (gömb, effektek, sötét háttér, fotók) KÉSŐBB kerülnek rá.
-// Stílus SCOPED. Közös változók a global.css-ből.
 ---
 
 <section class="kezelesek" id="kezelesek">
@@ -13,14 +9,14 @@
     <div class="kz-head-text">
       <span class="eyebrow">Kezelések</span>
       <h2>Személyre szabott kezelések <em>a bőröd <span class="kz-blk">valódi</span> igényeire.</em></h2>
-      <p class="kz-sub">Modern technológiával és szakértelemmel dolgozunk a természetes, egészséges ragyogásért.</p>
+      <p class="kz-sub">Modern technológiával és szákértelemmel dolgozunk a természetes, egészséges ragyogásért.</p>
     </div>
     <div class="kz-orb">
       <video class="kz-orb-vid" src="/orb.mp4?5" muted loop playsinline preload="auto" poster="/orb-poster.jpg?5"></video>
     </div>
   </div>
 
-  <!-- 2 ░ A HÁROM FEJEZET — folyamatvonal, + gomb lenyitja a konkrét kezeléseket + árakat -->
+  <!-- 2 ░ A HÁROM FEJEZET -->
   <ul class="kz-list">
     <li class="kz-item">
       <span class="kz-node"><span class="kz-node-ph">Ikon</span></span>
@@ -49,12 +45,12 @@
           <span class="kz-tt">Anti-aging</span>
           <button class="kz-plus" aria-expanded="false" aria-label="Anti-aging árai"></button>
         </div>
-        <p class="kz-desc">Bőrfeszesítő, regeneráló kezelések luxus hatóanyagokkal.</p>
+        <p class="kz-desc">Bőrfeszestítő, regeneraló kezelések luxus hatóanyagokkal.</p>
         <div class="kz-detail">
           <ul class="kz-price">
             <li><span class="kz-pn">Egyénre szabott antiaging kezelések (60 perc)</span><span class="kz-pp">34 000 Ft-tól</span></li>
             <li><span class="kz-pn">Arckezelés luxus professzionális termékekkel</span><span class="kz-pp">36 000–56 000 Ft</span></li>
-            <li><span class="kz-pn">Mezoterápiás (elektroporátor/dermapen) kezelések</span><span class="kz-pp">36 000–58 000 Ft</span></li>
+            <li><span class="kz-pn">Mezoterapías (elektroporátor/dermapen) kezelések</span><span class="kz-pp">36 000–58 000 Ft</span></li>
           </ul>
         </div>
       </div>
@@ -72,7 +68,7 @@
             <li><span class="kz-pn">Szemöldök / szempilla festés</span><span class="kz-pp">4 000 Ft</span></li>
             <li><span class="kz-pn">Bőrápolási tanácsadás</span><span class="kz-pp">25 000 Ft</span></li>
             <li><span class="kz-pn">Nappali smink / próbasmink</span><span class="kz-pp">18 000 Ft</span></li>
-            <li><span class="kz-pn">Sminktanácsadás és oktatás (3 óra)</span><span class="kz-pp">55 000 Ft</span></li>
+            <li><span class="kz-pn">Sminktánsadás és oktatás (3 óra)</span><span class="kz-pp">55 000 Ft</span></li>
             <li><span class="kz-pn">Alkalmi / esküvői smink</span><span class="kz-pp">egyeztetés szerint</span></li>
           </ul>
         </div>
@@ -80,15 +76,12 @@
     </li>
   </ul>
 
-
 </section>
 
 <style>
-  /* felül kis padding, hogy a Fejlesztünk után ne legyen nagy hézag; balról a heró szövegével azonos távolság (~26px) */
-  .kezelesek{ background: var(--bg); padding: 10px 1.1rem 1.4rem 1.65rem; margin-top:-61px; position:relative; z-index:1; }
+  /* margin-top:0 — a Fejlesztünk height:0 után nincs mit kompenzálni */
+  .kezelesek{ background: var(--bg); padding: 10px 1.1rem 1.4rem 1.65rem; margin-top: 0; position:relative; z-index:1; }
 
-  /* 1. Fejléc — szöveg + kis gömb-keret egymás mellett. A cím tipográfiája = a heró felső szövegének tényleges (×0.82) mérete. */
-  /* réteges fejléc: a gömb-videó külön rétegen (hátul), a szöveg elöl — a cím mérete nem tolja el a videót */
   .kz-head{ position:relative; min-height:150px; max-width:1000px; margin:0 auto; isolation:isolate; }
   .kz-head-text{ max-width:46%; min-width:0; position:relative; z-index:5; transform:translate(0,-4px); }
   .kezelesek .eyebrow{ font-size:.525rem; margin-bottom:.74rem; }
@@ -96,7 +89,6 @@
   .kz-head h2 .kz-blk{ color:var(--ink); }
   .kz-sub{ color:var(--muted); font-size:10px; line-height:1.45; }
 
-  /* Kép-keretek (helykijelölés) */
   .kz-frame{
     border:1.5px dashed var(--green); border-radius:10px;
     display:flex; align-items:center; justify-content:center;
@@ -104,19 +96,14 @@
     font-size:.5rem; letter-spacing:.1em; text-transform:uppercase; text-align:center; padding:.2rem;
   }
   .kz-frame-orb{ width:95px; height:95px; flex-shrink:0; border-radius:50%; }
-  /* fejléc gömb-VIDEÓ: fehér háttér → multiply blenddel beleolvad a krém oldalba, végtelen loop */
-  /* izolált blend + krém háttér: a fehér megbízhatóan az oldal színévé válik; a maszk elkeni a széleket */
   .kz-orb{ position:absolute; top:0; right:0; width:290px; z-index:0; background:var(--bg); transform:translate(37px,-17px); transform-origin:top right; }
-  /* a krém háttér + felemelt mag MÁR a videóba van sütve → NINCS blend-mód; a maszk a széleket simítja */
   .kz-orb-vid{ width:100%; height:auto; display:block;
     -webkit-mask-image:radial-gradient(76% 62% at 50% 60%, #000 36%, transparent 84%);
     mask-image:radial-gradient(76% 62% at 50% 60%, #000 36%, transparent 84%); }
   .kz-frame-ic{ width:43px; height:43px; border-radius:50%; font-size:.4rem; margin:0 auto .4rem; }
   .kz-frame-face{ width:110px; height:110px; flex-shrink:0; border-radius:12px; }
 
-  /* 2. Kezelések — 2×2, tömör */
   .kz-list{ list-style:none; position:relative; display:flex; flex-direction:column; gap:1.05rem; max-width:1000px; margin:1.4rem auto; padding:0; }
-  /* fehér, enyhén csillogó FOLYAMATVONAL a karikák középvonalán */
   .kz-list::before{ content:''; position:absolute; left:25px; top:26px; bottom:26px; width:6px; border-radius:3px; z-index:0;
     background:linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.95) 16%, rgba(255,255,255,.55) 50%, rgba(255,255,255,.95) 84%, rgba(255,255,255,.15));
     background-size:100% 240%;
@@ -124,7 +111,6 @@
     animation:kzShimmer 5s ease-in-out infinite; }
   @keyframes kzShimmer{ 0%,100%{background-position:0 0;} 50%{background-position:0 -100%;} }
   .kz-item{ position:relative; display:flex; align-items:flex-start; gap:.4rem; z-index:1; }
-  /* karika-node (a vonalon ül; benne lesz az ikon) */
   .kz-node{ flex-shrink:0; width:51px; height:51px; border-radius:50%; background:var(--bg);
     border:1.5px solid rgba(255,255,255,.95); box-shadow:0 0 9px rgba(255,255,255,.85), 0 2px 9px rgba(120,140,90,.18);
     display:flex; align-items:center; justify-content:center; position:relative; z-index:2; }
@@ -132,18 +118,14 @@
   .kz-content{ flex:1; min-width:0; padding-top:.15rem; }
   .kz-bar{ width:100%; display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:.3rem 0 .15rem; }
   .kz-bar .kz-tt{ font-family:var(--sans); font-size:11px; letter-spacing:.05em; text-transform:uppercase; font-weight:600; color:var(--ink); margin:0; }
-  /* mindig látható leírás — kisebb betű és ~30%-kal keskenyebb */
   .kz-desc{ color:var(--muted); font-size:11px; line-height:1.45; max-width:202px; margin:.05rem 0 .25rem; }
-  /* + gomb (a konkrét kezeléseket nyitja) */
   .kz-plus{ position:relative; flex-shrink:0; width:26px; height:26px; border-radius:50%; border:1px solid var(--line); background:none; cursor:pointer; transition:transform .35s, background .35s, border-color .35s; }
   .kz-plus::before,.kz-plus::after{ content:''; position:absolute; top:50%; left:50%; background:var(--green-deep); transition:background .35s; }
   .kz-plus::before{ width:10px; height:1.6px; transform:translate(-50%,-50%); }
   .kz-plus::after{ width:1.6px; height:10px; transform:translate(-50%,-50%); }
   .kz-item.open .kz-plus{ background:var(--green); border-color:var(--green); transform:rotate(90deg); }
   .kz-item.open .kz-plus::before,.kz-item.open .kz-plus::after{ background:#fff; }
-  /* lenyíló részlet — a konkrét kezelések + áraik */
   .kz-detail{ overflow:hidden; max-height:0; transition:max-height .4s ease; padding-right:34px; }
-  /* árlista a lenyíló részben — név balra, ár jobbra */
   .kz-price{ list-style:none; margin:0; padding:.2rem 0 .5rem; display:flex; flex-direction:column; gap:.5rem; }
   .kz-price li{ display:flex; justify-content:space-between; align-items:baseline; gap:.7rem; border-bottom:1px solid var(--line); padding-bottom:.45rem; }
   .kz-price li:last-child{ border-bottom:none; padding-bottom:0; }
@@ -151,7 +133,6 @@
   .kz-pp{ color:var(--green-deep); font-size:.66rem; font-weight:600; white-space:nowrap; flex-shrink:0; }
   .kz-item.open .kz-detail{ max-height:520px; }
 
-  /* 3. Sötét blokk */
   .kz-dark{ max-width:1000px; margin:1.2rem auto; border:1.5px dashed var(--line); border-radius:14px; padding:9px; }
   .kz-dark-note{ font-size:.5rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); text-align:center; margin-bottom:.8rem; opacity:.75; }
   .kz-dark-grid{ display:flex; flex-direction:column; gap:.9rem; }
@@ -162,23 +143,20 @@
   .kz-vals span{ color:var(--muted); font-size:.72rem; }
   .kz-frame-orb-dark{ width:100%; height:144px; border-radius:12px; transform:translate(-6px,-1px); }
 
-  /* 4. Záró CTA — fotó + szöveg egymás mellett */
   .kz-bottom{ max-width:1000px; margin:1.2rem auto 0; display:flex; align-items:center; gap:.9rem; }
   .kz-bottom-text{ flex:1; min-width:0; }
   .kz-big{ font-family:var(--serif); font-size:14px; line-height:1.2; }
   .kz-accent{ color:var(--green-deep); font-size:.76rem; margin-top:.3rem; }
   .kz-btn{ display:inline-flex; align-self:flex-start; margin-top:.7rem; border:1px solid var(--green); color:var(--green-deep); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.6rem 1rem; border-radius:8px; }
 
-  /* Nagyobb képernyő: a referencia tág elrendezése */
   @media (min-width:760px){
-    .kezelesek{ padding:2.4rem 1.2rem 3rem; }
+    .kezelesek{ padding:2.4rem 1.2rem 3rem; margin-top:0; }
     .kz-head{ gap:2rem; }
     .kz-head h2{ margin-bottom:.7rem; }
     .kz-sub{ font-size:.9rem; max-width:430px; }
     .kz-frame-orb{ width:auto; height:auto; flex:1; max-width:380px; min-height:240px; border-radius:14px; }
     .kz-head{ min-height:230px; }
     .kz-orb{ width:380px; }
-    .kezelesek{ margin-top:0; }
     .kz-list{ max-width:560px; gap:1.3rem; margin:2.4rem auto; }
     .kz-bar .kz-tt{ font-size:.74rem; }
     .kz-desc{ font-size:.7rem; max-width:300px; }
@@ -198,7 +176,6 @@
 </style>
 
 <script>
-  // + gomb: lenyitja/becsukja az adott kezelés részleteit
   document.querySelectorAll('.kezelesek .kz-plus').forEach(function(btn){
     btn.addEventListener('click', function(){
       var li = btn.closest('.kz-item');

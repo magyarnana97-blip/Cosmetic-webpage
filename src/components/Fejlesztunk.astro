@@ -1,6 +1,6 @@
 ---
-// ░ FEJLESZTÜNK ░ — szöveg + szérum (csepp) videó. A videó vezérlése az oldal közös scriptjében.
-// A .brush ecsetvonás a hero #brushgrad gradiensét használja (a hero a DOM-ban előrébb van).
+// ░ FEJLESZTÜNK ░ — szöveg + szérum (csepp) videó.
+// A .brush ecsetvonás a hero #brushgrad gradiensét használja.
 ---
 
 <section class="develop" id="fejlesztunk">
@@ -15,18 +15,12 @@
     <p class="reveal d2 dev-p">Összeműködünk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.</p>
   </div>
   <!--
-    MÁSODIK VIDEÓ (szérum) — ELMENTVE, kivéve a megjelenésből.
-    A JELENLEGI színekkel/filterekkel/maszkkal (NEM az eredeti feltöltött).
-    A pontos kinézet a lenti .serum CSS-ben él: filter saturate(1.45) brightness(1) + a réteges él-maszk.
-    VISSZATÉTEL: töröld ezt a nyitó komment-sort és lent a záró jelölőt, és a videó visszakerül a mostani kinézettel.
-
   <div class="serum reveal-media">
     <video id="dropvid" muted playsinline preload="auto" poster="/drop2-poster.jpg">
       <source src="/drop2.mp4" type="video/mp4" />
     </video>
   </div>
   -->
-
 </section>
 
 <style>
@@ -38,29 +32,40 @@
     linear-gradient(to left, var(--bg) 0%, transparent 22%),
     linear-gradient(to top, var(--bg) 0%, transparent 20%),
     radial-gradient(80% 74% at 64% 58%, transparent 42%, var(--bg) 84%);}
-  .pool{fill:rgba(150,180,90,.26);}
-  .ripple{fill:none;stroke:#9bbe66;stroke-width:1.6;transform-box:fill-box;transform-origin:center;animation:rippleout 3s ease-out infinite;}
-  .ripple2{animation-delay:.32s;}
-  .drop{transform-box:fill-box;transform-origin:center;animation:dropfall 3s cubic-bezier(.45,0,.9,.45) infinite;}
   @keyframes dropfall{0%{transform:translateY(0);opacity:0;}8%{opacity:1;}42%{transform:translateY(33px);opacity:1;}48%{transform:translateY(36px);opacity:0;}100%{transform:translateY(36px);opacity:0;}}
   @keyframes rippleout{0%,42%{transform:scale(.25);opacity:0;}50%{opacity:.7;}82%{transform:scale(2.3);opacity:0;}100%{opacity:0;}}
-  @media (prefers-reduced-motion:reduce){.drop,.ripple{animation:none;}}
 
-  /* mobilon: padding+height=0, a szekció nem foglal helyet, szöveg abszolút felhúzva */
-  .develop{position:relative;padding:0;height:0;overflow:visible;min-height:0;margin-top:0;}
-  .develop-text{position:absolute;transform:translate(4px,-264px);transform-origin:top left;width:100%;z-index:2;pointer-events:none;display:flex;align-items:center;gap:1rem;padding-right:1.2rem;}
+  /* mobilon: a szekció 0 magasságú, csak az abszolút szöveg látszódik */
+  .develop{
+    position: relative;
+    padding: 0;
+    height: 0;
+    overflow: visible;
+    min-height: 0;
+    margin-top: 0;
+  }
+  /* a szöveg -230px = a kártyasáv aljaihoz kalibrálva;
+     a -264px volt az eddi ami túl fel húzta, most kisebb negatív érték */
+  .develop-text{
+    position: absolute;
+    transform: translate(4px, -230px);
+    transform-origin: top left;
+    width: 100%;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1.2rem;
+  }
   .dev-col{flex:0 0 auto;width:47%;}
   .develop-text a{pointer-events:auto;}
   .develop-text h2{font-size:21px;line-height:1.08;margin:0;}
   .develop-text p{color:var(--muted);font-size:11px;line-height:1.5;flex:1;min-width:0;max-width:153px;margin:0;}
-  .develop-media{position:relative;z-index:1;height:200px;margin-top:1.5rem;border-radius:18px;background:radial-gradient(120px 120px at 70% 45%,#cfe0a8,#aecb7e 60%,#9bbe66 100%);box-shadow:0 30px 60px -28px rgba(110,132,103,.5);}
-  .green-texture{position:absolute;left:0;right:0;bottom:0;height:190px;z-index:0;background:
-    radial-gradient(140% 90px at 50% 100%,rgba(168,201,106,.45),transparent 70%),
-    repeating-linear-gradient(115deg,rgba(150,180,90,.16) 0 2px,transparent 2px 16px);
-    pointer-events:none;}
 
   @media (min-width:760px){
     .develop{height:auto;padding:1.5rem 1.4rem 2rem;max-width:1000px;margin-left:auto;margin-right:auto;min-height:90px;}
+    .develop-text{position:relative;transform:none;}
     .develop-text p{max-width:420px;}
   }
 </style>
