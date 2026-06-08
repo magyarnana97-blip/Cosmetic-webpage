@@ -56,10 +56,10 @@
     max-width: 170px;
   }
 
-  /* top:0 = kep teteje a 'Rolam' szoval egyvonalban */
+  /* +10% nagyobb (63%->69%), top -101px hogy az alja ne mozduljon */
   .rolam-photo{
     position: absolute;
-    top: 0px;
+    top: -101px;
     right: 0px;
     width: 69%;
     z-index: 1;
@@ -70,19 +70,14 @@
     width: 100%;
     height: auto;
     display: block;
-    /* Felul: elso 8%-ban teljesen atlatszо, 8-18% kozott halvany -> erosebb felso vages
-       Jobb oldal + also sarok: radialis gradienssel elmaszatolva
-       A ket reteg intersect-tel kombinalva */
     -webkit-mask-image:
-      linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 8%, #000 20%),
-      linear-gradient(to left, transparent 0%, rgba(0,0,0,0.4) 10%, #000 25%),
-      radial-gradient(75% 85% at 42% 52%, #000 52%, transparent 90%);
-    -webkit-mask-composite: source-in, source-in;
+      linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%),
+      radial-gradient(88% 88% at 80% 64%, #000 70%, transparent 93%);
+    -webkit-mask-composite: source-in;
     mask-image:
-      linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 8%, #000 20%),
-      linear-gradient(to left, transparent 0%, rgba(0,0,0,0.4) 10%, #000 25%),
-      radial-gradient(75% 85% at 42% 52%, #000 52%, transparent 90%);
-    mask-composite: intersect, intersect;
+      linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%),
+      radial-gradient(88% 88% at 80% 64%, #000 70%, transparent 93%);
+    mask-composite: intersect;
   }
 
   @media (min-width: 760px){
