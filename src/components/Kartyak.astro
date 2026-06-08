@@ -29,13 +29,14 @@
     overflow:hidden;
     background:#fff;
     box-sizing:border-box;
-    width:52px;
-    height:52px;
+    /* 52 * 0.9 ≈ 47px */
+    width:47px;
+    height:47px;
   }
-  /* mind a három azonos top:8px, csak vízszintes pozíció különbözik */
+  /* mind a három azonos Y (0), csak vízszintes eltolás különbözik */
   .ic1{transform:translate(-50%,0) translate(-115px,0);}
-  .ic2{transform:translate(-50%,0) translate(-1px,-3px);}
-  .ic3{transform:translate(-50%,0) translate(112px,-3px);}
+  .ic2{transform:translate(-50%,0) translate(-1px,0);}
+  .ic3{transform:translate(-50%,0) translate(112px,0);}
 
   .card-ic{
     width:100%;
