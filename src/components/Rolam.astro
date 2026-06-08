@@ -28,9 +28,6 @@
     position: relative;
   }
 
-  /* Felső fehér fedőréteg: a szekció tetejétől (padding felett is)
-     a .rolam-head tetejéig (= padding-top: 26px) teli háttérszín,
-     utána 30px alatt teljesen átlátszó */
   .rolam::before{
     content: '';
     position: absolute;
@@ -45,7 +42,6 @@
     pointer-events: none;
   }
 
-  /* Jobb oldali fedőréteg: háttérszín → átlátszó, kép jobb szélét fedi */
   .rolam::after{
     content: '';
     position: absolute;
@@ -77,9 +73,10 @@
   .rolam-h2 em{ font-style: italic; color: var(--green); }
   .rolam-sub{ color: var(--muted); font-size: 10px; line-height: 1.55; max-width: 170px; }
 
+  /* 5px-rel feljebb: -101px -> -106px */
   .rolam-photo{
     position: absolute;
-    top: -101px;
+    top: -106px;
     right: 0px;
     width: 69%;
     z-index: 1;
