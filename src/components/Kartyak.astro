@@ -1,4 +1,5 @@
-// ░ KÁRTYÁK ░ — a hero alá behúzott (negatív transform) hármas kártyasáv.
+---
+// KÁRTYÁK — a hero alá behúzott (negatív transform) hármas kártyasáv.
 ---
 
 <section class="cards-band">
@@ -17,7 +18,7 @@
   .cards{position:relative;--cpad:6px;--cardline:68%;background:rgba(20,23,21,0.4);border:1px solid rgba(255,255,255,0.22);border-radius:20px;padding:var(--cpad) .85rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;margin:0;transform:translate(-1px,-224px);box-shadow:0 26px 54px -26px rgba(0,0,0,.4);}
   .card{text-align:center;padding:54px .35rem .5rem;position:relative;}
   .card:not(:last-child)::after{content:'';position:absolute;right:0;top:calc((100% - var(--cardline))/2);height:var(--cardline);width:1.5px;background:rgba(255,255,255,.6);}
-  .card-ic{position:absolute;top:8px;left:50%;z-index:3;object-fit:contain;border-radius:8px;}
+  .card-ic{position:absolute;top:8px;left:50%;z-index:3;object-fit:contain;border-radius:50%;background:transparent;}
   .ic1{width:46px;height:46px;transform:translate(-50%,0) translate(-115px,2px);}
   .ic2{width:52px;height:52px;transform:translate(-50%,0) translate(-1px,-3px);}
   .ic3{width:52px;height:52px;transform:translate(-50%,0) translate(112px,-3px);}
