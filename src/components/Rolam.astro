@@ -17,7 +17,6 @@
 
 <style>
   .rolam{
-    /* Háttér: a kép jobb fele felől jövő világos zold-fehér fény — harmonizál a fotó hátterével */
     background:
       radial-gradient(ellipse 85% 70% at 80% 40%,
         rgba(220,235,200,0.9) 0%,
@@ -27,6 +26,37 @@
     padding: 26px 1.1rem 37px 24px;
     overflow: hidden;
     position: relative;
+  }
+
+  /* Felső fehér fedőréteg: a szekció tetejétől (padding felett is)
+     a .rolam-head tetejéig (= padding-top: 26px) teli háttérszín,
+     utána 30px alatt teljesen átlátszó */
+  .rolam::before{
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 90px;
+    background: linear-gradient(to bottom,
+      var(--bg) 0%,
+      var(--bg) 29%,
+      transparent 100%
+    );
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Jobb oldali fedőréteg: háttérszín → átlátszó, kép jobb szélét fedi */
+  .rolam::after{
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 55px;
+    background: linear-gradient(to left,
+      var(--bg) 0%,
+      transparent 100%
+    );
+    z-index: 3;
+    pointer-events: none;
   }
 
   .rolam-head{
@@ -60,7 +90,6 @@
     width: 100%;
     height: auto;
     display: block;
-    /* Maszk: alul + oldalt olvad, felul/jobb a háttér gradiens viszi át a színt */
     -webkit-mask-image:
       linear-gradient(to bottom, #000 0%, #000 65%, transparent 100%),
       radial-gradient(88% 88% at 80% 64%, #000 70%, transparent 93%);

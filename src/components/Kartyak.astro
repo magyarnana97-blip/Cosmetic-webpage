@@ -1,5 +1,5 @@
 ---
-// KÁRTYÁK — a hero alá behúzott (negatív transform) hármas kártyasáv.
+// KÁRTYÁK — a hero alá behúzott (negatív transform) hármas kártyasáv.
 ---
 
 <section class="cards-band">
@@ -19,7 +19,6 @@
   .card{text-align:center;padding:54px .35rem .5rem;position:relative;}
   .card:not(:last-child)::after{content:'';position:absolute;right:0;top:calc((100% - var(--cardline))/2);height:var(--cardline);width:1.5px;background:rgba(255,255,255,.6);}
 
-  /* Wrapper: kör alakú vekóny keret, kivágja a kép köré eső részét */
   .card-ic-wrap{
     position:absolute;
     top:8px;
@@ -30,19 +29,19 @@
     overflow:hidden;
     background:#fff;
     box-sizing:border-box;
+    /* mind a három 52×52px */
+    width:52px;
+    height:52px;
   }
-  .ic1{width:46px;height:46px;transform:translate(-50%,0) translate(-115px,2px);}
-  .ic2{width:52px;height:52px;transform:translate(-50%,0) translate(-1px,-3px);}
-  .ic3{width:52px;height:52px;transform:translate(-50%,0) translate(112px,-3px);}
+  .ic1{transform:translate(-50%,0) translate(-115px,2px);}
+  .ic2{transform:translate(-50%,0) translate(-1px,-3px);}
+  .ic3{transform:translate(-50%,0) translate(112px,-3px);}
 
-  /* Kép: betölti a kört, a vastag fehér keret a JPG-ben el van fedve */
   .card-ic{
     width:100%;
     height:100%;
     display:block;
     object-fit:cover;
-    /* A JPG-ben lévő vastag fehér keret benyúlik a kép széléről ~15%-ra
-       — ezzel belezoomolunk és levágjuk a fehér részt */
     object-position:center;
     scale:1.35;
   }
