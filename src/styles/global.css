@@ -23,18 +23,10 @@ em{font-style:italic;color:var(--green);}
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 
-/* ── SCROLL REVEAL (belépő animáció) ── */
-.reveal,.reveal-media{
-  opacity:0;
-  transform:translateY(22px);
-  filter:blur(4px);
-  transition:
-    opacity  .85s cubic-bezier(.22,1,.36,1),
-    transform .85s cubic-bezier(.22,1,.36,1),
-    filter   .85s cubic-bezier(.22,1,.36,1);
-}
+/* ── SCROLL REVEAL (belépő animáció) — eredeti értékek ── */
+.reveal,.reveal-media{opacity:0;transform:translateY(30px);filter:blur(5px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1),filter 1s cubic-bezier(.22,1,.36,1);}
 .reveal.in,.reveal-media.in{opacity:1;transform:none;filter:blur(0);}
-.d1{transition-delay:.08s;} .d2{transition-delay:.18s;} .d3{transition-delay:.28s;}
+.d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;}
 
 /* ── SCROLL EXIT — Apple-stílusú hátra tűnés görgetéskor ── */
 @supports (animation-timeline: scroll()) {
@@ -44,25 +36,16 @@ a{text-decoration:none;color:inherit;}
     animation-range: exit 0% exit 40%;
     will-change: opacity, transform, filter;
   }
-
   @keyframes scroll-fade-out {
-    from {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      filter: blur(0px);
-    }
-    to {
-      opacity: 0;
-      transform: scale(0.94) translateY(-28px);
-      filter: blur(6px);
-    }
+    from { opacity:1; transform:scale(1) translateY(0); filter:blur(0px); }
+    to   { opacity:0; transform:scale(0.94) translateY(-28px); filter:blur(6px); }
   }
 }
 
-/* Reduced motion — animációk kikapcsolása ha a user preferálja */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-media { transition: none; opacity: 1; transform: none; filter: none; }
-  .scroll-exit { animation: none !important; }
+  .reveal,.reveal-media{transition:none;opacity:1;transform:none;filter:none;}
+  .scroll-exit{animation:none !important;}
 }
 
 .eyebrow{display:block;font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.9rem;line-height:1.6;}
