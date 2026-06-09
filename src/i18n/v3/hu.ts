@@ -18,7 +18,7 @@ export const hu = {
   hero: {
     eyebrow: 'Professzionális\nbőrápolás',
     h1Lines: ['A tudomány', 'ereje.', 'A természet', 'intelligenciája.'],
-    lead: 'Személyre szabott kezelések a bőröd egészségéért és ragyogásáért.',
+    lead: 'Személyre szabott kezelések a bőröd egészségéért és természetes ragyogásáért.',
     cta1: 'Időpontot foglalok',
     cta2Line1: 'Ismerd meg a',
     cta2Line2: 'kezeléseket',
@@ -31,9 +31,9 @@ export const hu = {
   ],
   develop: {
     eyebrow: 'A bőröd megérdemli',
-    h2: 'Nem csak kezelünk.',
-    h2em: 'Fejlesztünk.',
-    body: 'Együttműködünk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.',
+    h2: 'Nem csak kezelek.',
+    h2em: 'Fejlesztek.',
+    body: 'Együtt dolgozunk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.',
   },
   treatments: {
     eyebrow: 'Kezelések',
@@ -41,7 +41,7 @@ export const hu = {
     h2em: 'a bőröd',
     h2bold: 'valódi',
     h2end: 'igényeire.',
-    sub: 'Modern technológiával és szakértelemmel dolgozunk a természetes, egészséges ragyogásért.',
+    sub: 'Modern technológiával és szakértelemmel dolgozom a természetes, egészséges ragyogásért.',
     categories: [
       {
         title: 'Arckezelések',
@@ -59,11 +59,11 @@ export const hu = {
       {
         title: 'Anti-aging',
         ariaLabel: 'Anti-aging árai',
-        desc: 'Bőrfeszestítő, regeneratív kezelések luxus hatóanyagokkal.',
+        desc: 'Bőrfeszesítő, regeneratív kezelések luxus hatóanyagokkal.',
         items: [
           { name: 'Egyénre szabott antiaging kezelések (60 perc)',   price: '34 000 Ft-tól' },
           { name: 'Arckezelés luxus professzionális termékekkel',    price: '36 000–56 000 Ft' },
-          { name: 'Mezoterapíiás (elektroporátor/dermapen) kezelések', price: '36 000–58 000 Ft' },
+          { name: 'Mezoterápiás (elektroporátor/dermapen) kezelések', price: '36 000–58 000 Ft' },
         ],
       },
       {
@@ -74,7 +74,7 @@ export const hu = {
           { name: 'Szemöldök / szempilla festés',          price: '4 000 Ft' },
           { name: 'Bőrápolási tanácsadás',                 price: '25 000 Ft' },
           { name: 'Nappali smink / próbasmink',            price: '18 000 Ft' },
-          { name: 'Sminktácsadás és oktatás (3 óra)',    price: '55 000 Ft' },
+          { name: 'Sminktanácsadás és oktatás (3 óra)',    price: '55 000 Ft' },
           { name: 'Alkalmi / esküvői smink',               price: 'egyeztetés szerint' },
         ],
       },
@@ -86,18 +86,18 @@ export const hu = {
     h2em1: 'információ.',
     h2mid: 'A kezelés célja ennek',
     h2em2: 'megértése.',
-    body: 'Több mint kezeléseket kínálok. A célom megérteni, mire van valóban szüksége a bőrödnek, és olyan megoldást találni, amely hosszú távon is támogatja annak egészségét és természetes ragyogását. A bőröd többet tud elmondani magadról, mint gondolnád.',
+    body: 'Több vagyok egy kozmetikusnál. A célom megérteni, mire van valóban szüksége a bőrödnek — és olyan megoldást találni, amely hosszú távon is támogatja annak egészségét és ragyogását. A bőröd többet tud elmondani magadról, mint gondolnád.',
     imgAlt: 'Marianna portré',
   },
   closing: {
     h2: 'Kezdjük el együtt',
-    body: 'Az első konzultáció ingyenes. Találjuk meg a bőrödnek leginkább megfelelő, természetes kezelést.',
+    body: 'Az első konzultáció ingyenes. Találjuk meg a bőrödnek leginkább megfelelő kezelést.',
     cta: 'Foglalj időpontot',
   },
   contact: {
     eyebrow: 'Kapcsolat',
-    h2: 'Foglaljon időpontot ma',
-    sub: 'Örömmel várom. Keressen telefonon, e-mailben, vagy küldjön üzenetet az alábbi űrlapon.',
+    h2: 'Foglalj időpontot ma',
+    sub: 'Örömmel várlak. Keress telefonon, e-mailben, vagy küldjön üzenetet az alábbi űrlapon.',
     address: '1126 Budapest, Dolgos utca 2. – 6B lépcsőház',
     phone: '+36 20 339 3399',
     phoneHref: 'tel:+36203393399',
