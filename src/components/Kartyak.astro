@@ -1,5 +1,6 @@
 ---
-// KÁRTYÁK — a hero alá behúzott (negatív transform) hármas kártyasáv.
+import type { T } from '../i18n/v3/hu';
+const { tr } = Astro.props as { tr: T };
 ---
 
 <section class="cards-band">
@@ -7,9 +8,12 @@
     <div class="card-ic-wrap ic1"><img src="/piktogram_1.jpg" class="card-ic" alt="" /></div>
     <div class="card-ic-wrap ic2"><img src="/piktogram_2.jpg" class="card-ic" alt="" /></div>
     <div class="card-ic-wrap ic3"><img src="/piktogram_3.jpg" class="card-ic" alt="" /></div>
-    <div class="card reveal"><h3>Tudományos<br/>háttér</h3><p>Bizonyított hatóanyagok, látható eredmények.</p></div>
-    <div class="card reveal d1"><h3>Személyre<br/>szabott kezelés</h3><p>Mert minden bőr egyedi.</p></div>
-    <div class="card reveal d2"><h3>Prémium<br/>élmény</h3><p>Modern technológia, maximális kényelem.</p></div>
+    {tr.cards.map((c, i) => (
+      <div class={`card reveal${i > 0 ? ' d' + i : ''}`}>
+        <h3 style="white-space:pre-line">{c.title}</h3>
+        <p>{c.desc}</p>
+      </div>
+    ))}
   </div>
 </section>
 
@@ -18,38 +22,13 @@
   .cards{position:relative;--cpad:6px;--cardline:68%;background:rgba(20,23,21,0.4);border:1px solid rgba(255,255,255,0.22);border-radius:20px;padding:var(--cpad) .85rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;margin:0;transform:translate(-1px,-224px);box-shadow:0 26px 54px -26px rgba(0,0,0,.4);}
   .card{text-align:center;padding:54px .35rem .5rem;position:relative;}
   .card:not(:last-child)::after{content:'';position:absolute;right:0;top:calc((100% - var(--cardline))/2);height:var(--cardline);width:1.5px;background:rgba(255,255,255,.6);}
-
-  .card-ic-wrap{
-    position:absolute;
-    top:8px;
-    left:50%;
-    z-index:3;
-    border-radius:50%;
-    border:1.5px solid rgba(255,255,255,0.85);
-    overflow:hidden;
-    background:#fff;
-    box-sizing:border-box;
-    /* 52 * 0.9 ≈ 47px */
-    width:47px;
-    height:47px;
-  }
-  /* mind a három azonos Y (0), csak vízszintes eltolás különbözik */
+  .card-ic-wrap{position:absolute;top:8px;left:50%;z-index:3;border-radius:50%;border:1.5px solid rgba(255,255,255,0.85);overflow:hidden;background:#fff;box-sizing:border-box;width:47px;height:47px;}
   .ic1{transform:translate(-50%,0) translate(-115px,0);}
   .ic2{transform:translate(-50%,0) translate(-1px,0);}
   .ic3{transform:translate(-50%,0) translate(112px,0);}
-
-  .card-ic{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-    object-position:center;
-    scale:1.35;
-  }
-
+  .card-ic{width:100%;height:100%;display:block;object-fit:cover;object-position:center;scale:1.35;}
   .card h3{font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;font-family:var(--sans);font-weight:500;color:#fff;margin-bottom:.5rem;line-height:1.3;}
   .card p{color:rgba(255,255,255,.78);font-size:.7rem;line-height:1.5;}
-
   @media (min-width:760px){
     .cards{max-width:1000px;margin-left:auto;margin-right:auto;}
   }

@@ -1,60 +1,28 @@
 ---
-// ░ FEJLESZTÜNK ░ — szöveg + szérum (csepp) videó.
-// A .brush ecsetvonás a hero #brushgrad gradiensét használja.
+import type { T } from '../i18n/v3/hu';
+const { tr } = Astro.props as { tr: T };
 ---
 
 <section class="develop" id="fejlesztunk">
   <div class="develop-text">
     <div class="dev-col">
-      <span class="eyebrow reveal">A bőröd megérdemli</span>
-      <h2 class="reveal d1">Nem csak kezelünk.<br/><em>Fejlesztünk.</em></h2>
+      <span class="eyebrow reveal">{tr.develop.eyebrow}</span>
+      <h2 class="reveal d1">{tr.develop.h2}<br/><em>{tr.develop.h2em}</em></h2>
       <svg class="brush brush-dev reveal d1" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
         <path d="M1,2.6 L199,4.2 L199,5.6 L1,7.4 Z" fill="url(#brushgrad)"/>
       </svg>
     </div>
-    <p class="reveal d2 dev-p">Együttműködünk a bőröddel, hogy hosszú távon a legjobb önmagad lehess.</p>
+    <p class="reveal d2 dev-p">{tr.develop.body}</p>
   </div>
-  <!--
-  <div class="serum reveal-media">
-    <video id="dropvid" muted playsinline preload="auto" poster="/drop2-poster.jpg">
-      <source src="/drop2.mp4" type="video/mp4" />
-    </video>
-  </div>
-  -->
 </section>
 
 <style>
-  .serum{position:absolute;left:105px;top:-305px;z-index:0;width:70%;pointer-events:auto;}
-  .serum video{width:100%;display:block;filter:saturate(1.45) brightness(1.0);transform:translateZ(0);will-change:transform;}
-  .serum::after{content:'';position:absolute;inset:0;pointer-events:none;background:
-    linear-gradient(to bottom, var(--bg) 0%, transparent 30%),
-    linear-gradient(to right, var(--bg) 0%, transparent 24%),
-    linear-gradient(to left, var(--bg) 0%, transparent 22%),
-    linear-gradient(to top, var(--bg) 0%, transparent 20%),
-    radial-gradient(80% 74% at 64% 58%, transparent 42%, var(--bg) 84%);}
-  @keyframes dropfall{0%{transform:translateY(0);opacity:0;}8%{opacity:1;}42%{transform:translateY(33px);opacity:1;}48%{transform:translateY(36px);opacity:0;}100%{transform:translateY(36px);opacity:0;}}
-  @keyframes rippleout{0%,42%{transform:scale(.25);opacity:0;}50%{opacity:.7;}82%{transform:scale(2.3);opacity:0;}100%{opacity:0;}}
-
-  .develop{
-    position: relative;
-    padding: 1.5rem 1.4rem 1rem;
-    margin-top: -230px;
-  }
-  .develop-text{
-    position: relative;
-    width: 100%;
-    z-index: 2;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding-right: 1.2rem;
-  }
+  .develop{position:relative;padding:1.5rem 1.4rem 1rem;margin-top:-230px;}
+  .develop-text{position:relative;width:100%;z-index:2;pointer-events:none;display:flex;align-items:center;gap:1rem;padding-right:1.2rem;}
   .dev-col{flex:0 0 auto;width:47%;}
   .develop-text a{pointer-events:auto;}
   .develop-text h2{font-size:21px;line-height:1.08;margin:0;}
   .develop-text p{color:var(--muted);font-size:11px;line-height:1.5;flex:1;min-width:0;max-width:153px;margin:0;}
-
   @media (min-width:760px){
     .develop{height:auto;padding:1.5rem 1.4rem 2rem;max-width:1000px;margin-left:auto;margin-right:auto;min-height:90px;margin-top:-230px;}
     .develop-text{position:relative;transform:none;}

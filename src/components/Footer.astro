@@ -1,12 +1,14 @@
 ---
-// ░ LÁBLÉC ░ — logó, név, szlogen, copyright. Itt van a #kapcsolat horgony.
+import type { T } from '../i18n/v3/hu';
+const { tr } = Astro.props as { tr: T };
+const ft = tr.footer;
 ---
 
-<footer class="foot" id="kapcsolat">
-  <img src="/logo.png" alt="" class="foot-mark" />
-  <p class="foot-name"><b>szépség</b>terapeuta</p>
-  <p class="foot-tag">A tudomány ereje, a természet intelligenciája.</p>
-  <p class="foot-copy">© 2026 szépségterapeuta · Budapest</p>
+<footer class="foot">
+  <img src="/logo.png" alt={ft.logoAlt} class="foot-mark" />
+  <p class="foot-name"><b>{ft.brandBold}</b>{ft.brandRest}</p>
+  <p class="foot-tag">{ft.tagline}</p>
+  <p class="foot-copy">{ft.copy}</p>
 </footer>
 
 <style>

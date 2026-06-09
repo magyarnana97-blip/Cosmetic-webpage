@@ -1,5 +1,5 @@
 ---
-// FŐOLDAL — v3 (mobil-fókuszú, futurisztikus design)
+import { t } from '../i18n/v3/index';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
@@ -10,10 +10,15 @@ import Rolam from '../components/Rolam.astro';
 import Boreelemzes from '../components/Boreelemzes.astro';
 import Kapcsolat from '../components/Kapcsolat.astro';
 import Footer from '../components/Footer.astro';
+
+// Nyelvválasztás: ?lang=en paraméter alapján, alapértelmezett: hu
+const url = Astro.url;
+const lang = (url.searchParams.get('lang') === 'en') ? 'en' : 'hu';
+const tr = t(lang);
 ---
 
 <!DOCTYPE html>
-<html lang="hu">
+<html lang={tr.meta.lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,23 +32,23 @@ import Footer from '../components/Footer.astro';
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     });
   </script>
-  <meta name="description" content="Prémium kozmetikai kezelések Budapesten. Hancz Marianna szépségterapeuta, QMS Anti-aging specialista." />
-  <title>Hancz Marianna — Szépségterapeuta | Budapest</title>
+  <meta name="description" content={tr.meta.description} />
+  <title>{tr.meta.title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
 <body>
-  <Nav />
-  <Hero />
-  <Kartyak />
-  <Fejlesztunk />
-  <Kezelesek />
-  <Rolam />
-  <Boreelemzes />
-  <Kapcsolat />
-  <Footer />
+  <Nav tr={tr} />
+  <Hero tr={tr} />
+  <Kartyak tr={tr} />
+  <Fejlesztunk tr={tr} />
+  <Kezelesek tr={tr} />
+  <Rolam tr={tr} />
+  <Boreelemzes tr={tr} />
+  <Kapcsolat tr={tr} />
+  <Footer tr={tr} />
 
   <script>
     if('scrollRestoration' in history) history.scrollRestoration='manual';

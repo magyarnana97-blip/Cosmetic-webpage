@@ -1,186 +1,103 @@
 ---
-// ░ KEZELÉSEK szekció — külön komponens ░
+import type { T } from '../i18n/v3/hu';
+const { tr } = Astro.props as { tr: T };
+const kz = tr.treatments;
 ---
 
 <section class="kezelesek" id="kezelesek">
 
-  <!-- 1 ░ FEJLÉC -->
   <div class="kz-head">
     <div class="kz-head-text">
-      <span class="eyebrow">Kezelések</span>
-      <h2>Személyre szabott kezelések <em>a bőröd <span class="kz-blk">valódi</span> igényeire.</em></h2>
-      <p class="kz-sub">Modern technológiával és szakértelemmel dolgozunk a természetes, egészséges ragyogásért.</p>
+      <span class="eyebrow">{kz.eyebrow}</span>
+      <h2>{kz.h2} <em>{kz.h2em} <span class="kz-blk">{kz.h2bold}</span> {kz.h2end}</em></h2>
+      <p class="kz-sub">{kz.sub}</p>
     </div>
     <div class="kz-orb">
       <video class="kz-orb-vid" src="/orb.mp4?5" muted loop playsinline preload="auto" poster="/orb-poster.jpg?5"></video>
     </div>
   </div>
 
-  <!-- 2 ░ A HÁROM FEJEZET -->
   <ul class="kz-list">
-    <li class="kz-item">
-      <span class="kz-node"><span class="kz-node-ph">Ikon</span></span>
-      <div class="kz-content">
-        <div class="kz-bar">
-          <span class="kz-tt">Arckezelések</span>
-          <button class="kz-plus" aria-expanded="false" aria-label="Arckezelések árai"></button>
+    {kz.categories.map(cat => (
+      <li class="kz-item">
+        <span class="kz-node"><span class="kz-node-ph">Ikon</span></span>
+        <div class="kz-content">
+          <div class="kz-bar">
+            <span class="kz-tt">{cat.title}</span>
+            <button class="kz-plus" aria-expanded="false" aria-label={cat.ariaLabel}></button>
+          </div>
+          <p class="kz-desc">{cat.desc}</p>
+          <div class="kz-detail">
+            <ul class="kz-price">
+              {cat.items.map(item => (
+                <li>
+                  <span class="kz-pn">{item.name}</span>
+                  <span class="kz-pp">{item.price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <p class="kz-desc">Professzionális arctisztítás, lágylézer és hatóanyagos kezelések.</p>
-        <div class="kz-detail">
-          <ul class="kz-price">
-            <li><span class="kz-pn">JANSSEN prof. arctisztítás (60 perc)</span><span class="kz-pp">28 000 Ft</span></li>
-            <li><span class="kz-pn">JANSSEN prof. arctisztítás (80 perc)</span><span class="kz-pp">30 000 Ft</span></li>
-            <li><span class="kz-pn">Lágylézeres kezelés (30 perc)</span><span class="kz-pp">24 000 Ft</span></li>
-            <li><span class="kz-pn">Lágylézeres kezelés kezelésbe építve (12 perc)</span><span class="kz-pp">14 000 Ft</span></li>
-            <li><span class="kz-pn">Hatóanyagos masszázs (30 perc)</span><span class="kz-pp">22 000 Ft</span></li>
-            <li><span class="kz-pn">Ultrahang/vio kezelésbe építve</span><span class="kz-pp">4 000 Ft</span></li>
-          </ul>
-        </div>
-      </div>
-    </li>
-    <li class="kz-item">
-      <span class="kz-node"><span class="kz-node-ph">Ikon</span></span>
-      <div class="kz-content">
-        <div class="kz-bar">
-          <span class="kz-tt">Anti-aging</span>
-          <button class="kz-plus" aria-expanded="false" aria-label="Anti-aging árai"></button>
-        </div>
-        <p class="kz-desc">Bőrfeszesítő, regeneráló kezelések luxus hatóanyagokkal.</p>
-        <div class="kz-detail">
-          <ul class="kz-price">
-            <li><span class="kz-pn">Egyénre szabott antiaging kezelések (60 perc)</span><span class="kz-pp">34 000 Ft-tól</span></li>
-            <li><span class="kz-pn">Arckezelés luxus professzionális termékekkel</span><span class="kz-pp">36 000–56 000 Ft</span></li>
-            <li><span class="kz-pn">Mezoterápiás (elektroporátor/dermapen) kezelések</span><span class="kz-pp">36 000–58 000 Ft</span></li>
-          </ul>
-        </div>
-      </div>
-    </li>
-    <li class="kz-item">
-      <span class="kz-node"><span class="kz-node-ph">Ikon</span></span>
-      <div class="kz-content">
-        <div class="kz-bar">
-          <span class="kz-tt">Smink</span>
-          <button class="kz-plus" aria-expanded="false" aria-label="Smink árai"></button>
-        </div>
-        <p class="kz-desc">Sminkelés, szempilla- és szemöldökfestés, tanácsadás.</p>
-        <div class="kz-detail">
-          <ul class="kz-price">
-            <li><span class="kz-pn">Szemöldök / szempilla festés</span><span class="kz-pp">4 000 Ft</span></li>
-            <li><span class="kz-pn">Bőrápolási tanácsadás</span><span class="kz-pp">25 000 Ft</span></li>
-            <li><span class="kz-pn">Nappali smink / próbasmink</span><span class="kz-pp">18 000 Ft</span></li>
-            <li><span class="kz-pn">Sminktanácsadás és oktatás (3 óra)</span><span class="kz-pp">55 000 Ft</span></li>
-            <li><span class="kz-pn">Alkalmi / esküvői smink</span><span class="kz-pp">egyeztetés szerint</span></li>
-          </ul>
-        </div>
-      </div>
-    </li>
+      </li>
+    ))}
   </ul>
 
 </section>
 
 <style>
-  /* margin-top:0 — a Fejlesztünk height:0 után nincs mit kompenzálni */
-  .kezelesek{ background: var(--bg); padding: 10px 1.1rem 1.4rem 1.65rem; margin-top: 0; position:relative; z-index:1; }
-
-  .kz-head{ position:relative; min-height:150px; max-width:1000px; margin:0 auto; isolation:isolate; }
-  .kz-head-text{ max-width:46%; min-width:0; position:relative; z-index:5; transform:translate(0,-4px); }
-  .kezelesek .eyebrow{ font-size:.525rem; margin-bottom:.74rem; }
-  .kz-head h2{ font-size:19px; line-height:1.08; margin:0 0 .45rem; }
-  .kz-head h2 .kz-blk{ color:var(--ink); }
-  .kz-sub{ color:var(--muted); font-size:10px; line-height:1.45; }
-
-  .kz-frame{
-    border:1.5px dashed var(--green); border-radius:10px;
-    display:flex; align-items:center; justify-content:center;
-    color:var(--green-deep); background:rgba(168,201,106,.06);
-    font-size:.5rem; letter-spacing:.1em; text-transform:uppercase; text-align:center; padding:.2rem;
-  }
-  .kz-frame-orb{ width:95px; height:95px; flex-shrink:0; border-radius:50%; }
-  .kz-orb{ position:absolute; top:0; right:0; width:290px; z-index:0; background:var(--bg); transform:translate(37px,-17px); transform-origin:top right; }
-  .kz-orb-vid{ width:100%; height:auto; display:block;
-    -webkit-mask-image:radial-gradient(76% 62% at 50% 60%, #000 36%, transparent 84%);
-    mask-image:radial-gradient(76% 62% at 50% 60%, #000 36%, transparent 84%); }
-  .kz-frame-ic{ width:43px; height:43px; border-radius:50%; font-size:.4rem; margin:0 auto .4rem; }
-  .kz-frame-face{ width:110px; height:110px; flex-shrink:0; border-radius:12px; }
-
-  .kz-list{ list-style:none; position:relative; display:flex; flex-direction:column; gap:1.05rem; max-width:1000px; margin:1.4rem auto; padding:0; }
-  .kz-list::before{ content:''; position:absolute; left:25px; top:26px; bottom:26px; width:6px; border-radius:3px; z-index:0;
-    background:linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.95) 16%, rgba(255,255,255,.55) 50%, rgba(255,255,255,.95) 84%, rgba(255,255,255,.15));
-    background-size:100% 240%;
-    box-shadow:0 0 7px rgba(255,255,255,.85), 0 0 0 1px rgba(150,170,110,.14);
-    animation:kzShimmer 5s ease-in-out infinite; }
-  @keyframes kzShimmer{ 0%,100%{background-position:0 0;} 50%{background-position:0 -100%;} }
-  .kz-item{ position:relative; display:flex; align-items:flex-start; gap:.4rem; z-index:1; }
-  .kz-node{ flex-shrink:0; width:51px; height:51px; border-radius:50%; background:var(--bg);
-    border:1.5px solid rgba(255,255,255,.95); box-shadow:0 0 9px rgba(255,255,255,.85), 0 2px 9px rgba(120,140,90,.18);
-    display:flex; align-items:center; justify-content:center; position:relative; z-index:2; }
-  .kz-node-ph{ font-size:.4rem; letter-spacing:.06em; text-transform:uppercase; color:var(--green-deep); opacity:.7; }
-  .kz-content{ flex:1; min-width:0; padding-top:.15rem; }
-  .kz-bar{ width:100%; display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:.3rem 0 .15rem; }
-  .kz-bar .kz-tt{ font-family:var(--sans); font-size:11px; letter-spacing:.05em; text-transform:uppercase; font-weight:600; color:var(--ink); margin:0; }
-  .kz-desc{ color:var(--muted); font-size:11px; line-height:1.45; max-width:202px; margin:.05rem 0 .25rem; }
-  .kz-plus{ position:relative; flex-shrink:0; width:26px; height:26px; border-radius:50%; border:1px solid var(--line); background:none; cursor:pointer; transition:transform .35s, background .35s, border-color .35s; }
-  .kz-plus::before,.kz-plus::after{ content:''; position:absolute; top:50%; left:50%; background:var(--green-deep); transition:background .35s; }
-  .kz-plus::before{ width:10px; height:1.6px; transform:translate(-50%,-50%); }
-  .kz-plus::after{ width:1.6px; height:10px; transform:translate(-50%,-50%); }
-  .kz-item.open .kz-plus{ background:var(--green); border-color:var(--green); transform:rotate(90deg); }
-  .kz-item.open .kz-plus::before,.kz-item.open .kz-plus::after{ background:#fff; }
-  .kz-detail{ overflow:hidden; max-height:0; transition:max-height .4s ease; padding-right:34px; }
-  .kz-price{ list-style:none; margin:0; padding:.2rem 0 .5rem; display:flex; flex-direction:column; gap:.5rem; }
-  .kz-price li{ display:flex; justify-content:space-between; align-items:baseline; gap:.7rem; border-bottom:1px solid var(--line); padding-bottom:.45rem; }
-  .kz-price li:last-child{ border-bottom:none; padding-bottom:0; }
-  .kz-pn{ color:var(--ink); font-size:.66rem; line-height:1.35; }
-  .kz-pp{ color:var(--green-deep); font-size:.66rem; font-weight:600; white-space:nowrap; flex-shrink:0; }
-  .kz-item.open .kz-detail{ max-height:520px; }
-
-  .kz-dark{ max-width:1000px; margin:1.2rem auto; border:1.5px dashed var(--line); border-radius:14px; padding:9px; }
-  .kz-dark-note{ font-size:.5rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); text-align:center; margin-bottom:.8rem; opacity:.75; }
-  .kz-dark-grid{ display:flex; flex-direction:column; gap:.9rem; }
-  .kz-claim{ font-size:19px; line-height:1.05; margin:.2rem 0 0; }
-  .kz-vals{ list-style:none; display:flex; flex-direction:column; gap:.5rem; padding:0; margin:0; }
-  .kz-vals li{ display:flex; flex-direction:column; gap:.05rem; }
-  .kz-vals strong{ font-weight:600; font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink); }
-  .kz-vals span{ color:var(--muted); font-size:.72rem; }
-  .kz-frame-orb-dark{ width:100%; height:144px; border-radius:12px; transform:translate(-6px,-1px); }
-
-  .kz-bottom{ max-width:1000px; margin:1.2rem auto 0; display:flex; align-items:center; gap:.9rem; }
-  .kz-bottom-text{ flex:1; min-width:0; }
-  .kz-big{ font-family:var(--serif); font-size:14px; line-height:1.2; }
-  .kz-accent{ color:var(--green-deep); font-size:.76rem; margin-top:.3rem; }
-  .kz-btn{ display:inline-flex; align-self:flex-start; margin-top:.7rem; border:1px solid var(--green); color:var(--green-deep); font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.6rem 1rem; border-radius:8px; }
-
+  .kezelesek{background:var(--bg);padding:10px 1.1rem 1.4rem 1.65rem;margin-top:0;position:relative;z-index:1;}
+  .kz-head{position:relative;min-height:150px;max-width:1000px;margin:0 auto;isolation:isolate;}
+  .kz-head-text{max-width:46%;min-width:0;position:relative;z-index:5;transform:translate(0,-4px);}
+  .kezelesek .eyebrow{font-size:.525rem;margin-bottom:.74rem;}
+  .kz-head h2{font-size:19px;line-height:1.08;margin:0 0 .45rem;}
+  .kz-head h2 .kz-blk{color:var(--ink);}
+  .kz-sub{color:var(--muted);font-size:10px;line-height:1.45;}
+  .kz-orb{position:absolute;top:0;right:0;width:290px;z-index:0;background:var(--bg);transform:translate(37px,-17px);transform-origin:top right;}
+  .kz-orb-vid{width:100%;height:auto;display:block;-webkit-mask-image:radial-gradient(76% 62% at 50% 60%,#000 36%,transparent 84%);mask-image:radial-gradient(76% 62% at 50% 60%,#000 36%,transparent 84%);}
+  .kz-list{list-style:none;position:relative;display:flex;flex-direction:column;gap:1.05rem;max-width:1000px;margin:1.4rem auto;padding:0;}
+  .kz-list::before{content:'';position:absolute;left:25px;top:26px;bottom:26px;width:6px;border-radius:3px;z-index:0;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.95) 16%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.95) 84%,rgba(255,255,255,.15));background-size:100% 240%;box-shadow:0 0 7px rgba(255,255,255,.85),0 0 0 1px rgba(150,170,110,.14);animation:kzShimmer 5s ease-in-out infinite;}
+  @keyframes kzShimmer{0%,100%{background-position:0 0;}50%{background-position:0 -100%;}}
+  .kz-item{position:relative;display:flex;align-items:flex-start;gap:.4rem;z-index:1;}
+  .kz-node{flex-shrink:0;width:51px;height:51px;border-radius:50%;background:var(--bg);border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 9px rgba(255,255,255,.85),0 2px 9px rgba(120,140,90,.18);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
+  .kz-node-ph{font-size:.4rem;letter-spacing:.06em;text-transform:uppercase;color:var(--green-deep);opacity:.7;}
+  .kz-content{flex:1;min-width:0;padding-top:.15rem;}
+  .kz-bar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.3rem 0 .15rem;}
+  .kz-bar .kz-tt{font-family:var(--sans);font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:600;color:var(--ink);margin:0;}
+  .kz-desc{color:var(--muted);font-size:11px;line-height:1.45;max-width:202px;margin:.05rem 0 .25rem;}
+  .kz-plus{position:relative;flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:transparent;cursor:pointer;transition:.25s;}
+  .kz-plus::before,.kz-plus::after{content:'';position:absolute;top:50%;left:50%;width:10px;height:1.5px;background:var(--ink);border-radius:1px;translate:-50% -50%;transition:transform .25s,opacity .25s;}
+  .kz-plus::after{transform:rotate(90deg);}
+  .kz-plus[aria-expanded="true"]::after{transform:rotate(0);opacity:0;}
+  .kz-detail{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.22,1,.36,1);}
+  .kz-detail>*{overflow:hidden;}
+  .kz-item.open .kz-detail{grid-template-rows:1fr;}
+  .kz-price{list-style:none;padding:0;margin:.4rem 0 .8rem;display:flex;flex-direction:column;gap:.45rem;}
+  .kz-price li{display:flex;justify-content:space-between;gap:.5rem;font-size:10px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:.35rem;}
+  .kz-pn{color:var(--muted);flex:1;}
+  .kz-pp{color:var(--ink);font-weight:600;white-space:nowrap;flex-shrink:0;}
   @media (min-width:760px){
-    .kezelesek{ padding:2.4rem 1.2rem 3rem; margin-top:0; }
-    .kz-head{ gap:2rem; }
-    .kz-head h2{ margin-bottom:.7rem; }
-    .kz-sub{ font-size:.9rem; max-width:430px; }
-    .kz-frame-orb{ width:auto; height:auto; flex:1; max-width:380px; min-height:240px; border-radius:14px; }
-    .kz-head{ min-height:230px; }
-    .kz-orb{ width:380px; }
-    .kz-list{ max-width:560px; gap:1.3rem; margin:2.4rem auto; }
-    .kz-bar .kz-tt{ font-size:.74rem; }
-    .kz-desc{ font-size:.7rem; max-width:300px; }
-    .kz-pn,.kz-pp{ font-size:.78rem; }
-    .kz-dark{ margin:2.4rem auto; padding:1.6rem 1.4rem; }
-    .kz-dark-grid{ flex-direction:row; align-items:center; gap:2rem; }
-    .kz-dark-text{ flex:1; }
-    .kz-vals{ flex:1; }
-    .kz-frame-orb-dark{ width:auto; flex:1; height:auto; min-height:200px; border-radius:14px; }
-    .kz-bottom{ gap:2rem; }
-    .kz-frame-face{ width:auto; height:auto; flex:1; min-height:200px; }
-    .kz-big{ font-size:1.5rem; }
-    .kz-head h2{ font-size:1.7rem; }
-    .kz-claim{ font-size:2.2rem; }
-    .kz-head-text{ transform:none; }
+    .kz-head-text{max-width:55%;}
+    .kz-head h2{font-size:1.55rem;}
+    .kz-sub{font-size:.82rem;}
+    .kz-desc{max-width:500px;font-size:.82rem;}
+    .kz-price li{font-size:.82rem;}
+    .kz-bar .kz-tt{font-size:.9rem;}
   }
 </style>
 
 <script>
-  document.querySelectorAll('.kezelesek .kz-plus').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var li = btn.closest('.kz-item');
-      var open = li.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  document.querySelectorAll('.kz-plus').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.kz-item');
+      const isOpen = item?.classList.contains('open');
+      document.querySelectorAll('.kz-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.kz-plus')?.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen && item) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
   });
 </script>

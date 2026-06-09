@@ -1,22 +1,23 @@
 ---
-// ░ FEJLÉC + MENÜ ░ — scoped stílus, a viselkedés (burger/drawer) az oldal közös scriptjében.
+import type { T } from '../i18n/v3/hu';
+const { tr } = Astro.props as { tr: T };
 ---
 
 <header class="nav">
-  <a href="/v3" class="brand" aria-label="Főoldal">
+  <a href="/" class="brand" aria-label="Főoldal">
     <img src="/logo.png" alt="" class="brand-mark" />
-    <span class="brand-name"><b>szépség</b>terapeuta</span>
+    <span class="brand-name"><b>{tr.nav.brandBold}</b>{tr.nav.brand.slice(tr.nav.brandBold.length)}</span>
   </a>
   <div class="nav-right">
-    <a href="#kapcsolat" class="btn-book">
+    <a href="#kapcsolat" class="btn-book" aria-label={tr.nav.ctaAriaLabel}>
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke-linecap="round"/></svg>
-      <span>Időpont</span>
+      <span>{tr.nav.cta}</span>
     </a>
     <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
 </header>
-<nav class="drawer" id="drawer">
-  <a href="#kezelesek">Kezelések</a><a href="#rolam">Rólam</a><a href="#kapcsolat">Kapcsolat</a>
+<nav class="drawer" id="drawer" aria-label="Főmenü">
+  {tr.nav.links.map(l => <a href={l.href}>{l.label}</a>)}
 </nav>
 
 <style>
