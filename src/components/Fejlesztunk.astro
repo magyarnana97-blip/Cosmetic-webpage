@@ -35,12 +35,10 @@
   @keyframes dropfall{0%{transform:translateY(0);opacity:0;}8%{opacity:1;}42%{transform:translateY(33px);opacity:1;}48%{transform:translateY(36px);opacity:0;}100%{transform:translateY(36px);opacity:0;}}
   @keyframes rippleout{0%,42%{transform:scale(.25);opacity:0;}50%{opacity:.7;}82%{transform:scale(2.3);opacity:0;}100%{opacity:0;}}
 
-  /* mobilon: a szekció 0 magasságú, csak az abszolút szöveg látszódik */
   .develop{
     position: relative;
     padding: 1.5rem 1.4rem 1rem;
-    /* -200px kompenzálja a kártyák transform:translate(-1px,-224px) által hagyott rést */
-    margin-top: -200px;
+    margin-top: -215px;
   }
   .develop-text{
     position: relative;
@@ -58,7 +56,7 @@
   .develop-text p{color:var(--muted);font-size:11px;line-height:1.5;flex:1;min-width:0;max-width:153px;margin:0;}
 
   @media (min-width:760px){
-    .develop{height:auto;padding:1.5rem 1.4rem 2rem;max-width:1000px;margin-left:auto;margin-right:auto;min-height:90px;margin-top:-200px;}
+    .develop{height:auto;padding:1.5rem 1.4rem 2rem;max-width:1000px;margin-left:auto;margin-right:auto;min-height:90px;margin-top:-215px;}
     .develop-text{position:relative;transform:none;}
     .develop-text p{max-width:420px;}
   }
