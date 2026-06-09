@@ -1,17 +1,20 @@
 /* ░ GLOBáLIS ALAP — közös változók, resetek és segéd-osztályok ░ */
-/* Csak az ide tartozik, amit TÖBB szekció is használ. A szekció-specifikus stílus a saját komponensben, scoped módon él. */
 
 :root{
   --bg:#F2F4EF; --green:#A8C96A; --green-deep:#8FAE52; --soft:#C6DAB2;
   --box:#E8EAE2; --line:#D6D9CF; --muted:#7B8180; --ink:#3A3F3E;
   --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
 
-  /* Tipográfiai tokenek — egy helyen hangolható */
-  --section-h2:   22px;    /* szekció főcímek */
-  --section-sub:  12px;    /* alcímek, bevető szövegek */
-  --section-body: 12px;    /* törzs szövegek, leírások */
-  --section-label: 10px;   /* kis uppercase labelek, árak */
+  /* Oldalmargó — minden szekció ezt használja */
+  --page-margin: 1.4rem;
+
+  /* Tipográfiai tokenek */
+  --section-h2:    22px;
+  --section-sub:   13px;
+  --section-body:  13px;
+  --section-label: 11px;
 }
+
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%;max-width:100%;position:relative;}
@@ -20,21 +23,18 @@ em{font-style:italic;color:var(--green);}
 img{max-width:100%;display:block;}
 a{text-decoration:none;color:inherit;}
 
-/* Megjelenő (scroll-reveal) animáció — minden szekció használja */
 .reveal,.reveal-media{opacity:0;transform:translateY(30px);filter:blur(5px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1),filter 1s cubic-bezier(.22,1,.36,1);}
 .reveal.in,.reveal-media.in{opacity:1;transform:none;filter:blur(0);}
 .d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;}
 
-/* Közös tipográfiai elemek (hero + Fejlesztünk) */
 .eyebrow{display:block;font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.9rem;line-height:1.6;}
 .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
 .brush-dev{width:65px;margin:19px 0 1rem;}
 
-/* Desktop tipográfiai skála */
 @media (min-width:760px){
   :root{
-    --section-sub:  .82rem;
-    --section-body: .82rem;
-    --section-label: .78rem;
+    --section-sub:   .85rem;
+    --section-body:  .85rem;
+    --section-label: .8rem;
   }
 }

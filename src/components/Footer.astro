@@ -1,21 +1,18 @@
 ---
 import type { T } from '../i18n/v3/hu';
 const { tr } = Astro.props as { tr: T };
-const ft = tr.footer;
 ---
-
 <footer class="foot">
-  <img src="/logo.png" alt={ft.logoAlt} class="foot-mark" />
-  <p class="foot-name"><b>{ft.brandBold}</b>{ft.brandRest}</p>
-  <p class="foot-tag">{ft.tagline}</p>
-  <p class="foot-copy">{ft.copy}</p>
+  <div class="foot-inner">
+    <span class="foot-name">{tr.footer.name}</span>
+    <span class="foot-tag">{tr.footer.tagline}</span>
+    <span class="foot-copy">{tr.footer.copy}</span>
+  </div>
 </footer>
-
 <style>
-  .foot{text-align:center;padding:2.6rem 1.5rem 3rem;}
-  .foot-mark{height:42px;width:auto;margin:0 auto .7rem;}
+  .foot{background:var(--ink);padding:2rem var(--page-margin);}
+  .foot-inner{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:.4rem;text-align:center;}
   .foot-name{font-size:1.05rem;color:var(--muted);}
-  .foot-name b{color:var(--green);font-weight:600;}
   .foot-tag{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.9rem;margin:.5rem 0 1.2rem;}
-  .foot-copy{font-size:.72rem;color:var(--muted);opacity:.7;}
+  .foot-copy{font-size:var(--section-label);color:var(--muted);opacity:.7;}
 </style>

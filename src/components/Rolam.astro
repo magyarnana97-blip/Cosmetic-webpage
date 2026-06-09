@@ -20,7 +20,7 @@ const ab = tr.about;
 </section>
 
 <style>
-  .rolam{background:radial-gradient(ellipse 85% 70% at 80% 40%,rgba(220,235,200,0.9) 0%,rgba(210,228,188,0.6) 30%,var(--bg) 70%);padding:26px 1.1rem 37px 24px;overflow:hidden;position:relative;}
+  .rolam{background:radial-gradient(ellipse 85% 70% at 80% 40%,rgba(220,235,200,0.9) 0%,rgba(210,228,188,0.6) 30%,var(--bg) 70%);padding:26px var(--page-margin) 37px var(--page-margin);overflow:hidden;position:relative;}
   .rolam::before{content:'';position:absolute;top:0;left:0;right:0;height:90px;background:linear-gradient(to bottom,var(--bg) 0%,var(--bg) 29%,transparent 100%);z-index:3;pointer-events:none;}
   .rolam::after{content:'';position:absolute;top:0;right:0;bottom:0;width:55px;background:linear-gradient(to left,var(--bg) 0%,transparent 100%);z-index:3;pointer-events:none;}
   .rolam-head{position:relative;max-width:1000px;margin:0 auto;min-height:506px;}
@@ -31,5 +31,5 @@ const ab = tr.about;
   .rolam-sub{color:var(--muted);font-size:var(--section-sub);line-height:1.55;max-width:170px;}
   .rolam-photo{position:absolute;top:-116px;right:0px;width:69%;z-index:1;overflow:hidden;}
   .rolam-photo img{width:100%;height:auto;display:block;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 65%,transparent 100%),radial-gradient(88% 88% at 80% 64%,#000 70%,transparent 93%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 0%,#000 65%,transparent 100%),radial-gradient(88% 88% at 80% 64%,#000 70%,transparent 93%);mask-composite:intersect;}
-  @media (min-width:760px){.rolam{padding:3rem 1.4rem;}.rolam-head{min-height:420px;}.rolam-sub{max-width:430px;}.rolam-text{max-width:480px;}}
+  @media (min-width:760px){.rolam{padding:3rem var(--page-margin);}.rolam-head{min-height:420px;}.rolam-sub{max-width:430px;}.rolam-text{max-width:480px;}}
 </style>

@@ -5,7 +5,6 @@ const kz = tr.treatments;
 ---
 
 <section class="kezelesek" id="kezelesek">
-
   <div class="kz-head">
     <div class="kz-head-text">
       <span class="eyebrow">{kz.eyebrow}</span>
@@ -16,7 +15,6 @@ const kz = tr.treatments;
       <video class="kz-orb-vid" src="/orb.mp4?5" muted loop playsinline preload="auto" poster="/orb-poster.jpg?5"></video>
     </div>
   </div>
-
   <ul class="kz-list">
     {kz.categories.map(cat => (
       <li class="kz-item">
@@ -30,10 +28,7 @@ const kz = tr.treatments;
           <div class="kz-detail">
             <ul class="kz-price">
               {cat.items.map(item => (
-                <li>
-                  <span class="kz-pn">{item.name}</span>
-                  <span class="kz-pp">{item.price}</span>
-                </li>
+                <li><span class="kz-pn">{item.name}</span><span class="kz-pp">{item.price}</span></li>
               ))}
             </ul>
           </div>
@@ -41,11 +36,10 @@ const kz = tr.treatments;
       </li>
     ))}
   </ul>
-
 </section>
 
 <style>
-  .kezelesek{background:var(--bg);padding:10px 1.1rem 1.4rem 1.65rem;margin-top:0;position:relative;z-index:1;}
+  .kezelesek{background:var(--bg);padding:10px var(--page-margin) 1.4rem calc(var(--page-margin) + 0.25rem);margin-top:0;position:relative;z-index:1;}
   .kz-head{position:relative;min-height:150px;max-width:1000px;margin:0 auto;isolation:isolate;}
   .kz-head-text{max-width:46%;min-width:0;position:relative;z-index:5;transform:translate(0,-4px);}
   .kezelesek .eyebrow{font-size:.525rem;margin-bottom:.74rem;}
