@@ -1,4 +1,3 @@
----
 /**
  * src/pages/index.astro
  * ─────────────────────────────────────────────────────
@@ -53,6 +52,13 @@ const alts = alternateUrls('/');
 </head>
 
 <body>
+  <!-- Nyelvajanlo sav -- csak kulfoldi latogatoknak, kattintasos, nem automatikus redirect -->
+  <div id="lang-suggest" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9999;background:#2c2c2c;color:#fff;border-radius:8px;padding:.75rem 1.25rem;font-size:.82rem;font-family:var(--sans,system-ui);box-shadow:0 4px 24px rgba(0,0,0,.22);display:flex;align-items:center;gap:1rem;max-width:92vw;">
+    <span id="lang-suggest-text"></span>
+    <a id="lang-suggest-link" href="#" style="background:#A8C96A;color:#fff;border-radius:4px;padding:.35rem .9rem;font-weight:700;font-size:.78rem;letter-spacing:.06em;text-decoration:none;white-space:nowrap;"></a>
+    <button onclick="document.getElementById('lang-suggest').style.display='none'" aria-label="Bezárás" style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:1.1rem;line-height:1;padding:0 .2rem;">&#x2715;</button>
+  </div>
+
   <Nav tr={tr} locale="hu" />
   <Hero tr={tr} />
   <Kartyak tr={tr} />
@@ -61,10 +67,43 @@ const alts = alternateUrls('/');
   <Rolam tr={tr} />
   <Boreelemzes tr={tr} />
   <Kapcsolat tr={tr} />
-  <Footer tr={tr} />
+  <Footer tr={tr} locale="hu" />
 
   <script>
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    // --- Nyelvajanlo logika ---
+    (function() {
+      var dismissed = sessionStorage.getItem('lang-suggest-dismissed');
+      if (dismissed) return;
+      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase().split('-')[0];
+      var suggest = document.getElementById('lang-suggest');
+      var txt = document.getElementById('lang-suggest-text');
+      var lnk = document.getElementById('lang-suggest-link');
+      if (!suggest || !txt || !lnk) return;
+      if (lang === 'ja') {
+        txt.textContent = '\u65e5\u672c\u8a9e\u3067\u3054\u89a7\u306b\u306a\u308a\u307e\u3059\u304b\uff1f';
+        lnk.textContent = '\u65e5\u672c\u8a9e\u3067\u8868\u793a';
+        lnk.href = '/ja';
+      } else if (lang === 'ko') {
+        txt.textContent = '\ud55c\uad6d\uc5b4\ub85c \ubcf4\uc2dc\uaca0\uc5b4\uc694?';
+        lnk.textContent = '\ud55c\uad6d\uc5b4\ub85c \ubcf4\uae30';
+        lnk.href = '/ko';
+      } else if (lang !== 'hu') {
+        txt.textContent = 'Would you prefer this page in English?';
+        lnk.textContent = 'View in English';
+        lnk.href = '/en';
+      } else {
+        return;
+      }
+      suggest.style.display = 'flex';
+      suggest.querySelector('button').addEventListener('click', function() {
+        sessionStorage.setItem('lang-suggest-dismissed', '1');
+      });
+      lnk.addEventListener('click', function() {
+        sessionStorage.setItem('lang-suggest-dismissed', '1');
+      });
+    })();
 
     window.__playNoScroll = function(v) {
       const sy = window.scrollY;
