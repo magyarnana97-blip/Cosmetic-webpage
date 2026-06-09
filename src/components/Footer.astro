@@ -4,18 +4,21 @@ const { tr } = Astro.props as { tr: T };
 ---
 <footer class="foot">
   <div class="foot-inner">
-    <span class="foot-name">
-      <b>{tr.footer.brandBold}</b>{tr.footer.brandRest}
-    </span>
+    <a href="/" class="foot-brand" aria-label="Főoldal">
+      <img src="/logo.png" alt={tr.footer.logoAlt} class="foot-logo" />
+      <span class="foot-name"><b>{tr.footer.brandBold}</b>{tr.footer.brandRest}</span>
+    </a>
     <span class="foot-tag">{tr.footer.tagline}</span>
     <span class="foot-copy">{tr.footer.copy}</span>
   </div>
 </footer>
 <style>
-  .foot{background:var(--ink);padding:2rem var(--page-margin);}
+  .foot{background:var(--ink);padding:2.5rem var(--page-margin);}
   .foot-inner{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:.4rem;text-align:center;}
-  .foot-name{font-family:var(--sans);font-size:1.05rem;color:var(--muted);letter-spacing:.01em;}
-  .foot-name b{font-weight:700;color:rgba(255,255,255,.55);}
-  .foot-tag{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.9rem;margin:.5rem 0 1.2rem;}
-  .foot-copy{font-size:var(--section-label);color:var(--muted);opacity:.7;}
+  .foot-brand{display:inline-flex;align-items:center;gap:.45rem;margin-bottom:.3rem;text-decoration:none;}
+  .foot-logo{height:30px;width:auto;opacity:.7;filter:brightness(0) invert(1);}
+  .foot-name{font-family:var(--sans);font-size:.9rem;color:var(--muted);white-space:nowrap;}
+  .foot-name b{font-weight:600;color:var(--green);}
+  .foot-tag{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:.88rem;margin:.3rem 0 1rem;}
+  .foot-copy{font-size:var(--section-label);color:var(--muted);opacity:.6;}
 </style>
