@@ -1,0 +1,63 @@
+---
+// ░ KAPCSOLAT szekció — a sima oldal kapcsolat szekciójából átvéve, statikus adatokkal ░
+---
+
+<section class="kapcsolat-sec" id="kapcsolat">
+  <div class="kapcsolat-grid">
+    <div class="kapcsolat-info">
+      <span class="eyebrow">Kapcsolat</span>
+      <h2 class="kapcsolat-h2">Foglaljon időpontot ma</h2>
+      <div class="kapcsolat-divider"></div>
+      <p class="kapcsolat-sub">Örömmel várom. Keressen telefonon, e-mailben, vagy küldjön üzenetet az alábbi űrlapon.</p>
+      <div class="kapcsolat-details">
+        <div class="kapcsolat-item"><span class="kapcsolat-icon">📍</span><span>1126 Budapest, Dolgos utca 2. – 6B lépcsőház</span></div>
+        <div class="kapcsolat-item"><span class="kapcsolat-icon">📞</span><a href="tel:+36203393399">+36 20 339 3399</a></div>
+        <div class="kapcsolat-item"><span class="kapcsolat-icon">✉️</span><a href="mailto:info@szepsegterapeuta.hu">info@szepsegterapeuta.hu</a></div>
+        <div class="kapcsolat-item"><span class="kapcsolat-icon">🕐</span><span>Hétfő–Vasárnap: 6:00–20:00</span></div>
+      </div>
+    </div>
+    <form class="kapcsolat-form" name="contact-v3" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact-v3" />
+      <label class="form-field"><span>Neve</span><input type="text" name="name" required /></label>
+      <label class="form-field"><span>E-mail címe</span><input type="email" name="email" required /></label>
+      <label class="form-field"><span>Üzenete</span><textarea name="message" rows="5" required></textarea></label>
+      <button type="submit" class="btn-solid">Küldés</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .kapcsolat-sec{
+    background: var(--bg);
+    padding: 3rem 1.4rem 4rem;
+  }
+  .kapcsolat-grid{
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .kapcsolat-h2{ font-size: 1.6rem; line-height: 1.1; margin: .4rem 0 0; color: var(--ink); }
+  .kapcsolat-divider{ width: 48px; height: 2px; background: var(--green); margin: .9rem 0 1rem; border-radius: 2px; }
+  .kapcsolat-sub{ color: var(--muted); font-size: .82rem; line-height: 1.65; margin-bottom: 1.4rem; }
+  .kapcsolat-details{ display: flex; flex-direction: column; gap: .75rem; }
+  .kapcsolat-item{ display: flex; align-items: flex-start; gap: .6rem; font-size: .82rem; color: var(--muted); }
+  .kapcsolat-item a{ color: var(--ink); }
+  .kapcsolat-icon{ flex-shrink: 0; margin-top: .05rem; }
+
+  .kapcsolat-form{ display: flex; flex-direction: column; gap: 1.1rem; }
+  .form-field{ display: flex; flex-direction: column; gap: .35rem; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .kapcsolat-form input,
+  .kapcsolat-form textarea{ width: 100%; padding: .75rem 0; border: none; border-bottom: 1.5px solid rgba(58,63,62,.18); background: transparent; font-family: var(--sans); font-size: .9rem; color: var(--ink); outline: none; transition: border-color .2s; }
+  .kapcsolat-form input:focus,
+  .kapcsolat-form textarea:focus{ border-bottom-color: var(--green); }
+  .kapcsolat-form textarea{ resize: vertical; min-height: 110px; }
+  .btn-solid{ display: inline-block; background: var(--green); color: #fff; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: .85rem 1.7rem; border-radius: 10px; border: none; cursor: pointer; transition: background .2s; }
+  .btn-solid:hover{ background: var(--green-deep); }
+
+  @media (min-width: 760px){
+    .kapcsolat-grid{ grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+    .kapcsolat-h2{ font-size: 2rem; }
+  }
+</style>
