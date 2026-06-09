@@ -1,0 +1,168 @@
+---
+/**
+ * src/pages/[lang]/index.astro
+ * ───────────────────────────────────────────────────
+ * Minden locale főoldala egyetlen fájlból.
+ * - /en  → angol fordítás
+ * - /ja  → japán (egyelőre hu fallback)
+ * - /ko  → koreai (egyelőre hu fallback)
+ *
+ * A magyar főoldal a gyökér URL-en él: src/pages/index.astro
+ */
+
+import { t, LOCALES, DEFAULT_LOCALE, alternateUrls, type Locale } from '../../i18n/v3/index';
+import '../../../src/styles/global.css';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import Kartyak from '../../components/Kartyak.astro';
+import Fejlesztunk from '../../components/Fejlesztunk.astro';
+import Kezelesek from '../../components/Kezelesek.astro';
+import Rolam from '../../components/Rolam.astro';
+import Boreelemzes from '../../components/Boreelemzes.astro';
+import Kapcsolat from '../../components/Kapcsolat.astro';
+import Footer from '../../components/Footer.astro';
+
+export function getStaticPaths() {
+  // Az alapértelmezett locale (hu) a gyökér URL-en van — ne duplikáljuk.
+  return LOCALES
+    .filter(locale => locale !== DEFAULT_LOCALE)
+    .map(locale => ({ params: { lang: locale } }));
+}
+
+const { lang } = Astro.params;
+const locale = lang as Locale;
+const tr = t(locale);
+const alts = alternateUrls('/');
+---
+
+<!DOCTYPE html>
+<html lang={tr.meta.lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={tr.meta.description} />
+  <title>{tr.meta.title}</title>
+
+  <!-- Hreflang: keresőmotoroknak jelzi az összes nyelvi változatot -->
+  {Object.entries(alts).map(([l, href]) => (
+    <link rel="alternate" hreflang={l} href={`https://szepsegterapeuta.hu${href}`} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href="https://szepsegterapeuta.hu/" />
+
+  <link rel="canonical" href={`https://szepsegterapeuta.hu/${locale}`} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script is:inline>
+    // Scroll pozíció nullázása oldalbetöltéskor
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('pageshow', function() {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    });
+  </script>
+</head>
+
+<body>
+  <Nav tr={tr} />
+  <Hero tr={tr} />
+  <Kartyak tr={tr} />
+  <Fejlesztunk tr={tr} />
+  <Kezelesek tr={tr} />
+  <Rolam tr={tr} />
+  <Boreelemzes tr={tr} />
+  <Kapcsolat tr={tr} />
+  <Footer tr={tr} />
+
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    window.__playNoScroll = function(v) {
+      const sy = window.scrollY;
+      try { const p = v.play(); if (p && p.catch) p.catch(() => {}); } catch(e) {}
+      const fix = () => { if (Math.abs(window.scrollY - sy) > 2) window.scrollTo(0, sy); };
+      requestAnimationFrame(fix); setTimeout(fix, 40); setTimeout(fix, 120);
+    };
+
+    (() => {
+      const hv = document.querySelector('.hero-video');
+      if (!hv) return;
+      const setRate = () => { hv.playbackRate = 0.85; };
+      hv.addEventListener('loadedmetadata', setRate);
+      hv.addEventListener('play', setRate);
+      setRate();
+    })();
+
+    (() => {
+      const ov = document.querySelector('.kz-orb-vid');
+      if (!ov) return;
+      const io = new IntersectionObserver(function(es) {
+        es.forEach(function(e) {
+          if (e.isIntersecting) { var p = ov.play(); if (p && p.catch) p.catch(function() {}); }
+          else { try { ov.pause(); } catch(_) {} }
+        });
+      }, { threshold: 0.25 });
+      io.observe(ov);
+    })();
+
+    const burger = document.getElementById('burger');
+    const drawer = document.getElementById('drawer');
+    burger?.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      drawer?.classList.toggle('open');
+    });
+    drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      burger?.classList.remove('open');
+      drawer.classList.remove('open');
+    }));
+
+    const io = new IntersectionObserver(
+      (es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+      { threshold: .12 }
+    );
+    document.querySelectorAll('.reveal, .reveal-media').forEach(el => io.observe(el));
+
+    (() => {
+      const v = document.getElementById('dropvid');
+      if (!v) return;
+      let teased = false, centeredPlayed = false;
+      const teaser = () => {
+        if (teased) return; teased = true;
+        try { v.currentTime = 0; } catch(e) {}
+        window.__playNoScroll(v);
+        setTimeout(() => { try { if (!centeredPlayed) { v.pause(); v.currentTime = 0.5; } } catch(e) {} }, 500);
+      };
+      if (v.readyState >= 2) teaser(); else v.addEventListener('loadeddata', teaser, { once: true });
+      const cio = new IntersectionObserver((es) => {
+        es.forEach(e => {
+          if (e.isIntersecting && !centeredPlayed) {
+            centeredPlayed = true;
+            try { v.currentTime = 0.5; } catch(e) {}
+            window.__playNoScroll(v);
+            cio.disconnect();
+          }
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      cio.observe(v);
+      let tailDone = false;
+      v.addEventListener('ended', () => {
+        if (tailDone) return; tailDone = true;
+        try { v.currentTime = 0; } catch(e) {}
+        window.__playNoScroll(v);
+        setTimeout(() => { try { v.pause(); } catch(e) {} }, 520);
+      });
+      v.style.cursor = 'pointer';
+      v.addEventListener('click', () => {
+        tailDone = false;
+        try { v.currentTime = 0; } catch(e) {}
+        window.__playNoScroll(v);
+      });
+    })();
+  </script>
+</body>
+</html>
