@@ -11,9 +11,10 @@
 
 import { hu } from './hu';
 import { en } from './en';
+import { ja } from './ja';
 import { ko } from './ko';
 
-// ── Típusok ────────────────────────────────────────────
+// ── Típusok ──────────────────────────────────────────────────────
 
 /** Az összes támogatott locale. Ide kell felvenni az új nyelveket. */
 export const LOCALES = ['hu', 'en', 'ja', 'ko'] as const;
@@ -25,21 +26,20 @@ export const DEFAULT_LOCALE: Locale = 'hu';
 /** A fordítás típusa — mindig a hu.ts a master, a többi ehhez igazodik. */
 export type T = typeof hu;
 
-// ── Fordítások ───────────────────────────────────────────
+// ── Fordítások ─────────────────────────────────────────────────────
 
 /**
  * Fordítási táblázat.
- * Amikor egy locale nincs még lefordítva (ja), fallback: hu.
- * Új fordítás hozzáadásakor: importald és add hozzá ide.
+ * Minden locale le van fordítva.
  */
 const translations: Record<Locale, T> = {
   hu,
   en,
-  ja: hu, // TODO: lefordítándó
+  ja,
   ko,
 };
 
-// ── Fő függvények ─────────────────────────────────────────
+// ── Fő függvények ───────────────────────────────────────────────────
 
 /**
  * Visszaadja az adott locale teljes fordítási objektumát.
