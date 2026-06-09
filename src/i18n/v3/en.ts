@@ -33,14 +33,14 @@ export const en: T = {
   ],
   develop: {
     eyebrow: 'Your skin deserves it',
-    h2: 'We don't just treat.',
+    h2: "We don't just treat.",
     h2em: 'We improve.',
     body: 'We work with your skin so you can be the best version of yourself long-term.',
   },
   treatments: {
     eyebrow: 'Treatments',
     h2: 'Personalised treatments',
-    h2em: 'for your skin's',
+    h2em: "for your skin's",
     h2bold: 'real',
     h2end: 'needs.',
     sub: 'We work with modern technology and expertise for natural, healthy radiance.',
@@ -64,8 +64,8 @@ export const en: T = {
         desc: 'Skin-firming, regenerating treatments with luxury active ingredients.',
         items: [
           { name: 'Personalised anti-aging treatments (60 min)',       price: 'from 34 000 HUF' },
-          { name: 'Facial with luxury professional products',          price: '36 000–56 000 HUF' },
-          { name: 'Mesotherapy (electroporator/dermapen) treatments',  price: '36 000–58 000 HUF' },
+          { name: 'Facial with luxury professional products',          price: '36 000-56 000 HUF' },
+          { name: 'Mesotherapy (electroporator/dermapen) treatments',  price: '36 000-58 000 HUF' },
         ],
       },
       {
@@ -92,8 +92,8 @@ export const en: T = {
     imgAlt: 'Marianna portrait',
   },
   closing: {
-    h2: 'Let's start together',
-    body: 'The first consultation is free. Let's find the natural treatment that suits your skin best.',
+    h2: "Let's start together",
+    body: "Let's find the natural treatment that suits your skin best.",
     cta: 'Book an appointment',
   },
   contact: {
@@ -116,7 +116,7 @@ export const en: T = {
     brandBold: 'beauty',
     brandRest: 'therapist',
     tagline: 'The power of science, the intelligence of nature.',
-    copy: '© 2026 szépségterapeuta · Budapest',
+    copy: '© 2026 szepsegterapeuta · Budapest',
     logoAlt: 'Beauty therapist logo',
   },
 };
