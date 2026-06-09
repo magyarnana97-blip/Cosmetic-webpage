@@ -1,11 +1,16 @@
-/* ░ GLOBÁLIS ALAP — közös változók, resetek és segéd-osztályok ░ */
+/* ░ GLOBáLIS ALAP — közös változók, resetek és segéd-osztályok ░ */
 /* Csak az ide tartozik, amit TÖBB szekció is használ. A szekció-specifikus stílus a saját komponensben, scoped módon él. */
 
 :root{
   --bg:#F2F4EF; --green:#A8C96A; --green-deep:#8FAE52; --soft:#C6DAB2;
   --box:#E8EAE2; --line:#D6D9CF; --muted:#7B8180; --ink:#3A3F3E;
   --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
-  --section-h2: 22px;
+
+  /* Tipográfiai tokenek — egy helyen hangolható */
+  --section-h2:   22px;    /* szekció főcímek */
+  --section-sub:  12px;    /* alcímek, bevető szövegek */
+  --section-body: 12px;    /* törzs szövegek, leírások */
+  --section-label: 10px;   /* kis uppercase labelek, árak */
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
@@ -24,3 +29,12 @@ a{text-decoration:none;color:inherit;}
 .eyebrow{display:block;font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:.9rem;line-height:1.6;}
 .brush{display:block;width:59px;height:9px;margin:.15rem 0 .8rem;}
 .brush-dev{width:65px;margin:19px 0 1rem;}
+
+/* Desktop tipográfiai skála */
+@media (min-width:760px){
+  :root{
+    --section-sub:  .82rem;
+    --section-body: .82rem;
+    --section-label: .78rem;
+  }
+}
