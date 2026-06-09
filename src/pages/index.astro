@@ -1,7 +1,7 @@
 ---
 /**
  * src/pages/index.astro
- * ───────────────────────────────────────────────────
+ * ─────────────────────────────────────────────────────
  * A gyökér URL (/) magyar nyelvű főoldala.
  * Többi locale: src/pages/[lang]/index.astro
  */
@@ -30,12 +30,10 @@ const alts = alternateUrls('/');
   <meta name="description" content={tr.meta.description} />
   <title>{tr.meta.title}</title>
 
-  <!-- Hreflang: keresőmotoroknak jelzi az összes nyelvi változatot -->
   {Object.entries(alts).map(([l, href]) => (
     <link rel="alternate" hreflang={l} href={`https://szepsegterapeuta.hu${href}`} />
   ))}
   <link rel="alternate" hreflang="x-default" href="https://szepsegterapeuta.hu/" />
-
   <link rel="canonical" href="https://szepsegterapeuta.hu/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,7 +41,6 @@ const alts = alternateUrls('/');
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <script is:inline>
-    // Scroll pozíció nullázása oldalbetöltéskor
     if (window.location.hash) {
       history.replaceState(null, '', window.location.pathname + window.location.search);
     }
@@ -56,7 +53,7 @@ const alts = alternateUrls('/');
 </head>
 
 <body>
-  <Nav tr={tr} />
+  <Nav tr={tr} locale="hu" />
   <Hero tr={tr} />
   <Kartyak tr={tr} />
   <Fejlesztunk tr={tr} />

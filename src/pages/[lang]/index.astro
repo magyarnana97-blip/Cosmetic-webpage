@@ -1,7 +1,7 @@
 ---
 /**
  * src/pages/[lang]/index.astro
- * ───────────────────────────────────────────────────
+ * ─────────────────────────────────────────────────────
  * Minden locale főoldala egyetlen fájlból.
  * - /en  → angol fordítás
  * - /ja  → japán (egyelőre hu fallback)
@@ -11,7 +11,7 @@
  */
 
 import { t, LOCALES, DEFAULT_LOCALE, alternateUrls, type Locale } from '../../i18n/v3/index';
-import '../../../src/styles/global.css';
+import '../../styles/global.css';
 import Nav from '../../components/Nav.astro';
 import Hero from '../../components/Hero.astro';
 import Kartyak from '../../components/Kartyak.astro';
@@ -23,7 +23,6 @@ import Kapcsolat from '../../components/Kapcsolat.astro';
 import Footer from '../../components/Footer.astro';
 
 export function getStaticPaths() {
-  // Az alapértelmezett locale (hu) a gyökér URL-en van — ne duplikáljuk.
   return LOCALES
     .filter(locale => locale !== DEFAULT_LOCALE)
     .map(locale => ({ params: { lang: locale } }));
@@ -43,12 +42,10 @@ const alts = alternateUrls('/');
   <meta name="description" content={tr.meta.description} />
   <title>{tr.meta.title}</title>
 
-  <!-- Hreflang: keresőmotoroknak jelzi az összes nyelvi változatot -->
   {Object.entries(alts).map(([l, href]) => (
     <link rel="alternate" hreflang={l} href={`https://szepsegterapeuta.hu${href}`} />
   ))}
   <link rel="alternate" hreflang="x-default" href="https://szepsegterapeuta.hu/" />
-
   <link rel="canonical" href={`https://szepsegterapeuta.hu/${locale}`} />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -56,7 +53,6 @@ const alts = alternateUrls('/');
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <script is:inline>
-    // Scroll pozíció nullázása oldalbetöltéskor
     if (window.location.hash) {
       history.replaceState(null, '', window.location.pathname + window.location.search);
     }
@@ -69,7 +65,7 @@ const alts = alternateUrls('/');
 </head>
 
 <body>
-  <Nav tr={tr} />
+  <Nav tr={tr} locale={locale} />
   <Hero tr={tr} />
   <Kartyak tr={tr} />
   <Fejlesztunk tr={tr} />
