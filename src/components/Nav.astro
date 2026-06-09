@@ -59,6 +59,11 @@ const langLabels: Record<Locale, string> = {
 </nav>
 
 <style>
+  /* Minden nav elem egységesen Inter (var(--sans)) */
+  .nav, .nav *, .drawer, .drawer * {
+    font-family: var(--sans);
+  }
+
   .nav{position:fixed;top:0;left:0;right:0;z-index:50;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 .85rem;background:rgba(242,244,239,.9);backdrop-filter:blur(12px);gap:.5rem;}
   .brand{display:flex;align-items:center;gap:.45rem;min-width:0;}
   .brand-mark{height:31px;width:auto;flex-shrink:0;}
@@ -89,8 +94,8 @@ const langLabels: Record<Locale, string> = {
   .drawer-lang{display:flex;gap:4px;padding:.7rem 1.6rem 1rem;border-top:1px solid rgba(0,0,0,.07);margin-top:.3rem;}
   .drawer-lang-btn{font-size:.65rem;font-weight:700;letter-spacing:.08em;color:var(--muted);padding:.35rem .5rem;border-radius:6px;background:rgba(0,0,0,.04);}
   .drawer-lang-btn:hover{color:var(--green);}
-  .drawer-lang-btn.active{color:var(--green);background:rgba(90,130,90,.1);}
+  .drawer-lang-btn.active{color:var(--green);background:rgba(168,201,106,.15);}
 
-  /* Desktopon a drawer nyelvválasztó elrejtve (ott a header-ben van) */
+  /* Desktopon a drawer nyelvválasztó elrejtve */
   @media(min-width:640px){.drawer-lang{display:none;}}
 </style>
