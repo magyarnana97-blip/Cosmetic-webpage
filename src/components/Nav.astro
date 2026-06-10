@@ -21,7 +21,6 @@ const langLabels: Record<Locale, string> = {
   </a>
 
   <div class="nav-right">
-    <!-- Nyelválasztó a fejlécben -->
     <div class="lang-switcher" aria-label="Nyelv választása">
       {LOCALES.map(l => (
         <a
@@ -34,15 +33,18 @@ const langLabels: Record<Locale, string> = {
         </a>
       ))}
     </div>
-
     <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
 </header>
 
+<!-- Backdrop -->
+<div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
 <nav class="drawer" id="drawer" aria-label="Főmenü">
-  {tr.nav.links.map(l => <a href={l.href}>{l.label}</a>)}
-  <!-- Időpont gomb a drawer-ben -->
-  <a href="#kapcsolat" class="drawer-book" aria-label={tr.nav.ctaAriaLabel}>
+  {tr.nav.links.map((l, i) => (
+    <a href={l.href} class="drawer-link" style={`--i:${i}`}>{l.label}</a>
+  ))}
+  <a href="#kapcsolat" class="drawer-book drawer-link" style="--i:3" aria-label={tr.nav.ctaAriaLabel}>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke-linecap="round"/></svg>
     {tr.nav.cta}
   </a>
@@ -60,26 +62,97 @@ const langLabels: Record<Locale, string> = {
   .brand-name b{font-weight:600;color:var(--green);}
   .nav-right{display:flex;align-items:center;gap:.55rem;flex-shrink:0;}
 
-  /* Nyelválasztó */
   .lang-switcher{display:flex;align-items:center;gap:2px;background:rgba(0,0,0,.05);border-radius:8px;padding:3px;}
   .lang-btn{font-size:.62rem;font-weight:700;letter-spacing:.08em;color:var(--muted);padding:.3rem .45rem;border-radius:6px;transition:all .2s;line-height:1;}
   .lang-btn:hover{color:var(--ink);background:rgba(0,0,0,.06);}
   .lang-btn.active{background:#fff;color:var(--green);box-shadow:0 1px 4px rgba(0,0,0,.1);}
 
-  /* Burger */
   .burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:5px;}
   .burger span{width:25px;height:2px;background:var(--ink);transition:.3s;}
   .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .burger.open span:nth-child(2){opacity:0;}
   .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
-  /* Drawer */
-  .drawer{position:fixed;top:64px;right:0;z-index:49;background:#fff;box-shadow:0 18px 44px rgba(58,63,62,.13);border-radius:0 0 0 14px;display:flex;flex-direction:column;padding:.4rem 0;transform:translateX(115%);transition:transform .4s cubic-bezier(.22,1,.36,1);}
-  .drawer.open{transform:translateX(0);}
-  .drawer a{padding:.85rem 2.4rem .85rem 1.6rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
-  .drawer a:hover{color:var(--green);background:var(--bg);}
+  /* Backdrop */
+  .drawer-backdrop{
+    position:fixed;inset:0;z-index:48;
+    background:rgba(58,63,62,0);
+    pointer-events:none;
+    transition:background .35s cubic-bezier(.22,1,.36,1);
+  }
+  .drawer-backdrop.open{
+    background:rgba(58,63,62,.22);
+    pointer-events:auto;
+  }
 
-  /* Időpont gomb a drawer-ben */
-  .drawer-book{display:flex;align-items:center;gap:.5rem;margin:.5rem 1rem .6rem;padding:.7rem 1.2rem !important;background:var(--green);color:#fff !important;border-radius:9px;justify-content:center;letter-spacing:.06em !important;}
+  /* Drawer */
+  .drawer{
+    position:fixed;top:64px;right:0;z-index:49;
+    background:#fff;
+    box-shadow:0 18px 44px rgba(58,63,62,.13);
+    border-radius:0 0 0 14px;
+    display:flex;flex-direction:column;
+    padding:.4rem 0;
+    transform:translateX(115%);
+    opacity:0;
+    transition:
+      transform .38s cubic-bezier(.22,1,.36,1),
+      opacity .28s cubic-bezier(.22,1,.36,1);
+  }
+  .drawer.open{
+    transform:translateX(0);
+    opacity:1;
+  }
+
+  /* Linkek staggered belépés */
+  .drawer-link{
+    padding:.85rem 2.4rem .85rem 1.6rem;
+    font-size:.78rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;
+    opacity:0;
+    transform:translateX(18px);
+    transition:
+      opacity .28s cubic-bezier(.22,1,.36,1),
+      transform .32s cubic-bezier(.22,1,.36,1),
+      color .18s,background .18s;
+    transition-delay:calc(var(--i, 0) * 55ms + 60ms);
+  }
+  .drawer.open .drawer-link{
+    opacity:1;
+    transform:translateX(0);
+  }
+  .drawer-link:hover{color:var(--green);background:var(--bg);}
+
+  .drawer-book{
+    display:flex;align-items:center;gap:.5rem;
+    margin:.5rem 1rem .6rem;
+    padding:.7rem 1.2rem !important;
+    background:var(--green);color:#fff !important;
+    border-radius:9px;justify-content:center;
+    letter-spacing:.06em !important;
+  }
   .drawer-book:hover{background:var(--green-deep) !important;}
 </style>
+
+<script>
+  const burger = document.getElementById('burger');
+  const drawer = document.getElementById('drawer');
+  const backdrop = document.getElementById('drawer-backdrop');
+
+  function openDrawer() {
+    burger?.classList.add('open');
+    drawer?.classList.add('open');
+    backdrop?.classList.add('open');
+  }
+  function closeDrawer() {
+    burger?.classList.remove('open');
+    drawer?.classList.remove('open');
+    backdrop?.classList.remove('open');
+  }
+
+  burger?.addEventListener('click', () => {
+    drawer?.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  backdrop?.addEventListener('click', closeDrawer);
+  drawer?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+</script>

@@ -1,31 +1,20 @@
 ---
 import type { T } from '../i18n/v3/hu';
 const { tr } = Astro.props as { tr: T };
+const d = tr.develop;
 ---
 
-<section class="develop" id="fejlesztunk">
-  <div class="develop-text">
-    <div class="dev-col">
-      <span class="eyebrow">{tr.develop.eyebrow}</span>
-      <h2 class="develop-h2">{tr.develop.h2}<br/><em>{tr.develop.h2em}</em></h2>
-      <svg class="brush brush-dev" viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M1,2.6 L199,4.2 L199,5.6 L1,7.4 Z" fill="url(#brushgrad)"/>
-      </svg>
-    </div>
-    <p class="dev-p">{tr.develop.body}</p>
+<section class="fejlesztunk scroll-exit">
+  <div class="fej-inner">
+    <span class="eyebrow reveal">{d.eyebrow}</span>
+    <h2 class="fej-h2 reveal d1">{d.h2}<em>{d.h2em}</em></h2>
+    <p class="fej-body reveal d2">{d.body}</p>
   </div>
 </section>
 
 <style>
-  .develop{position:relative;padding:1.5rem var(--page-margin) 1rem;margin-top:-230px;}
-  .develop-text{position:relative;width:100%;z-index:2;pointer-events:none;display:flex;align-items:center;gap:1rem;}
-  .dev-col{flex:0 0 auto;width:47%;}
-  .develop-text a{pointer-events:auto;}
-  .develop-h2{font-size:var(--section-h2);line-height:1.08;margin:0;}
-  .dev-p{color:var(--muted);font-size:var(--section-body);line-height:1.55;flex:1;min-width:0;max-width:153px;margin:0;}
-  @media (min-width:760px){
-    .develop{height:auto;padding:1.5rem var(--page-margin) 2rem;max-width:1000px;margin-left:auto;margin-right:auto;min-height:90px;margin-top:-230px;}
-    .develop-text{position:relative;transform:none;}
-    .dev-p{max-width:420px;}
-  }
+  .fejlesztunk{background:var(--bg);padding:2rem var(--page-margin) 2.5rem;}
+  .fej-inner{max-width:1000px;margin:0 auto;}
+  .fej-h2{font-family:var(--serif);font-size:var(--section-h2);font-weight:400;line-height:1.08;margin:.4rem 0 .9rem;color:var(--ink);}
+  .fej-body{color:var(--muted);font-family:var(--sans);font-size:var(--section-body);font-weight:300;line-height:1.65;max-width:520px;}
 </style>
