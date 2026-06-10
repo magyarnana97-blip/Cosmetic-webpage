@@ -40,6 +40,143 @@ const alts = alternateUrls('/');
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+  <style>
+    /* ── Nyelvajanlo sav ────────────────────────────── */
+    #lang-suggest {
+      display: none;
+      position: fixed;
+      bottom: 1.75rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 9999;
+      width: min(480px, 92vw);
+
+      /* glassmorphism */
+      background: rgba(247, 246, 241, 0.72);
+      backdrop-filter: blur(18px) saturate(1.6);
+      -webkit-backdrop-filter: blur(18px) saturate(1.6);
+      border: 1px solid rgba(168, 201, 106, 0.35);
+      border-radius: 16px;
+      box-shadow:
+        0 8px 32px rgba(80, 100, 60, 0.13),
+        0 1.5px 0 rgba(255,255,255,0.55) inset;
+
+      padding: 1rem 1.25rem 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      transition: transform 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+    }
+    #lang-suggest.ls-visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    #lang-suggest.ls-hiding {
+      transform: translateX(-50%) translateY(120%);
+      opacity: 0;
+    }
+
+    /* kis globális ikon bal oldalt */
+    #lang-suggest-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(168, 201, 106, 0.18);
+      border: 1px solid rgba(168, 201, 106, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6e8467;
+    }
+
+    /* szöveg rész */
+    #lang-suggest-body {
+      flex: 1;
+      min-width: 0;
+    }
+    #lang-suggest-label {
+      display: block;
+      font-family: var(--sans, 'Inter', system-ui);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #8a9e82;
+      margin-bottom: 0.2rem;
+    }
+    #lang-suggest-text {
+      display: block;
+      font-family: var(--sans, 'Inter', system-ui);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: #3a4535;
+      line-height: 1.4;
+    }
+
+    /* CTA gomb */
+    #lang-suggest-link {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: linear-gradient(135deg, #a8c96a 0%, #7fa852 100%);
+      color: #fff;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-family: var(--sans, 'Inter', system-ui);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(120, 168, 82, 0.35);
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+    #lang-suggest-link:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+    #lang-suggest-link svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      fill: none;
+    }
+
+    /* bezárás gomb */
+    #lang-suggest-close {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #9aaa90;
+      transition: background 0.18s ease, color 0.18s ease;
+      padding: 0;
+    }
+    #lang-suggest-close:hover {
+      background: rgba(110, 132, 103, 0.12);
+      color: #4a5e44;
+    }
+    #lang-suggest-close svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+  </style>
+
   <script is:inline>
     if (window.location.hash) {
       history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -53,11 +190,30 @@ const alts = alternateUrls('/');
 </head>
 
 <body>
-  <!-- Nyelvajanlo sav -- csak kulfoldi latogatoknak, kattintasos, nem automatikus redirect -->
-  <div id="lang-suggest" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9999;background:#2c2c2c;color:#fff;border-radius:8px;padding:.75rem 1.25rem;font-size:.82rem;font-family:var(--sans,system-ui);box-shadow:0 4px 24px rgba(0,0,0,.22);display:flex;align-items:center;gap:1rem;max-width:92vw;">
-    <span id="lang-suggest-text"></span>
-    <a id="lang-suggest-link" href="#" style="background:#A8C96A;color:#fff;border-radius:4px;padding:.35rem .9rem;font-weight:700;font-size:.78rem;letter-spacing:.06em;text-decoration:none;white-space:nowrap;"></a>
-    <button onclick="document.getElementById('lang-suggest').style.display='none'" aria-label="Bezárás" style="background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:1.1rem;line-height:1;padding:0 .2rem;">&#x2715;</button>
+
+  <!-- ── Nyelvajanlo sav (futurisztikus, glassmorphism) ── -->
+  <div id="lang-suggest" role="region" aria-label="Language suggestion">
+    <!-- globális ikon -->
+    <div id="lang-suggest-icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    </div>
+    <!-- szöveg -->
+    <div id="lang-suggest-body">
+      <span id="lang-suggest-label">Language</span>
+      <span id="lang-suggest-text"></span>
+    </div>
+    <!-- CTA -->
+    <a id="lang-suggest-link" href="#">
+      <span id="lang-suggest-link-text"></span>
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <!-- bezárás -->
+    <button id="lang-suggest-close" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+    </button>
   </div>
 
   <Nav tr={tr} locale="hu" />
@@ -73,37 +229,55 @@ const alts = alternateUrls('/');
   <script>
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-    // --- Nyelvajanlo logika ---
+    // ── Nyelvajanlo logika ──────────────────────────────
     (function() {
       var dismissed = sessionStorage.getItem('lang-suggest-dismissed');
       if (dismissed) return;
-      var lang = (navigator.language || navigator.userLanguage || '').toLowerCase().split('-')[0];
+
+      var lang = (navigator.language || '').toLowerCase().split('-')[0];
       var suggest = document.getElementById('lang-suggest');
-      var txt = document.getElementById('lang-suggest-text');
-      var lnk = document.getElementById('lang-suggest-link');
-      if (!suggest || !txt || !lnk) return;
+      var txt     = document.getElementById('lang-suggest-text');
+      var lnk     = document.getElementById('lang-suggest-link');
+      var lnkTxt  = document.getElementById('lang-suggest-link-text');
+      var closeBtn= document.getElementById('lang-suggest-close');
+      if (!suggest || !txt || !lnk || !lnkTxt || !closeBtn) return;
+
+      var config = null;
       if (lang === 'ja') {
-        txt.textContent = '\u65e5\u672c\u8a9e\u3067\u3054\u89a7\u306b\u306a\u308a\u307e\u3059\u304b\uff1f';
-        lnk.textContent = '\u65e5\u672c\u8a9e\u3067\u8868\u793a';
-        lnk.href = '/ja';
+        config = { text: '\u65e5\u672c\u8a9e\u3067\u3054\u89a7\u306b\u306a\u308a\u307e\u3059\u304b\uff1f', btnLabel: '\u65e5\u672c\u8a9e\u3067\u8868\u793a', href: '/ja' };
       } else if (lang === 'ko') {
-        txt.textContent = '\ud55c\uad6d\uc5b4\ub85c \ubcf4\uc2dc\uaca0\uc5b4\uc694?';
-        lnk.textContent = '\ud55c\uad6d\uc5b4\ub85c \ubcf4\uae30';
-        lnk.href = '/ko';
+        config = { text: '\ud55c\uad6d\uc5b4\ub85c \ubcf4\uc2dc\uaca0\uc5b4\uc694?', btnLabel: '\ud55c\uad6d\uc5b4\ub85c \ubcf4\uae30', href: '/ko' };
       } else if (lang !== 'hu') {
-        txt.textContent = 'Would you prefer this page in English?';
-        lnk.textContent = 'View in English';
-        lnk.href = '/en';
-      } else {
-        return;
+        config = { text: 'Would you prefer this page in English?', btnLabel: 'View in English', href: '/en' };
       }
+      if (!config) return;
+
+      txt.textContent    = config.text;
+      lnkTxt.textContent = config.btnLabel;
+      lnk.href           = config.href;
+
+      // megjelenes animacioval
       suggest.style.display = 'flex';
-      suggest.querySelector('button').addEventListener('click', function() {
-        sessionStorage.setItem('lang-suggest-dismissed', '1');
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          suggest.classList.add('ls-visible');
+        });
       });
+
+      function dismiss() {
+        sessionStorage.setItem('lang-suggest-dismissed', '1');
+        suggest.classList.remove('ls-visible');
+        suggest.classList.add('ls-hiding');
+        setTimeout(function() { suggest.style.display = 'none'; }, 550);
+      }
+
+      closeBtn.addEventListener('click', dismiss);
       lnk.addEventListener('click', function() {
         sessionStorage.setItem('lang-suggest-dismissed', '1');
       });
+
+      // 8 masodperc utan automatikusan eltűnik
+      setTimeout(dismiss, 8000);
     })();
 
     window.__playNoScroll = function(v) {
