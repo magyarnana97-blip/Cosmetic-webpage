@@ -59,22 +59,22 @@ export const hu = {
       {
         title: 'Anti-aging',
         ariaLabel: 'Anti-aging árai',
-        desc: 'Bőrfeszesítő, regeneratív kezelések luxus hatóanyagokkal.',
+        desc: 'Bőrfeszestíő, regeneratív kezelések luxus hatóanyagokkal.',
         items: [
           { name: 'Egyénre szabott antiaging kezelések (60 perc)',   price: '34 000 Ft-tól' },
           { name: 'Arckezelés luxus professzionális termékekkel',    price: '36 000–56 000 Ft' },
-          { name: 'Mezoterápiás (elektroporátor/dermapen) kezelések', price: '36 000–58 000 Ft' },
+          { name: 'Mezoterapías (elektroporátor/dermapen) kezelések', price: '36 000–58 000 Ft' },
         ],
       },
       {
         title: 'Smink',
         ariaLabel: 'Smink árai',
-        desc: 'Sminkelés, szempilla- és szemöldökfestés, tanácsadás.',
+        desc: 'Sminkelés, szempilla- és szemoldökfestés, tanácsadás.',
         items: [
-          { name: 'Szemöldök / szempilla festés',          price: '4 000 Ft' },
+          { name: 'Szemoldök / szempilla festés',          price: '4 000 Ft' },
           { name: 'Bőrápolási tanácsadás',                 price: '25 000 Ft' },
           { name: 'Nappali smink / próbasmink',            price: '18 000 Ft' },
-          { name: 'Sminktanácsadás és oktatás (3 óra)',    price: '55 000 Ft' },
+          { name: 'Sminktácsadás és oktatás (3 óra)',    price: '55 000 Ft' },
           { name: 'Alkalmi / esküvői smink',               price: 'egyeztetés szerint' },
         ],
       },
@@ -99,9 +99,9 @@ export const hu = {
     h2: 'Foglalj időpontot ma',
     sub: 'Örömmel várlak. Keress telefonon, e-mailben, vagy küldj üzenetet az alábbi űrlapon.',
     items: [
-      { icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', label: '1126 Budapest, Dolgos utca 2. – 6B lépcsőház' },
-      { icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z', label: '+36 20 339 3399' },
-      { icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'info@szepsegterapeuta.hu' },
+      { icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', label: '1126 Budapest, Dolgos utca 2. – 6B lépcsőház', href: 'https://share.google/KLRL07VWAELsPwqM5' },
+      { icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z', label: '+36 20 339 3399', href: 'tel:+36203393399' },
+      { icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'info@szepsegterapeuta.hu', href: 'mailto:info@szepsegterapeuta.hu' },
       { icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', label: 'Hétfő–Vasárnap: 6:00–20:00' },
     ],
     fields: [
