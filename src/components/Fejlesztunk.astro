@@ -13,8 +13,11 @@ const d = tr.develop;
 </section>
 
 <style>
-  .fejlesztunk{background:var(--bg);padding:2rem var(--page-margin) 2.5rem;}
+  .fejlesztunk{background:var(--bg);padding:1.5rem var(--page-margin) 1rem;margin-top:-230px;position:relative;z-index:1;}
   .fej-inner{max-width:1000px;margin:0 auto;}
   .fej-h2{font-family:var(--serif);font-size:var(--section-h2);font-weight:400;line-height:1.08;margin:.4rem 0 .9rem;color:var(--ink);}
   .fej-body{color:var(--muted);font-family:var(--sans);font-size:var(--section-body);font-weight:300;line-height:1.65;max-width:520px;}
+  @media (min-width:760px){
+    .fejlesztunk{margin-top:-230px;}
+  }
 </style>
