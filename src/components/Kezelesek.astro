@@ -18,7 +18,7 @@ const kz = tr.treatments;
   <ul class="kz-list">
     {kz.categories.map(cat => (
       <li class="kz-item">
-        <span class="kz-node"><span class="kz-node-ph">Ikon</span></span>
+        <span class="kz-node"></span>
         <div class="kz-content">
           <div class="kz-bar">
             <span class="kz-tt">{cat.title}</span>
@@ -39,7 +39,7 @@ const kz = tr.treatments;
 </section>
 
 <style>
-  .kezelesek{background:var(--bg);padding:10px var(--page-margin) 1.4rem calc(var(--page-margin) + 0.25rem);margin-top:0;position:relative;z-index:1;}
+  .kezelesek{background:var(--bg);padding:10px var(--page-margin) 1.4rem var(--page-margin);margin-top:0;position:relative;z-index:1;}
   .kz-head{position:relative;min-height:150px;max-width:1000px;margin:0 auto;isolation:isolate;}
   .kz-head-text{max-width:46%;min-width:0;position:relative;z-index:5;transform:translate(0,-4px);}
   .kezelesek .eyebrow{font-size:.525rem;margin-bottom:.74rem;}
@@ -48,12 +48,11 @@ const kz = tr.treatments;
   .kz-sub{color:var(--muted);font-size:var(--section-sub);line-height:1.45;}
   .kz-orb{position:absolute;top:0;right:0;width:290px;z-index:0;background:var(--bg);transform:translate(37px,-17px);transform-origin:top right;}
   .kz-orb-vid{width:100%;height:auto;display:block;-webkit-mask-image:radial-gradient(76% 62% at 50% 60%,#000 36%,transparent 84%);mask-image:radial-gradient(76% 62% at 50% 60%,#000 36%,transparent 84%);}
-  .kz-list{list-style:none;position:relative;display:flex;flex-direction:column;gap:1.05rem;max-width:1000px;margin:1.4rem auto;padding:0;}
+  .kz-list{list-style:none;position:relative;display:flex;flex-direction:column;gap:1.05rem;max-width:1000px;margin:1.4rem auto;padding:0 var(--page-margin) 0 0;}
   .kz-list::before{content:'';position:absolute;left:25px;top:26px;bottom:26px;width:6px;border-radius:3px;z-index:0;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.95) 16%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.95) 84%,rgba(255,255,255,.15));background-size:100% 240%;box-shadow:0 0 7px rgba(255,255,255,.85),0 0 0 1px rgba(150,170,110,.14);animation:kzShimmer 5s ease-in-out infinite;}
   @keyframes kzShimmer{0%,100%{background-position:0 0;}50%{background-position:0 -100%;}}
   .kz-item{position:relative;display:flex;align-items:flex-start;gap:.4rem;z-index:1;}
   .kz-node{flex-shrink:0;width:51px;height:51px;border-radius:50%;background:var(--bg);border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 9px rgba(255,255,255,.85),0 2px 9px rgba(120,140,90,.18);display:flex;align-items:center;justify-content:center;position:relative;z-index:2;}
-  .kz-node-ph{font-size:.4rem;letter-spacing:.06em;text-transform:uppercase;color:var(--green-deep);opacity:.7;}
   .kz-content{flex:1;min-width:0;padding-top:.15rem;}
   .kz-bar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.3rem 0 .15rem;}
   .kz-bar .kz-tt{font-family:var(--sans);font-size:var(--section-body);letter-spacing:.05em;text-transform:uppercase;font-weight:600;color:var(--ink);margin:0;}
